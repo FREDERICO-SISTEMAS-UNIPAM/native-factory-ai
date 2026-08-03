@@ -128,7 +128,7 @@ body {
 /* Nav Tabs */
 .nav-tabs {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     background: rgba(15, 23, 42, 0.6);
     padding: 4px;
     border-radius: var(--radius-md);
@@ -139,16 +139,16 @@ body {
     background: transparent;
     border: none;
     color: var(--text-muted);
-    padding: 8px 16px;
+    padding: 8px 14px;
     border-radius: var(--radius-sm);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     font-family: var(--font-sans);
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .nav-tab:hover {
@@ -520,6 +520,41 @@ body {
     border-radius: 20px;
     font-weight: 600;
 }
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.stat-value {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.stat-value.text-green { color: var(--accent-green); }
+.stat-value.text-cyan { color: var(--accent-cyan); }
 
 /* Prompt Card */
 .prompt-card {
@@ -945,7 +980,89 @@ iframe#sandbox-iframe {
     line-height: 1.6;
 }
 
-/* TAB 5: PITCH DECK */
+/* TAB 5: TESTING CONTAINER */
+.testing-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.testing-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    padding: 16px 24px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.testing-toolbar h3 {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.test-results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.test-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.test-card.pass {
+    border-left: 4px solid var(--accent-green);
+}
+
+.test-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.test-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+.test-badge.pass {
+    background: rgba(52, 211, 153, 0.15);
+    color: var(--accent-green);
+}
+
+.test-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.test-card p {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.test-time {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+}
+
+/* TAB 6: PITCH DECK */
 .pitch-container {
     display: flex;
     flex-direction: column;
