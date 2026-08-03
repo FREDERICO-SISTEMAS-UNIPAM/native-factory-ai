@@ -1,5 +1,5 @@
 /* ==========================================================================
-   NativeBuilder AI Ecosystem Suite — Application Engine v3.5
+   NativeBuilder AI Ecosystem Suite — Application Engine v3.6 (Layout Fix)
    Author: Frederico Alves
    ========================================================================== */
 
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             prompt: "Crie um SaaS de Gestão Financeira para Freelancers e PMEs com IA que prevê fluxo de caixa para 90 dias, analisa faturas pendentes, gera relatórios automáticos e recomenda investimentos em renda fixa com envio via WhatsApp.",
             spec: {
                 projectName: "FinTech AI Copilot",
-                version: "3.5.0",
+                version: "3.6.0",
                 targetFramework: "NativeBuilder Web App",
                 architecture: "Microservices + Multi-Agent Orchestrator",
                 database: "PostgreSQL + PGVector for AI Embeddings",
@@ -52,42 +52,10 @@ CREATE TABLE transactions (
     category VARCHAR(50) NOT NULL,
     due_date DATE NOT NULL,
     status VARCHAR(20) DEFAULT 'PENDING'
-);
-
-CREATE TABLE ai_predictions (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID REFERENCES users(id),
-    predicted_balance DECIMAL(12,2),
-    confidence_score FLOAT,
-    generated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );`,
-            api: `{
-  "openapi": "3.0.0",
-  "info": {
-    "title": "FinTech AI Copilot API",
-    "version": "3.5.0"
-  },
-  "paths": {
-    "/api/v1/forecast": {
-      "post": {
-        "summary": "Generate AI Cashflow Prediction",
-        "responses": {
-          "200": { "description": "Returns 90-day predicted financial trend" }
-        }
-      }
-    },
-    "/api/v1/invoices/scan": {
-      "post": {
-        "summary": "Scan & Extract Invoice PDF data via OCR Agent",
-        "responses": {
-          "200": { "description": "Structured invoice JSON payload" }
-        }
-      }
-    }
-  }
-}`,
+            api: `{"openapi": "3.0.0", "info": {"title": "FinTech AI Copilot API", "version": "3.6.0"}}`,
             components: `AppLayout\n├── Header (Brand, UserProfile, AgentStatus)\n├── AnalyticsOverview (MetricCards, CashflowChart)\n├── InvoiceManager (DataTable, AI RiskBadge, RemindBtn)\n└── AIChatAssistantDrawer (StreamingLLM, ActionExecutor)`,
-            htmlCode: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>FinTech AI Copilot</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>*{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',sans-serif;}body{background:#0b0f19;color:#f8fafc;padding:24px;}.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.1);}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px;}.card{background:rgba(30,41,59,0.7);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:20px;}.card-val{font-size:28px;font-weight:700;margin:8px 0;color:#38bdf8;}.tag{font-size:11px;background:rgba(52,211,153,0.15);color:#34d399;padding:4px 8px;border-radius:6px;}.ai-banner{background:linear-gradient(135deg,rgba(56,189,248,0.15),rgba(168,85,247,0.15));border:1px solid #38bdf8;border-radius:12px;padding:20px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;}.btn{background:#38bdf8;color:#000;font-weight:700;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;}.btn:hover{background:#7dd3fc;}table{width:100%;border-collapse:collapse;margin-top:12px;}th,td{text-align:left;padding:12px;border-bottom:1px solid rgba(255,255,255,0.08);font-size:13px;}th{color:#94a3b8;}</style></head><body><div class="header"><h2><i class="fa-solid fa-chart-pie" style="color:#38bdf8"></i> FinTech AI Copilot</h2><span class="tag"><i class="fa-solid fa-robot"></i> AI Forecast Agent Active</span></div><div class="ai-banner"><div><h3><i class="fa-solid fa-sparkles" style="color:#a855f7"></i> AI Insight Alert</h3><p style="font-size:13px;color:#cbd5e1;margin-top:4px;">Previsão de entrada de R$ 14.500 nos próximos 15 dias. Recomendado alocar R$ 4.000 em Reserva de Emergência.</p></div><button class="btn" onclick="alert('Ação executada com sucesso!')">Executar Ação</button></div><div class="grid"><div class="card"><span style="color:#94a3b8;font-size:12px;">Saldo Atual</span><div class="card-val">R$ 42.850,00</div><span style="color:#34d399;font-size:12px;"><i class="fa-solid fa-arrow-up"></i> +12.4% este mês</span></div><div class="card"><span style="color:#94a3b8;font-size:12px;">Fluxo Previsto (30 dias)</span><div class="card-val">R$ 58.200,00</div><span style="color:#38bdf8;font-size:12px;"><i class="fa-solid fa-brain"></i> Confiança de 96%</span></div><div class="card"><span style="color:#94a3b8;font-size:12px;">Faturas a Receber</span><div class="card-val">R$ 15.350,00</div><span style="color:#fb923c;font-size:12px;"><i class="fa-solid fa-triangle-exclamation"></i> 2 em atraso</span></div></div><div class="card"><h3><i class="fa-solid fa-list-check"></i> Faturas Recentes & Risco AI</h3><table><thead><tr><th>Cliente</th><th>Vencimento</th><th>Valor</th><th>Status</th><th>Ação AI</th></tr></thead><tbody><tr><td>Acme Corp Brasil</td><td>10/08/2026</td><td>R$ 8.500,00</td><td><span style="color:#34d399;">Pago</span></td><td>-</td></tr><tr><td>Studio Design Ltda</td><td>01/08/2026</td><td>R$ 4.200,00</td><td><span style="color:#fb923c;">Atrasado (2 dias)</span></td><td><button class="btn" style="padding:4px 10px;font-size:11px;" onclick="alert('Lembrete WhatsApp enviado via AI Agent!')">Cobrar via WhatsApp</button></td></tr></tbody></table></div></body></html>`
+            htmlCode: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>FinTech AI Copilot</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>*{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',sans-serif;}html,body{background:#0b0f19;color:#f8fafc;padding:24px;width:100%;height:100%;overflow-y:auto;}.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.1);}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px;}.card{background:rgba(30,41,59,0.7);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:20px;}.card-val{font-size:28px;font-weight:700;margin:8px 0;color:#38bdf8;}.tag{font-size:11px;background:rgba(52,211,153,0.15);color:#34d399;padding:4px 8px;border-radius:6px;}.ai-banner{background:linear-gradient(135deg,rgba(56,189,248,0.15),rgba(168,85,247,0.15));border:1px solid #38bdf8;border-radius:12px;padding:20px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;}.btn{background:#38bdf8;color:#000;font-weight:700;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;}.btn:hover{background:#7dd3fc;}table{width:100%;border-collapse:collapse;margin-top:12px;}th,td{text-align:left;padding:12px;border-bottom:1px solid rgba(255,255,255,0.08);font-size:13px;}th{color:#94a3b8;}</style></head><body><div class="header"><h2><i class="fa-solid fa-chart-pie" style="color:#38bdf8"></i> FinTech AI Copilot</h2><span class="tag"><i class="fa-solid fa-robot"></i> AI Forecast Agent Active</span></div><div class="ai-banner"><div><h3><i class="fa-solid fa-sparkles" style="color:#a855f7"></i> AI Insight Alert</h3><p style="font-size:13px;color:#cbd5e1;margin-top:4px;">Previsão de entrada de R$ 14.500 nos próximos 15 dias. Recomendado alocar R$ 4.000 em Reserva de Emergência.</p></div><button class="btn" onclick="alert('Ação executada com sucesso!')">Executar Ação</button></div><div class="grid"><div class="card"><span style="color:#94a3b8;font-size:12px;">Saldo Atual</span><div class="card-val">R$ 42.850,00</div><span style="color:#34d399;font-size:12px;"><i class="fa-solid fa-arrow-up"></i> +12.4% este mês</span></div><div class="card"><span style="color:#94a3b8;font-size:12px;">Fluxo Previsto (30 dias)</span><div class="card-val">R$ 58.200,00</div><span style="color:#38bdf8;font-size:12px;"><i class="fa-solid fa-brain"></i> Confiança de 96%</span></div><div class="card"><span style="color:#94a3b8;font-size:12px;">Faturas a Receber</span><div class="card-val">R$ 15.350,00</div><span style="color:#fb923c;font-size:12px;"><i class="fa-solid fa-triangle-exclamation"></i> 2 em atraso</span></div></div><div class="card"><h3><i class="fa-solid fa-list-check"></i> Faturas Recentes & Risco AI</h3><table><thead><tr><th>Cliente</th><th>Vencimento</th><th>Valor</th><th>Status</th><th>Ação AI</th></tr></thead><tbody><tr><td>Acme Corp Brasil</td><td>10/08/2026</td><td>R$ 8.500,00</td><td><span style="color:#34d399;">Pago</span></td><td>-</td></tr><tr><td>Studio Design Ltda</td><td>01/08/2026</td><td>R$ 4.200,00</td><td><span style="color:#fb923c;">Atrasado (2 dias)</span></td><td><button class="btn" style="padding:4px 10px;font-size:11px;" onclick="alert('Lembrete WhatsApp enviado via AI Agent!')">Cobrar via WhatsApp</button></td></tr></tbody></table></div></body></html>`
         },
         saas: {
             title: "Workflow Automator SaaS",
@@ -96,7 +64,7 @@ CREATE TABLE ai_predictions (
             schema: `CREATE TABLE workflows ( id UUID PRIMARY KEY, title VARCHAR(100), trigger_type VARCHAR(50), active_agents INTEGER DEFAULT 1 );`,
             api: `{"endpoints": ["/api/v1/trigger", "/api/v1/agents/run"]}`,
             components: `WorkflowCanvas -> NodeCard -> TriggerSocket -> AgentAction`,
-            htmlCode: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Workflow Engine</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>body{background:#090d16;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;padding:24px;}.node-box{background:rgba(30,41,59,0.8);border:1px solid #38bdf8;border-radius:12px;padding:16px;margin-bottom:16px;width:300px;}.node-title{font-weight:700;color:#38bdf8;display:flex;align-items:center;gap:8px;}.btn-run{background:#a855f7;color:#fff;border:none;padding:12px 24px;border-radius:8px;font-weight:700;cursor:pointer;}</style></head><body><h2><i class="fa-solid fa-diagram-next" style="color:#a855f7"></i> Live Workflow Engine</h2><p style="color:#94a3b8;margin-bottom:20px;">Orquestração de Agentes Autônomos em Tempo Real</p><div class="node-box"><div class="node-title"><i class="fa-solid fa-bolt"></i> Trigger: Webhook Inbound</div><p style="font-size:12px;color:#cbd5e1;margin-top:6px;">Escutando evento: <code>order.created</code></p></div><div style="margin-left:40px;border-left:2px dashed #a855f7;height:30px;"></div><div class="node-box"><div class="node-title"><i class="fa-solid fa-brain"></i> AI Agent: Summarizer</div><p style="font-size:12px;color:#cbd5e1;margin-top:6px;">Processando payload com Gemini 3.6</p></div><button class="btn-run" onclick="alert('Fluxo executado com sucesso!')"><i class="fa-solid fa-play"></i> Testar Execução</button></body></html>`
+            htmlCode: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Workflow Engine</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>html,body{background:#090d16;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;padding:24px;width:100%;height:100%;overflow-y:auto;}.node-box{background:rgba(30,41,59,0.8);border:1px solid #38bdf8;border-radius:12px;padding:16px;margin-bottom:16px;width:300px;}.node-title{font-weight:700;color:#38bdf8;display:flex;align-items:center;gap:8px;}.btn-run{background:#a855f7;color:#fff;border:none;padding:12px 24px;border-radius:8px;font-weight:700;cursor:pointer;}</style></head><body><h2><i class="fa-solid fa-diagram-next" style="color:#a855f7"></i> Live Workflow Engine</h2><p style="color:#94a3b8;margin-bottom:20px;">Orquestração de Agentes Autônomos em Tempo Real</p><div class="node-box"><div class="node-title"><i class="fa-solid fa-bolt"></i> Trigger: Webhook Inbound</div><p style="font-size:12px;color:#cbd5e1;margin-top:6px;">Escutando evento: <code>order.created</code></p></div><div style="margin-left:40px;border-left:2px dashed #a855f7;height:30px;"></div><div class="node-box"><div class="node-title"><i class="fa-solid fa-brain"></i> AI Agent: Summarizer</div><p style="font-size:12px;color:#cbd5e1;margin-top:6px;">Processando payload com Gemini 3.6</p></div><button class="btn-run" onclick="alert('Fluxo executado com sucesso!')"><i class="fa-solid fa-play"></i> Testar Execução</button></body></html>`
         },
         ecommerce: {
             title: "Hyper-Personalized Store",
@@ -105,7 +73,7 @@ CREATE TABLE ai_predictions (
             schema: `CREATE TABLE products ( id UUID PRIMARY KEY, name VARCHAR(255), price DECIMAL(10,2) );`,
             api: `{"endpoints": ["/api/v1/recommendations"]}`,
             components: `StoreLayout -> HeroBanner -> ProductGrid -> AICartDrawer`,
-            htmlCode: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>AI Storefront</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>body{background:#0f172a;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;padding:24px;}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px;}.card{background:#1e293b;border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.1);}.price{font-size:20px;font-weight:700;color:#34d399;margin:8px 0;}.buy-btn{background:#34d399;color:#000;font-weight:700;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;width:100%;}</style></head><body><h2><i class="fa-solid fa-bag-shopping" style="color:#34d399"></i> AI Storefront</h2><p style="color:#94a3b8;">Recomendações em tempo real alimentadas por NativeBuilder AI</p><div class="grid"><div class="card"><h3>Headset Wireless Pro AI</h3><p style="font-size:12px;color:#94a3b8;">Recomendado para o seu perfil</p><div class="price">R$ 899,00</div><button class="buy-btn" onclick="alert('Item adicionado ao carrinho com desconto AI!')">Comprar Agora</button></div><div class="card"><h3>Teclado Mecânico Ergostep</h3><p style="font-size:12px;color:#94a3b8;">98% de afinidade</p><div class="price">R$ 549,00</div><button class="buy-btn" onclick="alert('Item adicionado ao carrinho!')">Comprar Agora</button></div></div></body></html>`
+            htmlCode: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>AI Storefront</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>html,body{background:#0f172a;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;padding:24px;width:100%;height:100%;overflow-y:auto;}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px;}.card{background:#1e293b;border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.1);}.price{font-size:20px;font-weight:700;color:#34d399;margin:8px 0;}.buy-btn{background:#34d399;color:#000;font-weight:700;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;width:100%;}</style></head><body><h2><i class="fa-solid fa-bag-shopping" style="color:#34d399"></i> AI Storefront</h2><p style="color:#94a3b8;">Recomendações em tempo real alimentadas por NativeBuilder AI</p><div class="grid"><div class="card"><h3>Headset Wireless Pro AI</h3><p style="font-size:12px;color:#94a3b8;">Recomendado para o seu perfil</p><div class="price">R$ 899,00</div><button class="buy-btn" onclick="alert('Item adicionado ao carrinho com desconto AI!')">Comprar Agora</button></div><div class="card"><h3>Teclado Mecânico Ergostep</h3><p style="font-size:12px;color:#94a3b8;">98% de afinidade</p><div class="price">R$ 549,00</div><button class="buy-btn" onclick="alert('Item adicionado ao carrinho!')">Comprar Agora</button></div></div></body></html>`
         },
         health: {
             title: "HealthTech Diagnostic Hub",
@@ -114,7 +82,7 @@ CREATE TABLE ai_predictions (
             schema: `CREATE TABLE appointments ( id UUID PRIMARY KEY, patient_name VARCHAR(255) );`,
             api: `{"endpoints": ["/api/v1/triage"]}`,
             components: `HealthDashboard -> SymptomChecker -> AppointmentCalendar`,
-            htmlCode: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>HealthTech Hub</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>body{background:#090d16;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;padding:24px;}.box{background:#1e293b;padding:20px;border-radius:12px;border:1px solid #f472b6;}</style></head><body><h2><i class="fa-solid fa-heart-pulse" style="color:#f472b6"></i> HealthTech AI Triage</h2><div class="box" style="margin-top:20px;"><h3>Triagem Médica Assistida</h3><p style="font-size:13px;color:#cbd5e1;margin-top:8px;">O assistente de IA identificou baixa prioridade. Recomendado agendamento de teleconsulta.</p><button style="background:#f472b6;color:#000;font-weight:700;border:none;padding:10px 18px;border-radius:8px;margin-top:12px;cursor:pointer;" onclick="alert('Teleconsulta agendada!')">Agendar Teleconsulta</button></div></body></html>`
+            htmlCode: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>HealthTech Hub</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>html,body{background:#090d16;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;padding:24px;width:100%;height:100%;overflow-y:auto;}.box{background:#1e293b;padding:20px;border-radius:12px;border:1px solid #f472b6;}</style></head><body><h2><i class="fa-solid fa-heart-pulse" style="color:#f472b6"></i> HealthTech AI Triage</h2><div class="box" style="margin-top:20px;"><h3>Triagem Médica Assistida</h3><p style="font-size:13px;color:#cbd5e1;margin-top:8px;">O assistente de IA identificou baixa prioridade. Recomendado agendamento de teleconsulta.</p><button style="background:#f472b6;color:#000;font-weight:700;border:none;padding:10px 18px;border-radius:8px;margin-top:12px;cursor:pointer;" onclick="alert('Teleconsulta agendada!')">Agendar Teleconsulta</button></div></body></html>`
         }
     };
 
@@ -133,11 +101,15 @@ CREATE TABLE ai_predictions (
         bindEvents();
         loadTemplate('fintech');
         renderNodes();
+
+        // Default sandbox wrapper to desktop view
+        const wrapper = document.getElementById('sandbox-wrapper');
+        if (wrapper) wrapper.className = 'sandbox-frame-wrapper desktop';
     }
 
     // Event Binds
     function bindEvents() {
-        // 1. Top Level Product Switcher (Factory vs OmniInsight vs CanvasMind)
+        // 1. Top Level Product Switcher
         document.querySelectorAll('.product-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const appTarget = btn.dataset.app;
@@ -285,7 +257,7 @@ CREATE TABLE ai_predictions (
                     author: "Frederico Alves",
                     github: "https://github.com/FREDERICO-SISTEMAS-UNIPAM/native-factory-ai",
                     vercel: "https://gallant-borg.vercel.app",
-                    nativeBuilderSpecVersion: "3.5.0"
+                    nativeBuilderSpecVersion: "3.6.0"
                 }, null, 2));
                 const dlAnchor = document.createElement('a');
                 dlAnchor.setAttribute("href", dataStr);
@@ -393,7 +365,6 @@ CREATE TABLE ai_predictions (
         const targetNavGroup = document.getElementById(`sub-nav-${appKey}`);
         if (targetNavGroup) {
             targetNavGroup.classList.add('active');
-            // Trigger click on first sub-nav item
             const firstItem = targetNavGroup.querySelector('.sub-nav-item');
             if (firstItem) {
                 document.querySelectorAll('.sub-nav-item').forEach(i => i.classList.remove('active'));
