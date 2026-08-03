@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NativeFactory AI — Software Factory for NativeBuilder</title>
+    <meta name="description" content="AI-Native Autonomous Software Factory & Workflow Engine built for the NativelyAI / NativeBuilder ecosystem.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="dark-theme">
+    <!-- App Container -->
+    <div id="app" class="app-grid">
+        
+        <!-- Header Bar -->
+        <header class="app-header">
+            <div class="brand-container">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-cube"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>NativeFactory <span class="badge-tag">AI</span></h1>
+                    <span class="brand-sub">NativeBuilder Ecosystem Engine</span>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-tab="studio">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI Studio & Prompt
+                </button>
+                <button class="nav-tab" data-tab="pipeline">
+                    <i class="fa-solid fa-diagram-project"></i> Agent Pipeline Canvas
+                </button>
+                <button class="nav-tab" data-tab="sandbox">
+                    <i class="fa-solid fa-desktop"></i> Live App Sandbox
+                </button>
+                <button class="nav-tab" data-tab="architecture">
+                    <i class="fa-solid fa-network-wired"></i> Architecture & Spec
+                </button>
+            </nav>
+
+            <!-- Top Actions -->
+            <div class="header-actions">
+                <div class="ecosystem-badge" title="Official NativeBuilder Ecosystem Integration">
+                    <span class="dot-pulse"></span>
+                    <i class="fa-solid fa-bolt"></i> Natively.Builder Linked
+                </div>
+                <button id="btn-export-native" class="btn btn-primary btn-glow">
+                    <i class="fa-solid fa-file-export"></i> Export Blueprint
+                </button>
+            </div>
+        </header>
+
+        <!-- Sidebar / Template Selector -->
+        <aside class="app-sidebar">
+            <div class="sidebar-section">
+                <h3><i class="fa-solid fa-layer-group"></i> Quick Templates</h3>
+                <p class="sidebar-help">Select a pre-configured AI factory blueprint:</p>
+
+                <div class="template-cards">
+                    <div class="template-card active" data-template="fintech">
+                        <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        <div class="card-info">
+                            <h4>FinTech AI Copilot</h4>
+                            <p>Real-time analytics, predictive cashflow & automated reports.</p>
+                            <span class="tech-tag">Fintech • LLM • Charts</span>
+                        </div>
+                    </div>
+
+                    <div class="template-card" data-template="saas">
+                        <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+                        <div class="card-info">
+                            <h4>Workflow Automator SaaS</h4>
+                            <p>Multi-agent trigger engine with webhook integrations.</p>
+                            <span class="tech-tag">SaaS • Multi-Agent • Webhooks</span>
+                        </div>
+                    </div>
+
+                    <div class="template-card" data-template="ecommerce">
+                        <div class="card-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+                        <div class="card-info">
+                            <h4>Hyper-Personalized Store</h4>
+                            <p>AI product recommendations with instant checkout.</p>
+                            <span class="tech-tag">E-Commerce • AI Recs • Checkout</span>
+                        </div>
+                    </div>
+
+                    <div class="template-card" data-template="health">
+                        <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="card-info">
+                            <h4>HealthTech Diagnostic Hub</h4>
+                            <p>Symptom triage assistant & patient dashboard.</p>
+                            <span class="tech-tag">HealthTech • Triage • Security</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent Roster Panel -->
+            <div class="sidebar-section">
+                <h3><i class="fa-solid fa-users-gear"></i> Active Agent Roster</h3>
+                <div class="agent-roster">
+                    <div class="roster-item active" id="roster-spec">
+                        <span class="roster-status active"></span>
+                        <div class="roster-icon"><i class="fa-solid fa-brain"></i></div>
+                        <div class="roster-details">
+                            <strong>Spec Analyst Agent</strong>
+                            <span>Requirements & Blueprint</span>
+                        </div>
+                    </div>
+                    <div class="roster-item" id="roster-ux">
+                        <span class="roster-status"></span>
+                        <div class="roster-icon"><i class="fa-solid fa-palette"></i></div>
+                        <div class="roster-details">
+                            <strong>UI/UX Architect Agent</strong>
+                            <span>Design System & Layout</span>
+                        </div>
+                    </div>
+                    <div class="roster-item" id="roster-dev">
+                        <span class="roster-status"></span>
+                        <div class="roster-icon"><i class="fa-solid fa-code"></i></div>
+                        <div class="roster-details">
+                            <strong>Frontend/Backend Dev</strong>
+                            <span>Code Synthesis Engine</span>
+                        </div>
+                    </div>
+                    <div class="roster-item" id="roster-qa">
+                        <span class="roster-status"></span>
+                        <div class="roster-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="roster-details">
+                            <strong>QA & Security Inspector</strong>
+                            <span>Linter & Security Scan</span>
+                        </div>
+                    </div>
+                    <div class="roster-item" id="roster-native">
+                        <span class="roster-status"></span>
+                        <div class="roster-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                        <div class="roster-details">
+                            <strong>NativeBuilder Publisher</strong>
+                            <span>Deployment Engine</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Area -->
+        <main class="app-main">
+
+            <!-- TAB 1: STUDIO & PROMPT -->
+            <section id="tab-studio" class="tab-content active">
+                <div class="studio-container">
+                    
+                    <!-- Hero Banner -->
+                    <div class="studio-hero">
+                        <div class="hero-text">
+                            <h2>Building software at the speed of thought.</h2>
+                            <p>Describe your app idea. NativeFactory AI will generate full architecture specifications, multi-agent workflows, code components, and a live working prototype ready for NativeBuilder.</p>
+                        </div>
+                        <div class="hero-tags">
+                            <span><i class="fa-solid fa-check"></i> Zero Code Lock-in</span>
+                            <span><i class="fa-solid fa-check"></i> NativeBuilder Ready</span>
+                            <span><i class="fa-solid fa-check"></i> Full Stack Blueprint</span>
+                        </div>
+                    </div>
+
+                    <!-- Prompt Box -->
+                    <div class="prompt-card">
+                        <div class="prompt-header">
+                            <label for="prompt-input"><i class="fa-solid fa-terminal"></i> Enter Application Vision / Requirements:</label>
+                            <span class="ai-mode"><i class="fa-solid fa-bolt"></i> Agentic Synthesis v2.5</span>
+                        </div>
+                        <textarea id="prompt-input" rows="4" placeholder="Ex: Crie um SaaS de gestão financeira para freelancers com IA que prevê fluxo de caixa, emite boletos via Pix e envia alertas automáticos no WhatsApp..."></textarea>
+                        
+                        <div class="prompt-footer">
+                            <div class="prompt-options">
+                                <label class="chip-option active" id="chip-ui">
+                                    <input type="checkbox" checked hidden> <i class="fa-solid fa-paintbrush"></i> Auto UI Design
+                                </label>
+                                <label class="chip-option active" id="chip-db">
+                                    <input type="checkbox" checked hidden> <i class="fa-solid fa-database"></i> Auto DB Schema
+                                </label>
+                                <label class="chip-option active" id="chip-native">
+                                    <input type="checkbox" checked hidden> <i class="fa-solid fa-plug"></i> NativeBuilder Connectors
+                                </label>
+                            </div>
+                            <button id="btn-generate" class="btn btn-accent btn-large">
+                                <i class="fa-solid fa-rocket"></i> Launch Factory Pipeline
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Agent Execution Terminal / Output -->
+                    <div class="terminal-card">
+                        <div class="terminal-header">
+                            <div class="window-buttons">
+                                <span class="win-btn red"></span>
+                                <span class="win-btn yellow"></span>
+                                <span class="win-btn green"></span>
+                            </div>
+                            <span class="terminal-title"><i class="fa-solid fa-terminal"></i> Multi-Agent Execution Telemetry</span>
+                            <span id="pipeline-status" class="status-chip idle">System Ready</span>
+                        </div>
+                        <div id="terminal-logs" class="terminal-body">
+                            <div class="log-line info">[SYS] NativeFactory AI v2.5 initialized. Ready to receive prompt.</div>
+                            <div class="log-line info">[SYS] Natively.builder connector protocol: WS/TLS Connected.</div>
+                            <div class="log-line hint">[HINT] Choose a template on the left or type your custom application idea above and click "Launch Factory Pipeline".</div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- TAB 2: AGENT PIPELINE CANVAS -->
+            <section id="tab-pipeline" class="tab-content">
+                <div class="pipeline-container">
+                    <div class="canvas-toolbar">
+                        <div class="toolbar-title">
+                            <h3><i class="fa-solid fa-diagram-project"></i> Multi-Agent Workflow Graph</h3>
+                            <span>Interactive Agent Nodes & Execution Paths</span>
+                        </div>
+                        <div class="toolbar-actions">
+                            <button id="btn-add-agent" class="btn btn-secondary btn-sm"><i class="fa-solid fa-plus"></i> Add Custom Agent</button>
+                            <button id="btn-run-canvas" class="btn btn-accent btn-sm"><i class="fa-solid fa-play"></i> Simulate Execution</button>
+                            <button id="btn-reset-canvas" class="btn btn-outline btn-sm"><i class="fa-solid fa-rotate-left"></i> Reset Nodes</button>
+                        </div>
+                    </div>
+
+                    <!-- Canvas Area -->
+                    <div id="canvas-viewport" class="canvas-viewport">
+                        <svg id="canvas-connections" class="connections-svg"></svg>
+                        
+                        <!-- Nodes rendered dynamically by JS -->
+                        <div id="nodes-container" class="nodes-container"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: LIVE APP SANDBOX -->
+            <section id="tab-sandbox" class="tab-content">
+                <div class="sandbox-container">
+                    <div class="sandbox-toolbar">
+                        <div class="sandbox-title">
+                            <h3><i class="fa-solid fa-desktop"></i> Generated Application Live Sandbox</h3>
+                            <span id="sandbox-app-name">FinTech AI Copilot Dashboard</span>
+                        </div>
+                        <div class="device-toggles">
+                            <button class="device-btn active" data-device="desktop" title="Desktop View"><i class="fa-solid fa-desktop"></i></button>
+                            <button class="device-btn" data-device="tablet" title="Tablet View"><i class="fa-solid fa-tablet-screen-button"></i></button>
+                            <button class="device-btn" data-device="mobile" title="Mobile View"><i class="fa-solid fa-mobile-screen-button"></i></button>
+                            <button id="btn-refresh-sandbox" class="btn btn-icon" title="Reload Sandbox"><i class="fa-solid fa-arrows-rotate"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Live Frame Container -->
+                    <div class="sandbox-frame-wrapper" id="sandbox-wrapper">
+                        <iframe id="sandbox-iframe" title="Live Generated App Preview" src="about:blank"></iframe>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: ARCHITECTURE & SPEC INSPECTOR -->
+            <section id="tab-architecture" class="tab-content">
+                <div class="architecture-container">
+                    <div class="arch-tabs">
+                        <button class="arch-tab active" data-arch="spec"><i class="fa-solid fa-file-code"></i> Requirements Spec</button>
+                        <button class="arch-tab" data-arch="schema"><i class="fa-solid fa-database"></i> Database Schema (SQL / Prisma)</button>
+                        <button class="arch-tab" data-arch="api"><i class="fa-solid fa-code"></i> API Endpoints (OpenAPI)</button>
+                        <button class="arch-tab" data-arch="components"><i class="fa-solid fa-cubes"></i> Component Tree</button>
+                    </div>
+
+                    <div class="arch-viewer-card">
+                        <div class="viewer-header">
+                            <span id="arch-file-title" class="file-name">requirements_specification.json</span>
+                            <button id="btn-copy-spec" class="btn btn-secondary btn-sm"><i class="fa-solid fa-copy"></i> Copy Code</button>
+                        </div>
+                        <pre class="code-block"><code id="arch-code-content">// Spec loading...</code></pre>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Export Modal -->
+    <div id="export-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-file-export"></i> NativeBuilder Ecosystem Export</h3>
+                <button id="btn-close-modal" class="btn-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p>Your AI-generated application package is ready for deployment in the <strong>NativeBuilder (NativelyAI)</strong> platform.</p>
+
+                <div class="export-options-list">
+                    <div class="export-option-item">
+                        <div class="opt-icon"><i class="fa-solid fa-file-zipper"></i></div>
+                        <div class="opt-details">
+                            <strong>Full Blueprint Bundle (.ZIP)</strong>
+                            <span>Includes Specs, Database Schema, Agents Config & Source Code.</span>
+                        </div>
+                        <button id="btn-dl-zip" class="btn btn-accent btn-sm"><i class="fa-solid fa-download"></i> Download Bundle</button>
+                    </div>
+
+                    <div class="export-option-item">
+                        <div class="opt-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                        <div class="opt-details">
+                            <strong>Direct Push to Natively.builder Project</strong>
+                            <span>API Token Sync & Auto-deploy workflow.</span>
+                        </div>
+                        <button id="btn-push-native" class="btn btn-primary btn-sm"><i class="fa-solid fa-paper-plane"></i> Deploy Project</button>
+                    </div>
+
+                    <div class="export-option-item">
+                        <div class="opt-icon"><i class="fa-solid fa-code"></i></div>
+                        <div class="opt-details">
+                            <strong>Copy Integration Webhook JSON</strong>
+                            <span>Raw JSON schema payload for NativeBuilder Webhooks.</span>
+                        </div>
+                        <button id="btn-copy-json" class="btn btn-secondary btn-sm"><i class="fa-solid fa-copy"></i> Copy JSON</button>
+                    </div>
+                </div>
+
+                <div class="native-code-snippet">
+                    <label>NativeBuilder Manifest Preview:</label>
+                    <pre><code id="modal-json-preview"></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
