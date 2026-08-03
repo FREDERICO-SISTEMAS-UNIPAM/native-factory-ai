@@ -56,10 +56,7 @@ body {
     overflow: hidden;
 }
 
-/* ==========================================================================
-   App Layout Grid
-   ========================================================================== */
-
+/* App Layout Grid */
 .app-grid {
     display: grid;
     grid-template-rows: 64px 1fr;
@@ -71,10 +68,7 @@ body {
     width: 100vw;
 }
 
-/* ==========================================================================
-   Header Bar
-   ========================================================================== */
-
+/* Header Bar */
 .app-header {
     grid-area: header;
     background: var(--bg-header);
@@ -287,10 +281,7 @@ body {
     background: rgba(255, 255, 255, 0.1);
 }
 
-/* ==========================================================================
-   Sidebar Area
-   ========================================================================== */
-
+/* Sidebar Area */
 .app-sidebar {
     grid-area: sidebar;
     background: rgba(11, 17, 29, 0.85);
@@ -460,10 +451,7 @@ body {
     color: var(--text-dim);
 }
 
-/* ==========================================================================
-   Main Workspace Area
-   ========================================================================== */
-
+/* Main Workspace Area */
 .app-main {
     grid-area: main;
     overflow-y: auto;
@@ -957,10 +945,74 @@ iframe#sandbox-iframe {
     line-height: 1.6;
 }
 
-/* ==========================================================================
-   Export Modal
-   ========================================================================== */
+/* TAB 5: PITCH DECK */
+.pitch-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
 
+.pitch-hero {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: var(--radius-xl);
+    padding: 24px 32px;
+    text-align: center;
+}
+
+.pitch-hero h2 {
+    font-family: var(--font-heading);
+    font-size: 26px;
+    margin-bottom: 6px;
+}
+
+.pitch-hero p {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.pitch-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.pitch-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    backdrop-filter: blur(12px);
+}
+
+.pitch-icon {
+    width: 42px;
+    height: 42px;
+    background: rgba(56, 189, 248, 0.1);
+    color: var(--accent-cyan);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.pitch-card h3 {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.pitch-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* Export Modal */
 .modal-overlay {
     position: fixed;
     top: 0;
