@@ -1,7 +1,8 @@
 # 🚀 NativeFactory AI — Autonomous Software Factory for NativeBuilder Ecosystem
 
 > **Lablab.ai Hackathon Submission:** NativeBuilder: Build Without Limits (August 3–10, 2026)  
-> **Target Platform:** NativeBuilder (NativelyAI Ecosystem)
+> **Target Platform:** NativeBuilder (NativelyAI Ecosystem)  
+> **Author & Creator:** [Frederico Alves](https://www.linkedin.com/in/frederico-alves-254226393) | GitHub: [@FREDERICO-SISTEMAS-UNIPAM](https://github.com/FREDERICO-SISTEMAS-UNIPAM)
 
 ---
 
