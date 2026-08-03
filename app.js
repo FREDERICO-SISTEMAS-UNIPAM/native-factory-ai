@@ -1,16 +1,19 @@
 /* ==========================================================================
-   NativeFactory AI — Application Logic & Agent Engine v3.0
+   NativeBuilder AI Ecosystem Suite — Application Engine
+   Apps: 1. NativeFactory AI | 2. OmniInsight AI | 3. CanvasMind AI
+   Author: Frederico Alves
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
     // State Store
     const state = {
+        currentApp: 'factory',
         currentTab: 'studio',
         currentTemplate: 'fintech',
         currentArchView: 'spec',
         isGenerating: false,
         nodes: [],
-        generatedApps: {}
+        revenueChart: null
     };
 
     // Pre-loaded Application Blueprints
@@ -50,254 +53,37 @@ CREATE TABLE transactions (
     category VARCHAR(50) NOT NULL,
     due_date DATE NOT NULL,
     status VARCHAR(20) DEFAULT 'PENDING'
-);
-
-CREATE TABLE ai_predictions (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID REFERENCES users(id),
-    predicted_balance DECIMAL(12,2),
-    confidence_score FLOAT,
-    generated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );`,
-            api: `{
-  "openapi": "3.0.0",
-  "info": {
-    "title": "FinTech AI Copilot API",
-    "version": "1.0.0"
-  },
-  "paths": {
-    "/api/v1/forecast": {
-      "post": {
-        "summary": "Generate AI Cashflow Prediction",
-        "responses": {
-          "200": { "description": "Returns 90-day predicted financial trend" }
-        }
-      }
-    },
-    "/api/v1/invoices/scan": {
-      "post": {
-        "summary": "Scan & Extract Invoice PDF data via OCR Agent",
-        "responses": {
-          "200": { "description": "Structured invoice JSON payload" }
-        }
-      }
-    }
-  }
-}`,
-            components: `AppLayout
-├── Header (Brand, UserProfile, AgentStatus)
-├── AnalyticsOverview (MetricCards, CashflowChart)
-├── InvoiceManager (DataTable, AI RiskBadge, RemindBtn)
-└── AIChatAssistantDrawer (StreamingLLM, ActionExecutor)`,
-            htmlCode: `<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>FinTech AI Copilot</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: #0b0f19; color: #f8fafc; padding: 24px; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
-        .card { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; }
-        .card-val { font-size: 28px; font-weight: 700; margin: 8px 0; color: #38bdf8; }
-        .tag { font-size: 11px; background: rgba(52, 211, 153, 0.15); color: #34d399; padding: 4px 8px; border-radius: 6px; }
-        .ai-banner { background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(168,85,247,0.15)); border: 1px solid #38bdf8; border-radius: 12px; padding: 20px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
-        .btn { background: #38bdf8; color: #000; font-weight: 700; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; }
-        .btn:hover { background: #7dd3fc; }
-        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-        th, td { text-align: left; padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 13px; }
-        th { color: #94a3b8; }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h2><i class="fa-solid fa-chart-pie" style="color:#38bdf8"></i> FinTech AI Copilot</h2>
-        <span class="tag"><i class="fa-solid fa-robot"></i> AI Forecast Agent Active</span>
-    </div>
-
-    <div class="ai-banner">
-        <div>
-            <h3><i class="fa-solid fa-sparkles" style="color:#a855f7"></i> AI Insight Alert</h3>
-            <p style="font-size:13px; color:#cbd5e1; margin-top:4px;">Previsão de entrada de R$ 14.500 nos próximos 15 dias. Recomendado alocar R$ 4.000 em Reserva de Emergência.</p>
-        </div>
-        <button class="btn" onclick="alert('Ação executada com sucesso!')">Executar Ação</button>
-    </div>
-
-    <div class="grid">
-        <div class="card">
-            <span style="color:#94a3b8; font-size:12px;">Saldo Atual</span>
-            <div class="card-val">R$ 42.850,00</div>
-            <span style="color:#34d399; font-size:12px;"><i class="fa-solid fa-arrow-up"></i> +12.4% este mês</span>
-        </div>
-        <div class="card">
-            <span style="color:#94a3b8; font-size:12px;">Fluxo Previsto (30 dias)</span>
-            <div class="card-val">R$ 58.200,00</div>
-            <span style="color:#38bdf8; font-size:12px;"><i class="fa-solid fa-brain"></i> Confiança de 96%</span>
-        </div>
-        <div class="card">
-            <span style="color:#94a3b8; font-size:12px;">Faturas a Receber</span>
-            <div class="card-val">R$ 15.350,00</div>
-            <span style="color:#fb923c; font-size:12px;"><i class="fa-solid fa-triangle-exclamation"></i> 2 em atraso</span>
-        </div>
-    </div>
-
-    <div class="card">
-        <h3><i class="fa-solid fa-list-check"></i> Faturas Recentes & Risco AI</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Cliente</th>
-                    <th>Vencimento</th>
-                    <th>Valor</th>
-                    <th>Status</th>
-                    <th>Ação AI</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Acme Corp Brasil</td>
-                    <td>10/08/2026</td>
-                    <td>R$ 8.500,00</td>
-                    <td><span style="color:#34d399;">Pago</span></td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>Studio Design Ltda</td>
-                    <td>01/08/2026</td>
-                    <td>R$ 4.200,00</td>
-                    <td><span style="color:#fb923c;">Atrasado (2 dias)</span></td>
-                    <td><button class="btn" style="padding:4px 10px; font-size:11px;" onclick="alert('Lembrete WhatsApp enviado via AI Agent!')">Cobrar via WhatsApp</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>`
+            api: `{"openapi": "3.0.0", "info": {"title": "FinTech AI Copilot API", "version": "1.0.0"}}`,
+            components: `AppLayout -> Header -> AnalyticsOverview -> InvoiceManager -> AIChatDrawer`,
+            htmlCode: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>FinTech AI Copilot</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>*{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',sans-serif;}body{background:#0b0f19;color:#f8fafc;padding:24px;}.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.1);}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px;}.card{background:rgba(30,41,59,0.7);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:20px;}.card-val{font-size:28px;font-weight:700;margin:8px 0;color:#38bdf8;}.tag{font-size:11px;background:rgba(52,211,153,0.15);color:#34d399;padding:4px 8px;border-radius:6px;}.ai-banner{background:linear-gradient(135deg,rgba(56,189,248,0.15),rgba(168,85,247,0.15));border:1px solid #38bdf8;border-radius:12px;padding:20px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;}.btn{background:#38bdf8;color:#000;font-weight:700;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;}</style></head><body><div class="header"><h2><i class="fa-solid fa-chart-pie" style="color:#38bdf8"></i> FinTech AI Copilot</h2><span class="tag"><i class="fa-solid fa-robot"></i> AI Forecast Agent Active</span></div><div class="ai-banner"><div><h3><i class="fa-solid fa-sparkles" style="color:#a855f7"></i> AI Insight Alert</h3><p style="font-size:13px;color:#cbd5e1;margin-top:4px;">Previsão de entrada de R$ 14.500 nos próximos 15 dias.</p></div><button class="btn" onclick="alert('Ação executada!')">Executar Ação</button></div><div class="grid"><div class="card"><span style="color:#94a3b8;font-size:12px;">Saldo Atual</span><div class="card-val">R$ 42.850,00</div></div><div class="card"><span style="color:#94a3b8;font-size:12px;">Fluxo Previsto</span><div class="card-val">R$ 58.200,00</div></div><div class="card"><span style="color:#94a3b8;font-size:12px;">Faturas a Receber</span><div class="card-val">R$ 15.350,00</div></div></div></body></html>`
         },
         saas: {
             title: "Workflow Automator SaaS",
-            prompt: "Plataforma de automação de fluxos estilo Zapier / n8n onde agentes autônomos escutam webhooks, processam dados com LLM e disparam chamadas de API externas.",
-            spec: {
-                projectName: "Workflow Automator SaaS",
-                version: "1.8.2",
-                targetFramework: "NativeBuilder Engine",
-                architecture: "Event-Driven Async Workers",
-                database: "Redis Queue + Supabase DB"
-            },
-            schema: `CREATE TABLE workflows (
-    id UUID PRIMARY KEY,
-    title VARCHAR(100),
-    trigger_type VARCHAR(50),
-    active_agents INTEGER DEFAULT 1
-);`,
-            api: `{"endpoints": ["/api/v1/trigger", "/api/v1/agents/run"]}`,
-            components: `WorkflowCanvas -> NodeCard -> TriggerSocket -> AgentAction`,
-            htmlCode: `<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Workflow Automator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { background: #090d16; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; padding: 24px; }
-        .node-box { background: rgba(30,41,59,0.8); border: 1px solid #38bdf8; border-radius: 12px; padding: 16px; margin-bottom: 16px; width: 300px; }
-        .node-title { font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
-        .btn-run { background: #a855f7; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight:700; cursor:pointer; }
-    </style>
-</head>
-<body>
-    <h2><i class="fa-solid fa-diagram-next" style="color:#a855f7"></i> Live Workflow Engine</h2>
-    <p style="color:#94a3b8; margin-bottom:20px;">Orquestração de Agentes Autônomos em Tempo Real</p>
-
-    <div class="node-box">
-        <div class="node-title"><i class="fa-solid fa-bolt"></i> Trigger: Webhook Inbound</div>
-        <p style="font-size:12px; color:#cbd5e1; margin-top:6px;">Escutando evento: <code>order.created</code></p>
-    </div>
-    <div style="margin-left: 40px; border-left: 2px dashed #a855f7; height: 30px;"></div>
-    <div class="node-box">
-        <div class="node-title"><i class="fa-solid fa-brain"></i> AI Agent: Summarizer</div>
-        <p style="font-size:12px; color:#cbd5e1; margin-top:6px;">Processando payload com Gemini 3.6</p>
-    </div>
-
-    <button class="btn-run" onclick="alert('Fluxo executado com sucesso!')"><i class="fa-solid fa-play"></i> Testar Execução</button>
-</body>
-</html>`
+            prompt: "Plataforma de automação de fluxos estilo Zapier / n8n com agentes autônomos e webhooks.",
+            spec: { projectName: "Workflow Automator SaaS", version: "1.8.2" },
+            schema: `CREATE TABLE workflows ( id UUID PRIMARY KEY, title VARCHAR(100) );`,
+            api: `{"endpoints": ["/api/v1/trigger"]}`,
+            components: `WorkflowCanvas -> NodeCard -> TriggerSocket`,
+            htmlCode: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Workflow Engine</title><style>body{background:#090d16;color:#fff;font-family:sans-serif;padding:24px;}.box{background:#1e293b;padding:16px;border-radius:8px;border:1px solid #38bdf8;}</style></head><body><h2><i class="fa-solid fa-diagram-next"></i> Workflow Automator</h2><div class="box"><h4 style="color:#38bdf8">Trigger: Webhook Inbound</h4><p style="font-size:12px;color:#94a3b8;">Status: Active</p></div></body></html>`
         },
         ecommerce: {
             title: "Hyper-Personalized Store",
-            prompt: "E-Commerce com IA nativa que recomenda produtos personalizados em tempo real com base no comportamento do usuário e checkout simplificado Pix.",
+            prompt: "E-Commerce com IA nativa e recomendação em tempo real.",
             spec: { projectName: "Hyper-Personalized Store", version: "3.1.0" },
-            schema: `CREATE TABLE products ( id UUID PRIMARY KEY, name VARCHAR(255), price DECIMAL(10,2) );`,
+            schema: `CREATE TABLE products ( id UUID PRIMARY KEY, name VARCHAR(255) );`,
             api: `{"endpoints": ["/api/v1/recommendations"]}`,
-            components: `StoreLayout -> HeroBanner -> ProductGrid -> AICartDrawer`,
-            htmlCode: `<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>AI Storefront</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { background: #0f172a; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; padding: 24px; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top:20px; }
-        .card { background: #1e293b; border-radius: 12px; padding: 16px; border: 1px solid rgba(255,255,255,0.1); }
-        .price { font-size: 20px; font-weight:700; color:#34d399; margin: 8px 0; }
-        .buy-btn { background: #34d399; color: #000; font-weight: 700; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; width: 100%; }
-    </style>
-</head>
-<body>
-    <h2><i class="fa-solid fa-bag-shopping" style="color:#34d399"></i> AI Storefront</h2>
-    <p style="color:#94a3b8;">Recomendações em tempo real alimentadas por NativeBuilder AI</p>
-
-    <div class="grid">
-        <div class="card">
-            <h3>Headset Wireless Pro AI</h3>
-            <p style="font-size:12px; color:#94a3b8;">Recomendado para o seu perfil de produtor de áudio</p>
-            <div class="price">R$ 899,00</div>
-            <button class="buy-btn" onclick="alert('Item adicionado ao carrinho com desconto AI!')">Comprar Agora</button>
-        </div>
-        <div class="card">
-            <h3>Teclado Mecânico Ergostep</h3>
-            <p style="font-size:12px; color:#94a3b8;">98% de afinidade com suas compras recentes</p>
-            <div class="price">R$ 549,00</div>
-            <button class="buy-btn" onclick="alert('Item adicionado ao carrinho!')">Comprar Agora</button>
-        </div>
-    </div>
-</body>
-</html>`
+            components: `StoreLayout -> HeroBanner -> ProductGrid`,
+            htmlCode: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>AI Storefront</title><style>body{background:#0f172a;color:#fff;font-family:sans-serif;padding:24px;}.card{background:#1e293b;padding:16px;border-radius:8px;}</style></head><body><h2>AI Storefront</h2><div class="card"><h3>Headset Wireless Pro AI</h3><p style="color:#34d399;font-weight:bold;">R$ 899,00</p></div></body></html>`
         },
         health: {
             title: "HealthTech Diagnostic Hub",
-            prompt: "Plataforma de triagem médica e acompanhamento de pacientes com agente de IA em conformidade com a LGPD e agendamento automático.",
+            prompt: "Plataforma de triagem médica com assistente de IA.",
             spec: { projectName: "HealthTech Diagnostic Hub", version: "1.0.0" },
-            schema: `CREATE TABLE appointments ( id UUID PRIMARY KEY, patient_name VARCHAR(255) );`,
+            schema: `CREATE TABLE appointments ( id UUID PRIMARY KEY );`,
             api: `{"endpoints": ["/api/v1/triage"]}`,
-            components: `HealthDashboard -> SymptomChecker -> AppointmentCalendar`,
-            htmlCode: `<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>HealthTech Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { background: #090d16; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; padding: 24px; }
-        .box { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #f472b6; }
-    </style>
-</head>
-<body>
-    <h2><i class="fa-solid fa-heart-pulse" style="color:#f472b6"></i> HealthTech AI Triage</h2>
-    <div class="box" style="margin-top:20px;">
-        <h3>Triagem Médica Assistida</h3>
-        <p style="font-size:13px; color:#cbd5e1; margin-top:8px;">O assistente de IA identificou baixa prioridade. Recomendado agendamento de teleconsulta.</p>
-        <button style="background:#f472b6; color:#000; font-weight:700; border:none; padding:10px 18px; border-radius:8px; margin-top:12px; cursor:pointer;" onclick="alert('Teleconsulta agendada!')">Agendar Teleconsulta</button>
-    </div>
-</body>
-</html>`
+            components: `HealthDashboard -> SymptomChecker`,
+            htmlCode: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>HealthTech Hub</title><style>body{background:#090d16;color:#fff;font-family:sans-serif;padding:24px;}</style></head><body><h2>HealthTech AI Triage</h2></body></html>`
         }
     };
 
@@ -320,21 +106,37 @@ CREATE TABLE ai_predictions (
 
     // Event Binds
     function bindEvents() {
-        // Tab Navigation
-        document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.addEventListener('click', (e) => {
-                const target = tab.dataset.tab;
-                switchTab(target);
+        // Product Switcher (Factory vs OmniInsight vs CanvasMind)
+        document.querySelectorAll('.product-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const appTarget = btn.dataset.app;
+                switchApp(appTarget);
             });
         });
 
-        // Template Card Click
-        document.querySelectorAll('.template-card').forEach(card => {
+        document.querySelectorAll('.template-card[data-app-select]').forEach(card => {
             card.addEventListener('click', () => {
-                const tKey = card.dataset.template;
-                document.querySelectorAll('.template-card').forEach(c => c.classList.remove('active'));
-                card.classList.add('active');
-                loadTemplate(tKey);
+                const appTarget = card.dataset.appSelect;
+                switchApp(appTarget);
+            });
+        });
+
+        // Sub Navigation Items
+        document.querySelectorAll('.sub-nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const targetTab = item.dataset.tab;
+                document.querySelectorAll('.sub-nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                // Find active app view
+                const activeAppView = document.querySelector('.app-view.active');
+                activeAppView.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                const targetContent = activeAppView.querySelector(`#tab-${targetTab}`);
+                if (targetContent) targetContent.classList.add('active');
+
+                if (targetTab === 'sandbox') renderSandbox();
+                if (targetTab === 'architecture') renderArchView();
+                if (targetTab === 'pipeline') renderNodes();
             });
         });
 
@@ -353,6 +155,41 @@ CREATE TABLE ai_predictions (
             });
         }
 
+        // OmniInsight Natural Language Query
+        const btnRunQuery = document.getElementById('btn-run-query');
+        if (btnRunQuery) {
+            btnRunQuery.addEventListener('click', () => {
+                const queryText = document.getElementById('query-input').value || "Qual a previsão de receita?";
+                const outputCard = document.getElementById('query-output-card');
+                const outputText = document.getElementById('query-output-text');
+
+                outputCard.classList.remove('hidden');
+                outputText.innerText = `[PROCESSED BY OMNIINSIGHT AI] Análise gerada para: "${queryText}":\n\n- Previsão de Crescimento Q3: +24.5%\n- Risco de Churn Identificado: 3 clientes com baixa retenção no segmento SaaS.\n- Recomendação Autônoma: Disparar fluxo de reengajamento via NativeBuilder Webhook.`;
+            });
+        }
+
+        // CanvasMind Spatial Card Generator
+        const btnCmAddCard = document.getElementById('btn-cm-add-card');
+        if (btnCmAddCard) {
+            btnCmAddCard.addEventListener('click', () => {
+                const workspace = document.getElementById('spatial-workspace');
+                const card = document.createElement('div');
+                card.className = 'spatial-card';
+                card.style.left = `${100 + Math.random() * 300}px`;
+                card.style.top = `${100 + Math.random() * 200}px`;
+                card.innerHTML = `
+                    <div class="sp-header"><i class="fa-solid fa-cubes"></i> Dynamic UI Block</div>
+                    <div class="sp-body">
+                        <div class="sp-mockup glow">
+                            <span class="sp-badge">AI Component</span>
+                            <p style="font-size:11px; color:#cbd5e1;">Componente sintetizado com tokens Dark Mode WCAG AAA.</p>
+                        </div>
+                    </div>
+                `;
+                workspace.appendChild(card);
+            });
+        }
+
         // Architecture Sub-Tabs
         document.querySelectorAll('.arch-tab').forEach(tab => {
             tab.addEventListener('click', () => {
@@ -361,22 +198,6 @@ CREATE TABLE ai_predictions (
                 state.currentArchView = tab.dataset.arch;
                 renderArchView();
             });
-        });
-
-        // Device Toggle Buttons in Sandbox
-        document.querySelectorAll('.device-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const device = btn.dataset.device;
-                const wrapper = document.getElementById('sandbox-wrapper');
-                wrapper.className = `sandbox-frame-wrapper ${device}`;
-            });
-        });
-
-        // Refresh Sandbox Button
-        document.getElementById('btn-refresh-sandbox').addEventListener('click', () => {
-            renderSandbox();
         });
 
         // Export Modal Events
@@ -394,7 +215,7 @@ CREATE TABLE ai_predictions (
         document.getElementById('btn-copy-json').addEventListener('click', () => {
             const code = document.getElementById('modal-json-preview').innerText;
             navigator.clipboard.writeText(code);
-            alert('📋 Manifest JSON copiado para a área de transferência!');
+            alert('📋 Manifest JSON copiado!');
         });
 
         document.getElementById('btn-copy-spec').addEventListener('click', () => {
@@ -402,50 +223,67 @@ CREATE TABLE ai_predictions (
             navigator.clipboard.writeText(code);
             alert('📋 Código copiado!');
         });
-
-        // Canvas Toolbar Buttons
-        document.getElementById('btn-add-agent').addEventListener('click', () => {
-            const customTitle = prompt("Nome do Novo Agente:", "Custom Security Agent");
-            if (customTitle) {
-                const newNode = {
-                    id: `node-${Date.now()}`,
-                    title: customTitle,
-                    role: 'Custom Workflow Agent',
-                    icon: 'fa-robot',
-                    x: 400 + Math.random() * 200,
-                    y: 150 + Math.random() * 100
-                };
-                state.nodes.push(newNode);
-                renderNodes();
-            }
-        });
-
-        document.getElementById('btn-run-canvas').addEventListener('click', () => {
-            simulateCanvasExecution();
-        });
-
-        document.getElementById('btn-reset-canvas').addEventListener('click', () => {
-            state.nodes = [...INITIAL_NODES];
-            renderNodes();
-        });
     }
 
-    // Switch Tabs
-    function switchTab(tabKey) {
-        state.currentTab = tabKey;
-        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-        document.querySelector(`.nav-tab[data-tab="${tabKey}"]`).classList.add('active');
+    // Switch Main App View
+    function switchApp(appKey) {
+        state.currentApp = appKey;
 
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        document.getElementById(`tab-${tabKey}`).classList.add('active');
+        document.querySelectorAll('.product-btn').forEach(b => b.classList.remove('active'));
+        const activeBtn = document.querySelector(`.product-btn[data-app="${appKey}"]`);
+        if (activeBtn) activeBtn.classList.add('active');
 
-        if (tabKey === 'sandbox') {
-            renderSandbox();
-        } else if (tabKey === 'architecture') {
-            renderArchView();
-        } else if (tabKey === 'pipeline') {
-            renderNodes();
+        document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+        document.getElementById(`app-view-${appKey}`).classList.add('active');
+
+        document.querySelectorAll('.sub-nav-group').forEach(g => g.classList.remove('active'));
+        document.getElementById(`sub-nav-${appKey}`).classList.add('active');
+
+        if (appKey === 'omni') {
+            setTimeout(initRevenueChart, 200);
         }
+    }
+
+    // Initialize Chart.js for OmniInsight AI
+    function initRevenueChart() {
+        const ctx = document.getElementById('chart-revenue');
+        if (!ctx || state.revenueChart) return;
+
+        state.revenueChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul (AI Forecast)', 'Ago (AI Forecast)'],
+                datasets: [
+                    {
+                        label: 'Receita Realizada (R$)',
+                        data: [65000, 72000, 84000, 91000, 105000, 128450, null, null],
+                        borderColor: '#38bdf8',
+                        backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Previsão AI OmniInsight (R$)',
+                        data: [null, null, null, null, null, 128450, 145000, 168000],
+                        borderColor: '#a855f7',
+                        borderDash: [5, 5],
+                        backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8', font: { family: 'Plus Jakarta Sans' } } }
+                },
+                scales: {
+                    x: { ticks: { color: '#64748b' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    y: { ticks: { color: '#64748b' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                }
+            }
+        });
     }
 
     // Load Template Data
@@ -463,6 +301,7 @@ CREATE TABLE ai_predictions (
     // Log to Telemetry Terminal
     function appendLog(message, type = 'info') {
         const terminal = document.getElementById('terminal-logs');
+        if (!terminal) return;
         const line = document.createElement('div');
         line.className = `log-line ${type}`;
 
@@ -472,7 +311,7 @@ CREATE TABLE ai_predictions (
         terminal.scrollTop = terminal.scrollHeight;
     }
 
-    // Pipeline Execution Engine (Simulated Multi-Agent Pipeline)
+    // Pipeline Execution Engine
     function launchFactoryPipeline() {
         if (state.isGenerating) return;
         state.isGenerating = true;
@@ -484,55 +323,21 @@ CREATE TABLE ai_predictions (
         const promptText = document.getElementById('prompt-input').value;
         appendLog(`[PROMPT] Received factory request: "${promptText.substring(0, 60)}..."`, 'info');
 
-        // Step 1: Spec Agent
-        setRosterState('roster-spec', 'working');
-        appendLog('[Spec Analyst Agent] Analyzing requirements & generating OpenAPI blueprint...', 'agent');
-
         setTimeout(() => {
-            setRosterState('roster-spec', 'active');
-            setRosterState('roster-ux', 'working');
-            appendLog('[UI/UX Architect Agent] Synthesizing glassmorphism design tokens & layout graph...', 'agent');
-
+            appendLog('[Spec Analyst Agent] Generating OpenAPI blueprint...', 'agent');
             setTimeout(() => {
-                setRosterState('roster-ux', 'active');
-                setRosterState('roster-dev', 'working');
-                appendLog('[Frontend/Backend Dev] Compiling HTML5 / CSS3 / JS components for NativeBuilder live sandbox...', 'agent');
-
+                appendLog('[UI/UX Architect Agent] Synthesizing glassmorphism design tokens...', 'agent');
                 setTimeout(() => {
-                    setRosterState('roster-dev', 'active');
-                    setRosterState('roster-qa', 'working');
-                    appendLog('[QA & Security Inspector] Running zero-vulnerability audit & AST linter... PASS 100%', 'success');
-
+                    appendLog('[QA & Security Inspector] Vulnerability audit... PASS 100%', 'success');
                     setTimeout(() => {
-                        setRosterState('roster-qa', 'active');
-                        setRosterState('roster-native', 'working');
-                        appendLog('[NativeBuilder Publisher] Packaging ZIP manifest & establishing Natively.builder webhook sync...', 'agent');
-
-                        setTimeout(() => {
-                            setRosterState('roster-native', 'active');
-                            statusChip.className = 'status-chip done';
-                            statusChip.innerText = 'Completed';
-                            appendLog('🎉 [FACTORY SUCCESS] Software synthesis completed! Preview ready in Live App Sandbox.', 'success');
-                            state.isGenerating = false;
-
-                            // Auto switch to Sandbox after 1s
-                            setTimeout(() => {
-                                switchTab('sandbox');
-                            }, 800);
-
-                        }, 900);
-                    }, 900);
-                }, 900);
-            }, 900);
-        }, 900);
-    }
-
-    function setRosterState(rosterId, statusType) {
-        const item = document.getElementById(rosterId);
-        if (!item) return;
-        const statusSpan = item.querySelector('.roster-status');
-        statusSpan.className = `roster-status ${statusType}`;
-        if (statusType === 'active') item.classList.add('active');
+                        statusChip.className = 'status-chip done';
+                        statusChip.innerText = 'Completed';
+                        appendLog('🎉 [FACTORY SUCCESS] Multi-agent synthesis completed!', 'success');
+                        state.isGenerating = false;
+                    }, 800);
+                }, 800);
+            }, 800);
+        }, 800);
     }
 
     // Render Sandbox Iframe
@@ -541,6 +346,7 @@ CREATE TABLE ai_predictions (
         if (!data) return;
 
         const iframe = document.getElementById('sandbox-iframe');
+        if (!iframe) return;
         const doc = iframe.contentDocument || iframe.contentWindow.document;
         doc.open();
         doc.write(data.htmlCode);
@@ -554,6 +360,7 @@ CREATE TABLE ai_predictions (
 
         const titleEl = document.getElementById('arch-file-title');
         const codeEl = document.getElementById('arch-code-content');
+        if (!titleEl || !codeEl) return;
 
         if (state.currentArchView === 'spec') {
             titleEl.innerText = 'requirements_specification.json';
@@ -574,10 +381,11 @@ CREATE TABLE ai_predictions (
     function renderNodes() {
         const container = document.getElementById('nodes-container');
         const svg = document.getElementById('canvas-connections');
+        if (!container || !svg) return;
         container.innerHTML = '';
         svg.innerHTML = '';
 
-        state.nodes.forEach((node, idx) => {
+        state.nodes.forEach((node) => {
             const el = document.createElement('div');
             el.className = 'agent-node';
             el.style.left = `${node.x}px`;
@@ -591,83 +399,9 @@ CREATE TABLE ai_predictions (
                         <div class="node-role">${node.role}</div>
                     </div>
                 </div>
-                <div class="node-ports">
-                    <span class="port-dot"></span>
-                    <span class="port-dot"></span>
-                </div>
             `;
 
-            // Simple Drag & Drop
-            let isDragging = false;
-            let startX, startY, initialX, initialY;
-
-            el.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                startX = e.clientX;
-                startY = e.clientY;
-                initialX = node.x;
-                initialY = node.y;
-            });
-
-            window.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                const dx = e.clientX - startX;
-                const dy = e.clientY - startY;
-                node.x = initialX + dx;
-                node.y = initialY + dy;
-                el.style.left = `${node.x}px`;
-                el.style.top = `${node.y}px`;
-                drawConnections();
-            });
-
-            window.addEventListener('mouseup', () => {
-                isDragging = false;
-            });
-
             container.appendChild(el);
-        });
-
-        drawConnections();
-    }
-
-    // Draw SVG Connector Lines between Nodes
-    function drawConnections() {
-        const svg = document.getElementById('canvas-connections');
-        svg.innerHTML = '';
-
-        for (let i = 0; i < state.nodes.length - 1; i++) {
-            const source = state.nodes[i];
-            const target = state.nodes[i + 1];
-
-            const x1 = source.x + 220;
-            const y1 = source.y + 40;
-            const x2 = target.x;
-            const y2 = target.y + 40;
-
-            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            const dx = (x2 - x1) * 0.5;
-            const d = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
-
-            path.setAttribute('d', d);
-            path.setAttribute('stroke', '#38bdf8');
-            path.setAttribute('stroke-width', '2');
-            path.setAttribute('fill', 'none');
-            path.setAttribute('stroke-dasharray', '4 4');
-
-            svg.appendChild(path);
-        }
-    }
-
-    // Canvas Execution Animation
-    function simulateCanvasExecution() {
-        const nodesEls = document.querySelectorAll('.agent-node');
-        nodesEls.forEach((el, idx) => {
-            setTimeout(() => {
-                el.classList.add('active-exec');
-                setTimeout(() => {
-                    el.classList.remove('active-exec');
-                }, 800);
-            }, idx * 600);
         });
     }
 
@@ -677,13 +411,11 @@ CREATE TABLE ai_predictions (
         const jsonPreview = document.getElementById('modal-json-preview');
         
         const manifest = {
-            appName: TEMPLATES[state.currentTemplate].title,
+            suiteName: "NativeBuilder 3-in-1 AI Ecosystem",
             creator: "Frederico Alves",
-            ecosystemTarget: "NativeBuilder / NativelyAI",
+            applications: ["NativeFactory AI", "OmniInsight AI", "CanvasMind AI"],
             exportTimestamp: new Date().toISOString(),
-            vercelUrl: "https://gallant-borg.vercel.app",
-            connectors: ["PostgreSQL", "WhatsApp API", "OpenAI / Gemini"],
-            nativeBuilderSpecVersion: "2026.3.0"
+            vercelUrl: "https://gallant-borg.vercel.app"
         };
 
         jsonPreview.innerText = JSON.stringify(manifest, null, 2);

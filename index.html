@@ -3,53 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NativeFactory AI — Autonomous Software Factory for NativeBuilder</title>
-    <meta name="description" content="AI-Native Autonomous Software Factory & Workflow Engine built for the NativelyAI / NativeBuilder ecosystem.">
+    <title>NativeBuilder AI Suite — 3-in-1 Ecosystem by Frederico Alves</title>
+    <meta name="description" content="Complete 3-in-1 AI-Native Ecosystem for NativeBuilder: NativeFactory AI, OmniInsight AI, and CanvasMind AI.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for OmniInsight AI -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="index.css">
 </head>
 <body class="dark-theme">
     <!-- App Container -->
     <div id="app" class="app-grid">
         
-        <!-- Header Bar -->
+        <!-- Header Bar with 3-in-1 App Launcher -->
         <header class="app-header">
             <div class="brand-container">
                 <div class="brand-icon">
-                    <i class="fa-solid fa-cube"></i>
+                    <i class="fa-solid fa-cubes-stacked"></i>
                 </div>
                 <div class="brand-text">
-                    <h1>NativeFactory <span class="badge-tag">AI v3.0</span></h1>
-                    <span class="brand-sub">NativeBuilder Ecosystem Engine • Frederico Alves Edition</span>
+                    <h1>NativeBuilder <span class="badge-tag">Ecosystem Suite</span></h1>
+                    <span class="brand-sub">Frederico Alves • 3-in-1 Hackathon Winner Collection</span>
                 </div>
             </div>
 
-            <!-- Navigation Tabs -->
-            <nav class="nav-tabs">
-                <button class="nav-tab active" data-tab="studio">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI Studio & Prompt
+            <!-- Top Level Product Switcher -->
+            <div class="product-switcher">
+                <button class="product-btn active" data-app="factory">
+                    <i class="fa-solid fa-cube"></i> 1. NativeFactory AI
                 </button>
-                <button class="nav-tab" data-tab="pipeline">
-                    <i class="fa-solid fa-diagram-project"></i> Agent Pipeline Canvas
+                <button class="product-btn" data-app="omni">
+                    <i class="fa-solid fa-chart-pie"></i> 2. OmniInsight AI
                 </button>
-                <button class="nav-tab" data-tab="sandbox">
-                    <i class="fa-solid fa-desktop"></i> Live App Sandbox
+                <button class="product-btn" data-app="canvas">
+                    <i class="fa-solid fa-paintbrush"></i> 3. CanvasMind AI
                 </button>
-                <button class="nav-tab" data-tab="architecture">
-                    <i class="fa-solid fa-network-wired"></i> Architecture & ERD
-                </button>
-                <button class="nav-tab" data-tab="testing">
-                    <i class="fa-solid fa-vial-circle-check"></i> Test Suite Runner
-                </button>
-                <button class="nav-tab" data-tab="pitch">
-                    <i class="fa-solid fa-trophy"></i> Pitch Deck & Submission
-                </button>
-            </nav>
+            </div>
 
             <!-- Top Actions -->
             <div class="header-actions">
@@ -66,92 +59,61 @@
         <!-- Sidebar / Template Selector -->
         <aside class="app-sidebar">
             <div class="sidebar-section">
-                <h3><i class="fa-solid fa-layer-group"></i> Quick Templates</h3>
-                <p class="sidebar-help">Select a pre-configured AI factory blueprint:</p>
+                <h3><i class="fa-solid fa-layer-group"></i> Active Application Suite</h3>
+                <p class="sidebar-help">Switch between the 3 hackathon products:</p>
 
                 <div class="template-cards">
-                    <div class="template-card active" data-template="fintech">
-                        <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <div class="template-card active" data-app-select="factory">
+                        <div class="card-icon"><i class="fa-solid fa-cube"></i></div>
                         <div class="card-info">
-                            <h4>FinTech AI Copilot</h4>
-                            <p>Real-time analytics, predictive cashflow & automated reports.</p>
-                            <span class="tech-tag">Fintech • LLM • Charts</span>
+                            <h4>NativeFactory AI</h4>
+                            <p>Autonomous Software Factory & Multi-Agent Engine.</p>
+                            <span class="tech-tag">Software Factory • Agents</span>
                         </div>
                     </div>
 
-                    <div class="template-card" data-template="saas">
-                        <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+                    <div class="template-card" data-app-select="omni">
+                        <div class="card-icon"><i class="fa-solid fa-chart-pie"></i></div>
                         <div class="card-info">
-                            <h4>Workflow Automator SaaS</h4>
-                            <p>Multi-agent trigger engine with webhook integrations.</p>
-                            <span class="tech-tag">SaaS • Multi-Agent • Webhooks</span>
+                            <h4>OmniInsight AI</h4>
+                            <p>Real-Time BI Analytics & Autonomous Action Hub.</p>
+                            <span class="tech-tag">BI Analytics • Action Trigger</span>
                         </div>
                     </div>
 
-                    <div class="template-card" data-template="ecommerce">
-                        <div class="card-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+                    <div class="template-card" data-app-select="canvas">
+                        <div class="card-icon"><i class="fa-solid fa-paintbrush"></i></div>
                         <div class="card-info">
-                            <h4>Hyper-Personalized Store</h4>
-                            <p>AI product recommendations with instant checkout.</p>
-                            <span class="tech-tag">E-Commerce • AI Recs • Checkout</span>
-                        </div>
-                    </div>
-
-                    <div class="template-card" data-template="health">
-                        <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
-                        <div class="card-info">
-                            <h4>HealthTech Diagnostic Hub</h4>
-                            <p>Symptom triage assistant & patient dashboard.</p>
-                            <span class="tech-tag">HealthTech • Triage • Security</span>
+                            <h4>CanvasMind AI</h4>
+                            <p>Infinite Spatial UI Canvas & UX Product Copilot.</p>
+                            <span class="tech-tag">Spatial UI • Component Generator</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Agent Roster Panel -->
+            <!-- Sub Navigation for Active App -->
             <div class="sidebar-section">
-                <h3><i class="fa-solid fa-users-gear"></i> Active Agent Roster</h3>
-                <div class="agent-roster">
-                    <div class="roster-item active" id="roster-spec">
-                        <span class="roster-status active"></span>
-                        <div class="roster-icon"><i class="fa-solid fa-brain"></i></div>
-                        <div class="roster-details">
-                            <strong>Spec Analyst Agent</strong>
-                            <span>Requirements & Blueprint</span>
-                        </div>
-                    </div>
-                    <div class="roster-item" id="roster-ux">
-                        <span class="roster-status"></span>
-                        <div class="roster-icon"><i class="fa-solid fa-palette"></i></div>
-                        <div class="roster-details">
-                            <strong>UI/UX Architect Agent</strong>
-                            <span>Design System & Layout</span>
-                        </div>
-                    </div>
-                    <div class="roster-item" id="roster-dev">
-                        <span class="roster-status"></span>
-                        <div class="roster-icon"><i class="fa-solid fa-code"></i></div>
-                        <div class="roster-details">
-                            <strong>Frontend/Backend Dev</strong>
-                            <span>Code Synthesis Engine</span>
-                        </div>
-                    </div>
-                    <div class="roster-item" id="roster-qa">
-                        <span class="roster-status"></span>
-                        <div class="roster-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                        <div class="roster-details">
-                            <strong>QA & Security Inspector</strong>
-                            <span>Linter & Security Scan</span>
-                        </div>
-                    </div>
-                    <div class="roster-item" id="roster-native">
-                        <span class="roster-status"></span>
-                        <div class="roster-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-                        <div class="roster-details">
-                            <strong>NativeBuilder Publisher</strong>
-                            <span>Deployment Engine</span>
-                        </div>
-                    </div>
+                <h3><i class="fa-solid fa-list-check"></i> Module Navigation</h3>
+                <div id="sub-nav-factory" class="sub-nav-group active">
+                    <button class="sub-nav-item active" data-tab="studio"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Studio & Prompt</button>
+                    <button class="sub-nav-item" data-tab="pipeline"><i class="fa-solid fa-diagram-project"></i> Agent Pipeline Canvas</button>
+                    <button class="sub-nav-item" data-tab="sandbox"><i class="fa-solid fa-desktop"></i> Live App Sandbox</button>
+                    <button class="sub-nav-item" data-tab="architecture"><i class="fa-solid fa-network-wired"></i> Architecture & Spec</button>
+                    <button class="sub-nav-item" data-tab="testing"><i class="fa-solid fa-vial-circle-check"></i> Test Suite Runner</button>
+                    <button class="sub-nav-item" data-tab="pitch"><i class="fa-solid fa-trophy"></i> Pitch Deck</button>
+                </div>
+
+                <div id="sub-nav-omni" class="sub-nav-group">
+                    <button class="sub-nav-item active" data-tab="bi-dashboard"><i class="fa-solid fa-chart-column"></i> BI Analytics Dashboard</button>
+                    <button class="sub-nav-item" data-tab="bi-queries"><i class="fa-solid fa-brain"></i> Natural Language AI Queries</button>
+                    <button class="sub-nav-item" data-tab="bi-actions"><i class="fa-solid fa-bolt"></i> Autonomous Action Hub</button>
+                </div>
+
+                <div id="sub-nav-canvas" class="sub-nav-group">
+                    <button class="sub-nav-item active" data-tab="spatial-canvas"><i class="fa-solid fa-compass-drafting"></i> Infinite Spatial Canvas</button>
+                    <button class="sub-nav-item" data-tab="ui-library"><i class="fa-solid fa-boxes-stacked"></i> AI Component Library</button>
+                    <button class="sub-nav-item" data-tab="ux-auditor"><i class="fa-solid fa-eye"></i> Accessibility & UX Inspector</button>
                 </div>
             </div>
         </aside>
@@ -159,242 +121,380 @@
         <!-- Main Workspace Area -->
         <main class="app-main">
 
-            <!-- TAB 1: STUDIO & PROMPT -->
-            <section id="tab-studio" class="tab-content active">
-                <div class="studio-container">
-                    
-                    <!-- Hero Banner -->
-                    <div class="studio-hero">
-                        <div class="hero-text">
-                            <h2>Building software at the speed of thought.</h2>
-                            <p>Describe your app idea. NativeFactory AI will generate full architecture specifications, multi-agent workflows, code components, automated test suites, and a live working prototype ready for NativeBuilder.</p>
-                        </div>
-                        <div class="hero-tags">
-                            <span><i class="fa-solid fa-check"></i> Zero Code Lock-in</span>
-                            <span><i class="fa-solid fa-check"></i> NativeBuilder Ready</span>
-                            <span><i class="fa-solid fa-check"></i> Full Stack Blueprint</span>
-                        </div>
-                    </div>
+            <!-- ===================================================================
+                 APP 1: NATIVEFACTORY AI
+                 =================================================================== -->
+            <div id="app-view-factory" class="app-view active">
 
-                    <!-- Prompt Box -->
-                    <div class="prompt-card">
-                        <div class="prompt-header">
-                            <label for="prompt-input"><i class="fa-solid fa-terminal"></i> Enter Application Vision / Requirements:</label>
-                            <span class="ai-mode"><i class="fa-solid fa-bolt"></i> Gemini 3.6 & Natively Agentic Engine</span>
-                        </div>
-                        <textarea id="prompt-input" rows="4" placeholder="Ex: Crie um SaaS de gestão financeira para freelancers com IA que prevê fluxo de caixa, emite boletos via Pix e envia alertas automáticos no WhatsApp..."></textarea>
-                        
-                        <div class="prompt-footer">
-                            <div class="prompt-options">
-                                <label class="chip-option active" id="chip-ui">
-                                    <input type="checkbox" checked hidden> <i class="fa-solid fa-paintbrush"></i> Auto UI Design
-                                </label>
-                                <label class="chip-option active" id="chip-db">
-                                    <input type="checkbox" checked hidden> <i class="fa-solid fa-database"></i> Auto DB Schema
-                                </label>
-                                <label class="chip-option active" id="chip-native">
-                                    <input type="checkbox" checked hidden> <i class="fa-solid fa-plug"></i> NativeBuilder Connectors
-                                </label>
+                <!-- TAB 1: STUDIO & PROMPT -->
+                <section id="tab-studio" class="tab-content active">
+                    <div class="studio-container">
+                        <div class="studio-hero">
+                            <div class="hero-text">
+                                <h2>1. NativeFactory AI — Autonomous Software Factory</h2>
+                                <p>Describe your app idea. NativeFactory AI generates architecture specs, multi-agent workflows, code components, and a live working prototype ready for NativeBuilder.</p>
                             </div>
-                            <button id="btn-generate" class="btn btn-accent btn-large">
-                                <i class="fa-solid fa-rocket"></i> Launch Factory Pipeline
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Telemetry Stats Cards -->
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <span class="stat-label"><i class="fa-solid fa-microchip"></i> Agent Latency</span>
-                            <span class="stat-value" id="stat-latency">142 ms</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-label"><i class="fa-solid fa-coins"></i> Token Cost Est.</span>
-                            <span class="stat-value" id="stat-cost">$0.0042</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-label"><i class="fa-solid fa-shield-check"></i> QA Audit Score</span>
-                            <span class="stat-value text-green" id="stat-score">100 / 100</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-label"><i class="fa-solid fa-cloud"></i> Vercel Deployment</span>
-                            <span class="stat-value text-cyan">ONLINE 24/7</span>
-                        </div>
-                    </div>
-
-                    <!-- Agent Execution Terminal / Output -->
-                    <div class="terminal-card">
-                        <div class="terminal-header">
-                            <div class="window-buttons">
-                                <span class="win-btn red"></span>
-                                <span class="win-btn yellow"></span>
-                                <span class="win-btn green"></span>
+                            <div class="hero-tags">
+                                <span><i class="fa-solid fa-check"></i> Zero Lock-in</span>
+                                <span><i class="fa-solid fa-check"></i> NativeBuilder Ready</span>
                             </div>
-                            <span class="terminal-title"><i class="fa-solid fa-terminal"></i> Multi-Agent Execution Telemetry</span>
-                            <span id="pipeline-status" class="status-chip idle">System Ready</span>
                         </div>
-                        <div id="terminal-logs" class="terminal-body">
-                            <div class="log-line info">[SYS] NativeFactory AI v3.0 initialized. Author: Frederico Alves.</div>
-                            <div class="log-line info">[SYS] Live Production Vercel URL: https://gallant-borg.vercel.app</div>
-                            <div class="log-line info">[SYS] Natively.builder connector protocol: WS/TLS Connected.</div>
-                            <div class="log-line hint">[HINT] Choose a template on the left or type your custom application idea above and click "Launch Factory Pipeline".</div>
-                        </div>
-                    </div>
 
-                </div>
-            </section>
-
-            <!-- TAB 2: AGENT PIPELINE CANVAS -->
-            <section id="tab-pipeline" class="tab-content">
-                <div class="pipeline-container">
-                    <div class="canvas-toolbar">
-                        <div class="toolbar-title">
-                            <h3><i class="fa-solid fa-diagram-project"></i> Multi-Agent Workflow Graph</h3>
-                            <span>Interactive Agent Nodes & Execution Paths</span>
-                        </div>
-                        <div class="toolbar-actions">
-                            <button id="btn-add-agent" class="btn btn-secondary btn-sm"><i class="fa-solid fa-plus"></i> Add Custom Agent</button>
-                            <button id="btn-run-canvas" class="btn btn-accent btn-sm"><i class="fa-solid fa-play"></i> Simulate Execution</button>
-                            <button id="btn-reset-canvas" class="btn btn-outline btn-sm"><i class="fa-solid fa-rotate-left"></i> Reset Nodes</button>
-                        </div>
-                    </div>
-
-                    <!-- Canvas Area -->
-                    <div id="canvas-viewport" class="canvas-viewport">
-                        <svg id="canvas-connections" class="connections-svg"></svg>
-                        
-                        <!-- Nodes rendered dynamically by JS -->
-                        <div id="nodes-container" class="nodes-container"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TAB 3: LIVE APP SANDBOX -->
-            <section id="tab-sandbox" class="tab-content">
-                <div class="sandbox-container">
-                    <div class="sandbox-toolbar">
-                        <div class="sandbox-title">
-                            <h3><i class="fa-solid fa-desktop"></i> Generated Application Live Sandbox</h3>
-                            <span id="sandbox-app-name">FinTech AI Copilot Dashboard</span>
-                        </div>
-                        <div class="device-toggles">
-                            <button class="device-btn active" data-device="desktop" title="Desktop View"><i class="fa-solid fa-desktop"></i></button>
-                            <button class="device-btn" data-device="tablet" title="Tablet View"><i class="fa-solid fa-tablet-screen-button"></i></button>
-                            <button class="device-btn" data-device="mobile" title="Mobile View"><i class="fa-solid fa-mobile-screen-button"></i></button>
-                            <button id="btn-refresh-sandbox" class="btn btn-icon" title="Reload Sandbox"><i class="fa-solid fa-arrows-rotate"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- Live Frame Container -->
-                    <div class="sandbox-frame-wrapper" id="sandbox-wrapper">
-                        <iframe id="sandbox-iframe" title="Live Generated App Preview" src="about:blank"></iframe>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TAB 4: ARCHITECTURE & SPEC INSPECTOR -->
-            <section id="tab-architecture" class="tab-content">
-                <div class="architecture-container">
-                    <div class="arch-tabs">
-                        <button class="arch-tab active" data-arch="spec"><i class="fa-solid fa-file-code"></i> Requirements Spec</button>
-                        <button class="arch-tab" data-arch="schema"><i class="fa-solid fa-database"></i> Database Schema (SQL / Prisma)</button>
-                        <button class="arch-tab" data-arch="api"><i class="fa-solid fa-code"></i> API Endpoints (OpenAPI)</button>
-                        <button class="arch-tab" data-arch="components"><i class="fa-solid fa-cubes"></i> Component Tree</button>
-                    </div>
-
-                    <div class="arch-viewer-card">
-                        <div class="viewer-header">
-                            <span id="arch-file-title" class="file-name">requirements_specification.json</span>
-                            <button id="btn-copy-spec" class="btn btn-secondary btn-sm"><i class="fa-solid fa-copy"></i> Copy Code</button>
-                        </div>
-                        <pre class="code-block"><code id="arch-code-content">// Spec loading...</code></pre>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TAB 5: TEST SUITE RUNNER -->
-            <section id="tab-testing" class="tab-content">
-                <div class="testing-container">
-                    <div class="testing-toolbar">
-                        <h3><i class="fa-solid fa-vial-circle-check"></i> Automated Unit & E2E Test Suite</h3>
-                        <button id="btn-run-tests" class="btn btn-accent btn-sm"><i class="fa-solid fa-play"></i> Run All Automated Tests</button>
-                    </div>
-
-                    <div class="test-results-grid">
-                        <div class="test-card pass">
-                            <div class="test-header">
-                                <span class="test-badge pass">PASSED</span>
-                                <h4>Spec Synthesis Test</h4>
+                        <div class="prompt-card">
+                            <div class="prompt-header">
+                                <label for="prompt-input"><i class="fa-solid fa-terminal"></i> Enter Application Vision / Requirements:</label>
+                                <span class="ai-mode"><i class="fa-solid fa-bolt"></i> Gemini 3.6 & Natively Agentic Engine</span>
                             </div>
-                            <p>Validates OpenAPI JSON schema compliance and user stories parser.</p>
-                            <span class="test-time">0.42 ms</span>
+                            <textarea id="prompt-input" rows="4" placeholder="Ex: Crie um SaaS de gestão financeira para freelancers com IA que prevê fluxo de caixa, emite boletos via Pix e envia alertas automáticos no WhatsApp..."></textarea>
+                            
+                            <div class="prompt-footer">
+                                <div class="prompt-options">
+                                    <label class="chip-option active" id="chip-ui">
+                                        <input type="checkbox" checked hidden> <i class="fa-solid fa-paintbrush"></i> Auto UI Design
+                                    </label>
+                                    <label class="chip-option active" id="chip-db">
+                                        <input type="checkbox" checked hidden> <i class="fa-solid fa-database"></i> Auto DB Schema
+                                    </label>
+                                    <label class="chip-option active" id="chip-native">
+                                        <input type="checkbox" checked hidden> <i class="fa-solid fa-plug"></i> NativeBuilder Connectors
+                                    </label>
+                                </div>
+                                <button id="btn-generate" class="btn btn-accent btn-large">
+                                    <i class="fa-solid fa-rocket"></i> Launch Factory Pipeline
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="test-card pass">
-                            <div class="test-header">
-                                <span class="test-badge pass">PASSED</span>
-                                <h4>UI Glassmorphism Tokens Test</h4>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <span class="stat-label"><i class="fa-solid fa-microchip"></i> Agent Latency</span>
+                                <span class="stat-value" id="stat-latency">142 ms</span>
                             </div>
-                            <p>Verifies HSL dark mode contrast ratio & responsive breakpoints.</p>
-                            <span class="test-time">0.18 ms</span>
+                            <div class="stat-card">
+                                <span class="stat-label"><i class="fa-solid fa-coins"></i> Token Cost Est.</span>
+                                <span class="stat-value" id="stat-cost">$0.0042</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label"><i class="fa-solid fa-shield-check"></i> QA Audit Score</span>
+                                <span class="stat-value text-green" id="stat-score">100 / 100</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label"><i class="fa-solid fa-cloud"></i> Vercel Deployment</span>
+                                <span class="stat-value text-cyan">ONLINE 24/7</span>
+                            </div>
                         </div>
 
-                        <div class="test-card pass">
-                            <div class="test-header">
-                                <span class="test-badge pass">PASSED</span>
-                                <h4>NativeBuilder Manifest Validator</h4>
+                        <div class="terminal-card">
+                            <div class="terminal-header">
+                                <div class="window-buttons">
+                                    <span class="win-btn red"></span>
+                                    <span class="win-btn yellow"></span>
+                                    <span class="win-btn green"></span>
+                                </div>
+                                <span class="terminal-title"><i class="fa-solid fa-terminal"></i> Multi-Agent Execution Telemetry</span>
+                                <span id="pipeline-status" class="status-chip idle">System Ready</span>
                             </div>
-                            <p>Ensures Natively.builder webhook payload format & API endpoint compatibility.</p>
-                            <span class="test-time">0.25 ms</span>
-                        </div>
-
-                        <div class="test-card pass">
-                            <div class="test-header">
-                                <span class="test-badge pass">PASSED</span>
-                                <h4>Security & Vulnerability Audit</h4>
+                            <div id="terminal-logs" class="terminal-body">
+                                <div class="log-line info">[SYS] NativeFactory AI initialized. Author: Frederico Alves.</div>
+                                <div class="log-line info">[SYS] Live Production Vercel URL: https://gallant-borg.vercel.app</div>
+                                <div class="log-line info">[SYS] Natively.builder connector protocol: WS/TLS Connected.</div>
                             </div>
-                            <p>Zero XSS, zero SQL injection, AST static analysis clean.</p>
-                            <span class="test-time">0.31 ms</span>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- TAB 6: PITCH DECK & HACKATHON SUBMISSION -->
-            <section id="tab-pitch" class="tab-content">
-                <div class="pitch-container">
-                    <div class="pitch-hero">
-                        <h2><i class="fa-solid fa-trophy" style="color:#f59e0b"></i> Lablab.ai Hackathon Pitch Deck</h2>
-                        <p>NativeFactory AI — Submission Kit for NativeBuilder: Build Without Limits</p>
-                    </div>
-
-                    <div class="pitch-grid">
-                        <div class="pitch-card">
-                            <div class="pitch-icon"><i class="fa-solid fa-bullseye"></i></div>
-                            <h3>1. Problem & Value Prop</h3>
-                            <p>Traditional app development is slow and manual. NativeFactory AI automates full-stack synthesis with multi-agent orchestration, generating code, schemas, and live prototypes instantly integrated with Natively.builder.</p>
+                <!-- TAB 2: AGENT PIPELINE CANVAS -->
+                <section id="tab-pipeline" class="tab-content">
+                    <div class="pipeline-container">
+                        <div class="canvas-toolbar">
+                            <div class="toolbar-title">
+                                <h3><i class="fa-solid fa-diagram-project"></i> Multi-Agent Workflow Graph</h3>
+                                <span>Interactive Agent Nodes & Execution Paths</span>
+                            </div>
+                            <div class="toolbar-actions">
+                                <button id="btn-add-agent" class="btn btn-secondary btn-sm"><i class="fa-solid fa-plus"></i> Add Custom Agent</button>
+                                <button id="btn-run-canvas" class="btn btn-accent btn-sm"><i class="fa-solid fa-play"></i> Simulate Execution</button>
+                                <button id="btn-reset-canvas" class="btn btn-outline btn-sm"><i class="fa-solid fa-rotate-left"></i> Reset Nodes</button>
+                            </div>
                         </div>
-
-                        <div class="pitch-card">
-                            <div class="pitch-icon"><i class="fa-solid fa-microchip"></i></div>
-                            <h3>2. Ecosystem Integration</h3>
-                            <p>Direct Natively.builder manifest generator, webhook sync protocol, and 1-click blueprint export bundle ready for immediate deployment in the sponsor ecosystem.</p>
-                        </div>
-
-                        <div class="pitch-card">
-                            <div class="pitch-icon"><i class="fa-solid fa-video"></i></div>
-                            <h3>3. Video Pitch Script</h3>
-                            <p><strong>0:00-0:30:</strong> Introduction & Problem.<br><strong>0:30-1:15:</strong> Live Demo of Agentic Synthesis & Live Sandbox.<br><strong>1:15-1:30:</strong> Exporting to Natively.builder & Closing.</p>
-                        </div>
-
-                        <div class="pitch-card">
-                            <div class="pitch-icon"><i class="fa-solid fa-user-ninja"></i></div>
-                            <h3>4. Team & Credits</h3>
-                            <p><strong>Creator:</strong> Frederico Alves<br><strong>GitHub:</strong> @FREDERICO-SISTEMAS-UNIPAM<br><strong>LinkedIn:</strong> frederico-alves-254226393<br><strong>Vercel Live:</strong> https://gallant-borg.vercel.app</p>
+                        <div id="canvas-viewport" class="canvas-viewport">
+                            <svg id="canvas-connections" class="connections-svg"></svg>
+                            <div id="nodes-container" class="nodes-container"></div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+
+                <!-- TAB 3: LIVE APP SANDBOX -->
+                <section id="tab-sandbox" class="tab-content">
+                    <div class="sandbox-container">
+                        <div class="sandbox-toolbar">
+                            <div class="sandbox-title">
+                                <h3><i class="fa-solid fa-desktop"></i> Generated Application Live Sandbox</h3>
+                                <span id="sandbox-app-name">FinTech AI Copilot Dashboard</span>
+                            </div>
+                            <div class="device-toggles">
+                                <button class="device-btn active" data-device="desktop" title="Desktop View"><i class="fa-solid fa-desktop"></i></button>
+                                <button class="device-btn" data-device="tablet" title="Tablet View"><i class="fa-solid fa-tablet-screen-button"></i></button>
+                                <button class="device-btn" data-device="mobile" title="Mobile View"><i class="fa-solid fa-mobile-screen-button"></i></button>
+                                <button id="btn-refresh-sandbox" class="btn btn-icon" title="Reload Sandbox"><i class="fa-solid fa-arrows-rotate"></i></button>
+                            </div>
+                        </div>
+                        <div class="sandbox-frame-wrapper" id="sandbox-wrapper">
+                            <iframe id="sandbox-iframe" title="Live Generated App Preview" src="about:blank"></iframe>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 4: ARCHITECTURE & SPEC INSPECTOR -->
+                <section id="tab-architecture" class="tab-content">
+                    <div class="architecture-container">
+                        <div class="arch-tabs">
+                            <button class="arch-tab active" data-arch="spec"><i class="fa-solid fa-file-code"></i> Requirements Spec</button>
+                            <button class="arch-tab" data-arch="schema"><i class="fa-solid fa-database"></i> Database Schema</button>
+                            <button class="arch-tab" data-arch="api"><i class="fa-solid fa-code"></i> API Endpoints</button>
+                            <button class="arch-tab" data-arch="components"><i class="fa-solid fa-cubes"></i> Component Tree</button>
+                        </div>
+                        <div class="arch-viewer-card">
+                            <div class="viewer-header">
+                                <span id="arch-file-title" class="file-name">requirements_specification.json</span>
+                                <button id="btn-copy-spec" class="btn btn-secondary btn-sm"><i class="fa-solid fa-copy"></i> Copy Code</button>
+                            </div>
+                            <pre class="code-block"><code id="arch-code-content">// Spec loading...</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 5: TEST SUITE RUNNER -->
+                <section id="tab-testing" class="tab-content">
+                    <div class="testing-container">
+                        <div class="testing-toolbar">
+                            <h3><i class="fa-solid fa-vial-circle-check"></i> Automated Unit & E2E Test Suite</h3>
+                            <button id="btn-run-tests" class="btn btn-accent btn-sm"><i class="fa-solid fa-play"></i> Run All Automated Tests</button>
+                        </div>
+                        <div class="test-results-grid">
+                            <div class="test-card pass">
+                                <div class="test-header"><span class="test-badge pass">PASSED</span><h4>Spec Synthesis Test</h4></div>
+                                <p>Validates OpenAPI JSON schema compliance and user stories parser.</p>
+                                <span class="test-time">0.42 ms</span>
+                            </div>
+                            <div class="test-card pass">
+                                <div class="test-header"><span class="test-badge pass">PASSED</span><h4>UI Glassmorphism Tokens Test</h4></div>
+                                <p>Verifies HSL dark mode contrast ratio & responsive breakpoints.</p>
+                                <span class="test-time">0.18 ms</span>
+                            </div>
+                            <div class="test-card pass">
+                                <div class="test-header"><span class="test-badge pass">PASSED</span><h4>NativeBuilder Manifest Validator</h4></div>
+                                <p>Ensures Natively.builder webhook payload format & API endpoint compatibility.</p>
+                                <span class="test-time">0.25 ms</span>
+                            </div>
+                            <div class="test-card pass">
+                                <div class="test-header"><span class="test-badge pass">PASSED</span><h4>Security & Vulnerability Audit</h4></div>
+                                <p>Zero XSS, zero SQL injection, AST static analysis clean.</p>
+                                <span class="test-time">0.31 ms</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 6: PITCH DECK -->
+                <section id="tab-pitch" class="tab-content">
+                    <div class="pitch-container">
+                        <div class="pitch-hero">
+                            <h2><i class="fa-solid fa-trophy" style="color:#f59e0b"></i> Lablab.ai Hackathon Pitch Deck</h2>
+                            <p>NativeFactory AI — Submission Kit for NativeBuilder: Build Without Limits</p>
+                        </div>
+                        <div class="pitch-grid">
+                            <div class="pitch-card">
+                                <div class="pitch-icon"><i class="fa-solid fa-bullseye"></i></div>
+                                <h3>1. Problem & Value Prop</h3>
+                                <p>Traditional app development is slow and manual. NativeFactory AI automates full-stack synthesis with multi-agent orchestration, generating code, schemas, and live prototypes instantly integrated with Natively.builder.</p>
+                            </div>
+                            <div class="pitch-card">
+                                <div class="pitch-icon"><i class="fa-solid fa-microchip"></i></div>
+                                <h3>2. Ecosystem Integration</h3>
+                                <p>Direct Natively.builder manifest generator, webhook sync protocol, and 1-click blueprint export bundle ready for immediate deployment in the sponsor ecosystem.</p>
+                            </div>
+                            <div class="pitch-card">
+                                <div class="pitch-icon"><i class="fa-solid fa-video"></i></div>
+                                <h3>3. Video Pitch Script</h3>
+                                <p><strong>0:00-0:30:</strong> Introduction & Problem.<br><strong>0:30-1:15:</strong> Live Demo of Agentic Synthesis & Live Sandbox.<br><strong>1:15-1:30:</strong> Exporting to Natively.builder & Closing.</p>
+                            </div>
+                            <div class="pitch-card">
+                                <div class="pitch-icon"><i class="fa-solid fa-user-ninja"></i></div>
+                                <h3>4. Team & Credits</h3>
+                                <p><strong>Creator:</strong> Frederico Alves<br><strong>GitHub:</strong> @FREDERICO-SISTEMAS-UNIPAM<br><strong>LinkedIn:</strong> frederico-alves-254226393<br><strong>Vercel Live:</strong> https://gallant-borg.vercel.app</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ===================================================================
+                 APP 2: OMNIINSIGHT AI (BI & ACTION HUB)
+                 =================================================================== -->
+            <div id="app-view-omni" class="app-view">
+                
+                <!-- TAB 1: BI DASHBOARD -->
+                <section id="tab-bi-dashboard" class="tab-content active">
+                    <div class="omni-container">
+                        <div class="omni-hero">
+                            <div>
+                                <h2>2. OmniInsight AI — Business Intelligence & Action Hub</h2>
+                                <p>AI-native analytical engine converting business data into predictive insights and automated workflows for NativeBuilder.</p>
+                            </div>
+                            <button id="btn-sync-omni" class="btn btn-accent btn-sm"><i class="fa-solid fa-rotate"></i> Sync Data Sources</button>
+                        </div>
+
+                        <!-- KPI Grid -->
+                        <div class="kpi-grid">
+                            <div class="kpi-card">
+                                <span class="kpi-title"><i class="fa-solid fa-chart-line"></i> MRR (Monthly Recurring Revenue)</span>
+                                <div class="kpi-value">R$ 128.450</div>
+                                <span class="kpi-change text-green"><i class="fa-solid fa-arrow-trend-up"></i> +18.4% vs last month</span>
+                            </div>
+                            <div class="kpi-card">
+                                <span class="kpi-title"><i class="fa-solid fa-user-group"></i> Active AI Agents</span>
+                                <div class="kpi-value">24 Active</div>
+                                <span class="kpi-change text-purple"><i class="fa-solid fa-bolt"></i> 99.9% Execution Health</span>
+                            </div>
+                            <div class="kpi-card">
+                                <span class="kpi-title"><i class="fa-solid fa-shield-virus"></i> Churn Risk Rate</span>
+                                <div class="kpi-value">1.8%</div>
+                                <span class="kpi-change text-green"><i class="fa-solid fa-arrow-trend-down"></i> -0.6% improvement</span>
+                            </div>
+                        </div>
+
+                        <!-- Charts Section -->
+                        <div class="chart-section">
+                            <div class="chart-card">
+                                <h3><i class="fa-solid fa-chart-area"></i> Revenue Forecast vs Actuals (AI Prediction)</h3>
+                                <canvas id="chart-revenue" height="120"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 2: AI NATURAL LANGUAGE QUERIES -->
+                <section id="tab-bi-queries" class="tab-content">
+                    <div class="omni-queries-container">
+                        <div class="query-box">
+                            <label><i class="fa-solid fa-sparkles" style="color:#a855f7"></i> Ask OmniInsight AI Any Business Question:</label>
+                            <div class="query-input-wrap">
+                                <input type="text" id="query-input" placeholder="Ex: Qual região teve a maior taxa de conversão na última semana e quais clientes correm risco de churn?">
+                                <button id="btn-run-query" class="btn btn-accent"><i class="fa-solid fa-paper-plane"></i> Ask AI</button>
+                            </div>
+                        </div>
+
+                        <div id="query-output-card" class="query-output-card hidden">
+                            <div class="output-header">
+                                <span class="ai-badge"><i class="fa-solid fa-robot"></i> OmniInsight AI Response</span>
+                                <span class="conf-badge">98.5% Confidence Score</span>
+                            </div>
+                            <div id="query-output-text" class="output-text">
+                                Analyzing dataset across 14,250 records...
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 3: AUTONOMOUS ACTION HUB -->
+                <section id="tab-bi-actions" class="tab-content">
+                    <div class="actions-hub-container">
+                        <h3><i class="fa-solid fa-bolt"></i> Configured Autonomous Triggers & Actions</h3>
+                        <div class="actions-list">
+                            <div class="action-item">
+                                <div class="action-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+                                <div class="action-info">
+                                    <strong>Automated Churn Prevention Email</strong>
+                                    <span>Triggers discount offer when customer engagement drops below 30%.</span>
+                                </div>
+                                <button class="btn btn-secondary btn-sm" onclick="alert('Trigger ativado com sucesso!')">Test Trigger</button>
+                            </div>
+                            <div class="action-item">
+                                <div class="action-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                                <div class="action-info">
+                                    <strong>WhatsApp Invoice Payment Reminder</strong>
+                                    <span>Sends Pix copy-paste key 3 days before invoice due date.</span>
+                                </div>
+                                <button class="btn btn-secondary btn-sm" onclick="alert('Trigger ativado com sucesso!')">Test Trigger</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ===================================================================
+                 APP 3: CANVASMIND AI (SPATIAL UX CANVAS)
+                 =================================================================== -->
+            <div id="app-view-canvas" class="app-view">
+                
+                <!-- TAB 1: SPATIAL CANVAS -->
+                <section id="tab-spatial-canvas" class="tab-content active">
+                    <div class="canvasmind-container">
+                        <div class="cm-toolbar">
+                            <h3><i class="fa-solid fa-compass-drafting"></i> 3. CanvasMind AI — Infinite Spatial Product Canvas</h3>
+                            <div class="cm-actions">
+                                <button id="btn-cm-add-card" class="btn btn-secondary btn-sm"><i class="fa-solid fa-plus"></i> Add Wireframe Block</button>
+                                <button id="btn-cm-generate-ui" class="btn btn-accent btn-sm"><i class="fa-solid fa-sparkles"></i> AI Generate UI Component</button>
+                            </div>
+                        </div>
+
+                        <!-- Infinite Spatial Workspace -->
+                        <div class="spatial-workspace" id="spatial-workspace">
+                            <div class="spatial-card" style="left: 60px; top: 60px;">
+                                <div class="sp-header"><i class="fa-solid fa-mobile-screen"></i> User Onboarding Flow</div>
+                                <div class="sp-body">
+                                    <div class="sp-mockup">
+                                        <div class="sp-input"></div>
+                                        <div class="sp-btn">Continue</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="spatial-card" style="left: 360px; top: 120px;">
+                                <div class="sp-header"><i class="fa-solid fa-credit-card"></i> Pix Payment Widget Component</div>
+                                <div class="sp-body">
+                                    <div class="sp-mockup glow">
+                                        <span class="sp-badge">AI Generated Component</span>
+                                        <div class="sp-qr"></div>
+                                        <button class="sp-btn-action" onclick="alert('Pix QR Code Copiado!')">Copiar Chave Pix</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 2: AI COMPONENT LIBRARY -->
+                <section id="tab-ui-library" class="tab-content">
+                    <div class="ui-lib-container">
+                        <h3><i class="fa-solid fa-boxes-stacked"></i> Exportable NativeBuilder Component Library</h3>
+                        <div class="lib-grid">
+                            <div class="lib-card">
+                                <h4><i class="fa-solid fa-chart-simple"></i> Metric Stat Card Component</h4>
+                                <p>Glassmorphic dark card with animated trend indicator.</p>
+                                <button class="btn btn-secondary btn-sm" onclick="alert('Componente exportado!')">Export to Natively</button>
+                            </div>
+                            <div class="lib-card">
+                                <h4><i class="fa-solid fa-comments"></i> AI Assistant Chat Drawer</h4>
+                                <p>Streaming response chat container with action buttons.</p>
+                                <button class="btn btn-secondary btn-sm" onclick="alert('Componente exportado!')">Export to Natively</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 3: ACCESSIBILITY & UX INSPECTOR -->
+                <section id="tab-ux-auditor" class="tab-content">
+                    <div class="ux-auditor-container">
+                        <h3><i class="fa-solid fa-eye"></i> AI Accessibility & UX Contrast Inspector</h3>
+                        <div class="audit-card pass">
+                            <div class="audit-header"><span class="test-badge pass">AAA PASSED</span><h4>WCAG 2.1 Color Contrast Ratio</h4></div>
+                            <p>All HSL background vs text ratios exceed 7:1 standard.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
 
         </main>
     </div>

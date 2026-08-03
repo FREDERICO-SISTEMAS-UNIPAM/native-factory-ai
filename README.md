@@ -1,36 +1,37 @@
-# 🚀 NativeFactory AI — Autonomous Software Factory for NativeBuilder Ecosystem
+# 🚀 NativeBuilder AI Suite — 3-in-1 Ecosystem by Frederico Alves
 
 > **Lablab.ai Hackathon Submission:** NativeBuilder: Build Without Limits (August 3–10, 2026)  
 > **Target Platform:** NativeBuilder (NativelyAI Ecosystem)  
-> **Author & Creator:** [Frederico Alves](https://www.linkedin.com/in/frederico-alves-254226393) | GitHub: [@FREDERICO-SISTEMAS-UNIPAM](https://github.com/FREDERICO-SISTEMAS-UNIPAM)
+> **Author & Lead Creator:** [Frederico Alves](https://www.linkedin.com/in/frederico-alves-254226393) | GitHub: [@FREDERICO-SISTEMAS-UNIPAM](https://github.com/FREDERICO-SISTEMAS-UNIPAM)  
+> **Live Production Vercel URL:** [https://gallant-borg.vercel.app](https://gallant-borg.vercel.app)
 
 ---
 
 ## 📌 Executive Summary
 
-**NativeFactory AI** is an AI-native autonomous software factory and multi-agent workflow orchestration studio designed specifically for the **NativeBuilder / NativelyAI** ecosystem.
+The **NativeBuilder AI Suite** is a comprehensive, 3-in-1 AI-Native platform developed for the **NativeBuilder (NativelyAI)** ecosystem. It combines three powerful autonomous products into a unified suite:
 
-It empowers creators, founders, and engineers to transform raw natural language requirements into fully functional, high-performance web applications, database schemas, OpenAPI endpoints, and live working prototypes—ready for seamless 1-click export and deployment into NativeBuilder.
+1. **🏭 NativeFactory AI:** Autonomous Software Factory & Multi-Agent Workflow Engine.
+2. **📊 OmniInsight AI:** Real-time Business Intelligence Analytics & Autonomous Action Hub.
+3. **🎨 CanvasMind AI:** Infinite Spatial UI Canvas & UX Product Design Copilot.
 
 ---
 
-## 🌟 Key Features
+## 🌟 The 3 Ecosystem Applications
 
-1. **⚡ Prompt-to-App Agentic Pipeline:**
-   - Multi-agent synthesis pipeline: *Spec Analyst Agent* -> *UI/UX Architect Agent* -> *Code Synthesis Engine* -> *QA & Security Inspector* -> *NativeBuilder Publisher*.
-   - Live telemetry logs detailing agent reasoning and execution progress.
+### 1. 🏭 NativeFactory AI (Software Factory)
+- **Multi-Agent Pipeline:** Spec Analyst -> UI/UX Architect -> Code Synthesis Dev -> QA Inspector -> NativeBuilder Deployer.
+- **Live App Sandbox:** Interactive real-time prototype rendering with Desktop, Tablet, and Mobile viewport preview.
+- **Automated Test Runner:** E2E & Unit Test suite validator.
 
-2. **🎨 Interactive Multi-Agent Workflow Canvas:**
-   - Drag-and-drop node graph visualizer connecting agent roles, input/output data ports, and execution dependencies.
+### 2. 📊 OmniInsight AI (BI & Action Hub)
+- **AI Revenue & Churn Forecast:** Interactive Chart.js predictive financial trend model.
+- **Natural Language Data Queries:** Ask complex business questions and receive structured AI insights with 98.5% confidence scores.
+- **Autonomous Action Triggers:** Automated WhatsApp invoice reminders and churn retention webhook triggers.
 
-3. **💻 Live Interactive Sandbox:**
-   - Immediate real-time rendering of generated web applications with desktop, tablet, and mobile viewport preview toggles.
-
-4. **📊 Architecture & Spec Inspector:**
-   - Instant generation of OpenAPI 3.0 specs, PostgreSQL / Prisma DB schemas, User Story specs, and Component Trees.
-
-5. **🔗 NativeBuilder Ecosystem Integration:**
-   - Built-in manifest generator, direct deployment connectors, and ZIP package export formatted for Natively.builder.
+### 3. 🎨 CanvasMind AI (Infinite Spatial UI Canvas)
+- **Spatial Wireframe Generator:** Infinite canvas for spatial component composition and user journey mapping.
+- **WCAG 2.1 Accessibility Inspector:** Automated dark glassmorphism contrast audit.
 
 ---
 
@@ -38,52 +39,38 @@ It empowers creators, founders, and engineers to transform raw natural language 
 
 ```mermaid
 graph TD
-    User([User Prompt / Vision]) --> Studio[AI Studio & Prompt Engine]
-    Studio --> SpecAgent[Spec Analyst Agent]
-    SpecAgent --> UXAgent[UI/UX Architect Agent]
-    UXAgent --> DevAgent[Code Synthesis Dev Agent]
-    DevAgent --> QAAgent[QA & Security Inspector]
-    QAAgent --> NativePublisher[NativeBuilder Publisher Engine]
+    User([Frederico Alves / User]) --> SuiteHeader[NativeBuilder AI Suite Launcher]
+    
+    SuiteHeader --> Factory[1. NativeFactory AI]
+    SuiteHeader --> Omni[2. OmniInsight AI]
+    SuiteHeader --> Canvas[3. CanvasMind AI]
 
-    subgraph "NativeFactory Engine"
-        SpecAgent
-        UXAgent
-        DevAgent
-        QAAgent
+    subgraph "NativeFactory AI Engine"
+        Factory --> AgentPipeline[Multi-Agent Pipeline]
+        AgentPipeline --> LiveSandbox[Live App Sandbox]
+        AgentPipeline --> TestRunner[Automated Test Runner]
     end
 
-    NativePublisher --> Sandbox[Live App Sandbox Preview]
-    NativePublisher --> ArchSpec[OpenAPI & Database Schema]
-    NativePublisher --> NativePlatform[Natively.builder Deployment API]
+    subgraph "OmniInsight AI Engine"
+        Omni --> ChartJS[Predictive Chart.js]
+        Omni --> NLQuery[Natural Language Queries]
+        Omni --> ActionTriggers[Autonomous Triggers]
+    end
+
+    subgraph "CanvasMind AI Engine"
+        Canvas --> SpatialCanvas[Infinite Canvas Editor]
+        Canvas --> ComponentLib[Exportable UI Components]
+    end
+
+    Factory --> NativelyPlatform[Natively.builder Deployment API]
+    Omni --> NativelyPlatform
+    Canvas --> NativelyPlatform
 ```
 
 ---
 
-## 🛠️ Tech Stack & Implementation
+## 🚀 Live Production & Deploy
 
-- **Frontend Core:** HTML5, Modern Vanilla JavaScript (ES2026+), SVG Canvas
-- **Design System:** Custom Dark Glassmorphism CSS with HSL variables, Neon accents, and JetBrains Mono / Outfit typography
-- **Integration Engine:** JSON Manifest Generator & NativeBuilder Webhook Protocol
-
----
-
-## 🚀 How to Run Locally
-
-1. Clone or navigate to the repository directory:
-   ```bash
-   cd /home/deliveryboy/antigravity/gallant-borg
-   ```
-2. Serve the static files with any HTTP server (e.g. Python, Node.js, or Vite):
-   ```bash
-   python3 -m http.server 8080
-   ```
-3. Open `http://localhost:8080` in your web browser.
-
----
-
-## 🏆 Pitch Video Script & Submission Guide
-
-- **0:00 - 0:15**: Problem Statement (Building complete apps manually takes weeks; static AI landing pages are not enough).
-- **0:15 - 0:45**: Demo of NativeFactory AI generating a full FinTech Copilot in seconds.
-- **0:45 - 1:15**: Demonstrating the Agent Canvas Graph & Live Sandbox.
-- **1:15 - 1:30**: Exporting directly to Natively.builder and closing call to action.
+- **Vercel Live URL:** [https://gallant-borg.vercel.app](https://gallant-borg.vercel.app)
+- **Natively.builder App:** [https://builder.nativelyai.com](https://builder.nativelyai.com) (Project: `NativeFactory AI`)
+- **GitHub Repository:** [https://github.com/FREDERICO-SISTEMAS-UNIPAM/native-factory-ai](https://github.com/FREDERICO-SISTEMAS-UNIPAM/native-factory-ai)
