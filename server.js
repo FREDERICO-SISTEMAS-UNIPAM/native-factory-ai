@@ -66,6 +66,19 @@ function cleanNumber(numStr) {
     return numStr.toString().replace(/\D/g, '');
 }
 
+// Utility: Flexible phone number matching
+function matchPhoneNumber(num1, num2) {
+    const c1 = cleanNumber(num1);
+    const c2 = cleanNumber(num2);
+    if (!c1 || !c2) return false;
+    if (c1 === c2) return true;
+    if (c1.endsWith(c2) || c2.endsWith(c1)) return true;
+    if (c1.length >= 8 && c2.length >= 8) {
+        return c1.slice(-8) === c2.slice(-8);
+    }
+    return false;
+}
+
 // Haversine Distance Formula in Kilometers
 function calculateDistanceKm(lat1, lon1, lat2, lon2) {
     if (lat1 == null || lon1 == null || lat2 == null || lon2 == null) return Infinity;
@@ -102,7 +115,6 @@ async function connectToWhatsApp() {
     waSock = makeWASocket({
         version,
         logger: pino({ level: 'silent' }),
-        printQRInTerminal: true,
         auth: state,
         browser: ['Radar de Rotas Patos', 'Chrome', '1.0.0']
     });
@@ -153,7 +165,7 @@ async function connectToWhatsApp() {
                 const senderPhone = cleanNumber(participantJid);
 
                 // Check against active registered stores
-                const matchingStore = stores.find(s => s.active && cleanNumber(s.whatsappNumber) === senderPhone);
+                const matchingStore = stores.find(s => s.active && matchPhoneNumber(s.whatsappNumber, senderPhone));
 
                 if (matchingStore) {
                     if (!driverGps || !driverGps.active || driverGps.lat == null) {
@@ -212,7 +224,16 @@ async function connectToWhatsApp() {
             const senderPhone = cleanNumber(participantJid);
 
             // PASSO 3: Proteção contra empresas distantes
-            const armedInfo = armedStores.get(senderPhone);
+            let armedSenderKey = null;
+            let armedInfo = null;
+
+            for (const [key, info] of armedStores.entries()) {
+                if (matchPhoneNumber(key, senderPhone) || matchPhoneNumber(info.store.whatsappNumber, senderPhone)) {
+                    armedSenderKey = key;
+                    armedInfo = info;
+                    break;
+                }
+            }
 
             if (!armedInfo) {
                 // Se a mensagem veio de alguém não engatilhado (distante ou não cadastrado), ignora!
@@ -221,7 +242,7 @@ async function connectToWhatsApp() {
 
             // Verifica expiração do engatilhamento (timeout de 45 segundos)
             if (Date.now() - armedInfo.armedAt > 45000) {
-                armedStores.delete(senderPhone);
+                if (armedSenderKey) armedStores.delete(armedSenderKey);
                 console.log(`[RADAR] Engatilhamento de ${armedInfo.store.name} expirou.`);
                 continue;
             }
@@ -237,7 +258,7 @@ async function connectToWhatsApp() {
                 console.log(`[RADAR 🚀 ROTA PEGA] "eu" enviado para ${armedInfo.store.name} no grupo ${groupJid}!`);
 
                 // Remove do estado engatilhado
-                armedStores.delete(senderPhone);
+                if (armedSenderKey) armedStores.delete(armedSenderKey);
 
                 const msgText = msg.message.conversation ||
                                 msg.message.extendedTextMessage?.text ||
