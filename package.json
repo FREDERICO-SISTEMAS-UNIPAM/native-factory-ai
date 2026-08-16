@@ -1,0 +1,20 @@
+{
+  "name": "delivery-boy-patos-radar",
+  "version": "1.0.0",
+  "description": "Radar de Rotas Automático para WhatsApp - Delivery Boy",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "pdfkit": "^0.19.1",
+    "pino": "^9.1.0",
+    "qrcode": "^1.5.3",
+    "ws": "^8.17.0"
+  }
+}

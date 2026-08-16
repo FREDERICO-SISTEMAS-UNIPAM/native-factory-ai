@@ -1,0 +1,32 @@
+[
+  {
+    "id": "store-king-adega",
+    "name": "King Adega",
+    "whatsappNumber": "5534999990001",
+    "address": "Rua Major Gote, 1200, Centro, Patos de Minas - MG",
+    "latitude": -18.5833,
+    "longitude": -46.5167,
+    "maxRadiusKm": 3.0,
+    "active": true
+  },
+  {
+    "id": "store-orla-bar",
+    "name": "Orla Bar & Resto",
+    "whatsappNumber": "5534999990002",
+    "address": "Av. Fátima Porto, 850, Patos de Minas - MG",
+    "latitude": -18.5790,
+    "longitude": -46.5210,
+    "maxRadiusKm": 2.5,
+    "active": true
+  },
+  {
+    "id": "store-rei-da-batata",
+    "name": "Rei da Batata",
+    "whatsappNumber": "5534999990003",
+    "address": "Rua Alaor de Mello Ribeiro, 225, Patos de Minas - MG",
+    "latitude": -18.5912,
+    "longitude": -46.5105,
+    "maxRadiusKm": 3.0,
+    "active": true
+  }
+]

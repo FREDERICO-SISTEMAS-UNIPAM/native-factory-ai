@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engenheiro Simulator - Mega Planejador UFU Patos de Minas</title>
+  <meta name="description" content="Jogo de simulação de carreira e planejamento de matrícula para Engenharia Eletrônica e de Telecomunicações - UFU Patos de Minas.">
+  <link rel="stylesheet" href="./planejador.css">
+</head>
+<body>
+
+  <!-- Header & Career Dashboard -->
+  <header>
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <div class="brand-title">
+          <h1>MEGA PLANEJADOR UFU</h1>
+          <p>Engenharia Eletrônica & Telecomunicações — Patos de Minas</p>
+        </div>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-label">Nível de Carreira</span>
+          <span class="stat-value highlight" id="stat-engineer-level">Estagiário de Eletrônica</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Carga Horária</span>
+          <span class="stat-value" id="stat-hours">0 / 2300 h</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-label">Grade Atual</span>
+          <span class="stat-value" id="stat-selected-count">0 matérias</span>
+        </div>
+
+        <div class="progress-container">
+          <span class="stat-label">Progresso do Curso</span>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-tabs">
+        <button class="tab-btn active" data-tab="tab-canteiro">
+          <span>🛠️</span> Canteiro & Grade
+        </button>
+        <button class="tab-btn" data-tab="tab-arvore">
+          <span>🌳</span> Árvore de Pré-requisitos
+        </button>
+        <button class="tab-btn" data-tab="tab-projetos">
+          <span>🚀</span> Projetos de Engenharia
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    
+    <!-- Tab 1: Canteiro de Obras & Grade de Horários -->
+    <div class="tab-content active" id="tab-canteiro">
+      <div class="grid-layout">
+        
+        <!-- Left Panel: Subject Offer & Selection -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title">
+              <span>📚</span> Disciplinas da Grade
+            </div>
+            <button class="btn btn-secondary" id="btn-reset-game" style="font-size: 11px; padding: 6px 12px;">🔄 Reiniciar</button>
+          </div>
+
+          <!-- Period Chips -->
+          <div class="period-selector" id="period-selector"></div>
+
+          <!-- Subject List -->
+          <div class="subject-list" id="subject-list"></div>
+        </div>
+
+        <!-- Right Panel: Weekly Schedule & Conflict Detector -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title">
+              <span>📅</span> Meu Quadro de Horários da Semana
+            </div>
+            <button class="btn" id="btn-finish-semester">
+              <span>🎓</span> Concluir Semestre & Avançar
+            </button>
+          </div>
+
+          <!-- Conflict Alert Banner -->
+          <div class="alert-banner hidden" id="alert-banner">
+            <div class="alert-icon">⚠️</div>
+            <div id="alert-text">Choque de horários detectado!</div>
+          </div>
+
+          <!-- Schedule Matrix Table -->
+          <div class="schedule-table-container" id="schedule-table-container"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Tab 2: Prerequisites Flowchart Tree -->
+    <div class="tab-content" id="tab-arvore">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🌳</span> Árvore de Pré-requisitos & Cadeia de Dependências
+          </div>
+          <span style="font-size: 12px; color: var(--text-muted);">Baseado na grade oficial do Prof. Daniel Costa Ramos</span>
+        </div>
+        <div class="tree-container" id="tree-container"></div>
+      </div>
+    </div>
+
+    <!-- Tab 3: Engineering Projects Lab -->
+    <div class="tab-content" id="tab-projetos">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🔬</span> Laboratório de Projetos de Engenharia
+          </div>
+          <span style="font-size: 12px; color: var(--text-muted);">Projetos desbloqueados conforme suas horas e matérias concluídas</span>
+        </div>
+        <div class="projects-grid" id="projects-grid"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Victory / Progression Modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-box">
+      <div style="font-size: 48px; margin-bottom: 12px;">🏆</div>
+      <h2 id="modal-title">Semestre Concluído!</h2>
+      <p id="modal-desc">Você aprovou em todas as disciplinas sem choques de horário!</p>
+      <button class="btn" id="btn-close-modal">Continuar Jornada</button>
+    </div>
+  </div>
+
+  <script src="./planejador.js"></script>
+</body>
+</html>

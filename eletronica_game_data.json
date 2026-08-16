@@ -1,0 +1,1553 @@
+{
+  "1": {
+    "id": 1,
+    "name": "Introdução à Eng. Eletrônica e de Telecomunicações",
+    "full_code_name": "1 — Introdução à Eng. Eletrônica e de Telecomunicações",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "1 — Introdução à Eng. Eletrônica e de Telecomunicações",
+    "period": 1,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "08:00 – 09:40",
+        "room": "201G",
+        "teacher": "Diego"
+      }
+    ],
+    "workload": 45
+  },
+  "2": {
+    "id": 2,
+    "name": "Química Tecnológica",
+    "full_code_name": "2 — Química Tecnológica",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "2 — Química Tecnológica",
+    "period": 1,
+    "schedule": [
+      {
+        "day": "Quinta",
+        "time": "08:50 – 10:40",
+        "room": "Lab Química",
+        "teacher": "Daniele L"
+      }
+    ],
+    "workload": 45
+  },
+  "3": {
+    "id": 3,
+    "name": "Expressão Gráfica",
+    "full_code_name": "3 — Expressão Gráfica",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "3 — Expressão Gráfica",
+    "period": 1,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "09:50 – 11:30",
+        "room": "Lab Desenho",
+        "teacher": "Carla"
+      }
+    ],
+    "workload": 45
+  },
+  "4": {
+    "id": 4,
+    "name": "Cálculo Diferencial e Integral I",
+    "full_code_name": "4 — Cálculo Diferencial e Integral I",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "4 — Cálculo Diferencial e Integral I",
+    "period": 1,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "09:50 – 11:30",
+        "room": "201G",
+        "teacher": "Bruno"
+      },
+      {
+        "day": "Quarta",
+        "time": "08:00 – 09:40",
+        "room": "201G",
+        "teacher": "Bruno"
+      }
+    ],
+    "workload": 90
+  },
+  "5": {
+    "id": 5,
+    "name": "Álgebra Matricial e Geometria Analítica",
+    "full_code_name": "5 — Álgebra Matricial e Geometria Analítica",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "5 — Álgebra Matricial e Geometria Analítica",
+    "period": 1,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "08:00 – 09:40",
+        "room": "Topázio",
+        "teacher": "Wilian"
+      },
+      {
+        "day": "Quinta",
+        "time": "08:00 – 08:50",
+        "room": "Topázio",
+        "teacher": "Wilian"
+      }
+    ],
+    "workload": 45
+  },
+  "6": {
+    "id": 6,
+    "name": "Introdução à Tecnologia da Computação",
+    "full_code_name": "6 — Introdução à Tecnologia da Computação",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "6 — Introdução à Tecnologia da Computação",
+    "period": 1,
+    "schedule": [
+      {
+        "day": "Quarta",
+        "time": "09:50 – 11:30",
+        "room": "Lab Comp",
+        "teacher": "Laurence"
+      }
+    ],
+    "workload": 45
+  },
+  "7": {
+    "id": 7,
+    "name": "Circuitos Elétricos I",
+    "full_code_name": "7 — Circuitos Elétricos I",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "7 — Circuitos Elétricos I",
+    "period": 2,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "14:00 – 15:40",
+        "room": "202G",
+        "teacher": "Elise"
+      },
+      {
+        "day": "Quarta",
+        "time": "14:00 – 15:40",
+        "room": "202G",
+        "teacher": "Elise"
+      }
+    ],
+    "workload": 45
+  },
+  "8": {
+    "id": 8,
+    "name": "Experimental de Circuitos Elétricos I",
+    "full_code_name": "8 — Experimental de Circuitos Elétricos I",
+    "prerequisites": [],
+    "corequisites": [
+      7
+    ],
+    "hours_req": 0,
+    "raw": "8 — Experimental de Circuitos Elétricos I Co: 7",
+    "period": 2,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "14:00 – 15:40",
+        "room": "Lab ECE1",
+        "teacher": "Elise"
+      }
+    ],
+    "workload": 60
+  },
+  "9": {
+    "id": 9,
+    "name": "Física Básica: Mecânica",
+    "full_code_name": "9 — Física Básica: Mecânica",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "9 — Física Básica: Mecânica",
+    "period": 2,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "14:00 – 15:40",
+        "room": "MJ 405",
+        "teacher": "Eliana"
+      },
+      {
+        "day": "Quinta",
+        "time": "14:00 – 15:40",
+        "room": "MJ 405",
+        "teacher": "Eliana"
+      }
+    ],
+    "workload": 90
+  },
+  "10": {
+    "id": 10,
+    "name": "Lab. de Física Básica: Mecânica",
+    "full_code_name": "10 — Lab. de Física Básica: Mecânica",
+    "prerequisites": [],
+    "corequisites": [
+      9
+    ],
+    "hours_req": 0,
+    "raw": "10 — Lab. de Física Básica: Mecânica Co: 9",
+    "period": 2,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "08:00 – 09:40",
+        "room": "Lab Fis 1",
+        "teacher": "Eliana"
+      }
+    ],
+    "workload": 60
+  },
+  "11": {
+    "id": 11,
+    "name": "Cálculo Diferencial e Integral II",
+    "full_code_name": "11 — Cálculo Diferencial e Integral II",
+    "prerequisites": [
+      4
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "11 — Cálculo Diferencial e Integral II Pré: 4",
+    "period": 2,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "16:00 – 17:40",
+        "room": "MJ Fis",
+        "teacher": "Fabrícia"
+      },
+      {
+        "day": "Quarta",
+        "time": "16:00 – 17:40",
+        "room": "MJ Fis",
+        "teacher": "Fabrícia"
+      }
+    ],
+    "workload": 90
+  },
+  "12": {
+    "id": 12,
+    "name": "Estatística para Engenharia",
+    "full_code_name": "12 — Estatística para Engenharia",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "12 — Estatística para Engenharia",
+    "period": 2,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "16:00 – 17:40",
+        "room": "203G",
+        "teacher": "Marcelo"
+      }
+    ],
+    "workload": 45
+  },
+  "13": {
+    "id": 13,
+    "name": "Programação Orientada a Objetos",
+    "full_code_name": "13 — Programação Orientada a Objetos",
+    "prerequisites": [
+      6
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "13 — Programação Orientada a Objetos Pré: 6",
+    "period": 2,
+    "schedule": [
+      {
+        "day": "Quinta",
+        "time": "16:00 – 17:40",
+        "room": "Lab Comp",
+        "teacher": "Laurence"
+      }
+    ],
+    "workload": 45
+  },
+  "14": {
+    "id": 14,
+    "name": "Fundamentos de Semicondutores",
+    "full_code_name": "14 — Fundamentos de Semicondutores",
+    "prerequisites": [
+      2
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "14 — Fundamentos de Semicondutores Pré: 2",
+    "period": 2,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "16:00 – 17:40",
+        "room": "203G",
+        "teacher": "Davi"
+      }
+    ],
+    "workload": 45
+  },
+  "15": {
+    "id": 15,
+    "name": "Circuitos Elétricos II",
+    "full_code_name": "15 — Circuitos Elétricos II",
+    "prerequisites": [
+      4,
+      7
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "15 — Circuitos Elétricos II Pré: 4, 7",
+    "period": 3,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "08:00 – 09:40",
+        "room": "203G",
+        "teacher": "Henrique"
+      },
+      {
+        "day": "Quarta",
+        "time": "08:00 – 09:40",
+        "room": "203G",
+        "teacher": "Henrique"
+      }
+    ],
+    "workload": 45
+  },
+  "16": {
+    "id": 16,
+    "name": "Experimental de Circuitos Elétricos II",
+    "full_code_name": "16 — Experimental de Circuitos Elétricos II",
+    "prerequisites": [
+      8
+    ],
+    "corequisites": [
+      15
+    ],
+    "hours_req": 0,
+    "raw": "16 — Experimental de Circuitos Elétricos II Pré: 8  |  Co: 15",
+    "period": 3,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "08:00 – 09:40",
+        "room": "Lab ECE2",
+        "teacher": "Henrique"
+      }
+    ],
+    "workload": 60
+  },
+  "17": {
+    "id": 17,
+    "name": "Física Básica: Eletricidade e Magnetismo",
+    "full_code_name": "17 — Física Básica: Eletricidade e Magnetismo",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "17 — Física Básica: Eletricidade e Magnetismo",
+    "period": 3,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "08:00 – 09:40",
+        "room": "MJ 405",
+        "teacher": "Aline"
+      },
+      {
+        "day": "Quinta",
+        "time": "08:00 – 09:40",
+        "room": "MJ 405",
+        "teacher": "Aline"
+      }
+    ],
+    "workload": 90
+  },
+  "18": {
+    "id": 18,
+    "name": "Lab. Física Básica: Eletricidade e Magnetismo",
+    "full_code_name": "18 — Lab. Física Básica: Eletricidade e Magnetismo",
+    "prerequisites": [],
+    "corequisites": [
+      17
+    ],
+    "hours_req": 0,
+    "raw": "18 — Lab. Física Básica: Eletricidade e Magnetismo Co: 17",
+    "period": 3,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "10:00 – 11:40",
+        "room": "Lab Fis 2",
+        "teacher": "Aline"
+      }
+    ],
+    "workload": 60
+  },
+  "19": {
+    "id": 19,
+    "name": "Cálculo Diferencial e Integral III",
+    "full_code_name": "19 — Cálculo Diferencial e Integral III",
+    "prerequisites": [
+      4,
+      11
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "19 — Cálculo Diferencial e Integral III Pré: 4, 11",
+    "period": 3,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "10:00 – 11:40",
+        "room": "203G",
+        "teacher": "Marcelo"
+      },
+      {
+        "day": "Quarta",
+        "time": "10:00 – 11:40",
+        "room": "203G",
+        "teacher": "Marcelo"
+      }
+    ],
+    "workload": 90
+  },
+  "20": {
+    "id": 20,
+    "name": "Métodos Matemáticos",
+    "full_code_name": "20 — Métodos Matemáticos",
+    "prerequisites": [
+      4,
+      11
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "20 — Métodos Matemáticos Pré: 4, 11",
+    "period": 3,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "10:00 – 11:40",
+        "room": "203G",
+        "teacher": "Fabrícia"
+      }
+    ],
+    "workload": 45
+  },
+  "21": {
+    "id": 21,
+    "name": "Fenômenos de Transporte",
+    "full_code_name": "21 — Fenômenos de Transporte",
+    "prerequisites": [
+      4
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "21 — Fenômenos de Transporte Pré: 4",
+    "period": 3,
+    "schedule": [
+      {
+        "day": "Quinta",
+        "time": "10:00 – 11:40",
+        "room": "MJ 405",
+        "teacher": "Eliana"
+      }
+    ],
+    "workload": 45
+  },
+  "22": {
+    "id": 22,
+    "name": "Eletrônica Analógica I",
+    "full_code_name": "22 — Eletrônica Analógica I",
+    "prerequisites": [
+      7,
+      14
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "22 — Eletrônica Analógica I Pré: 7, 14",
+    "period": 3,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "14:00 – 15:40",
+        "room": "Lab Eletrônica",
+        "teacher": "Davi"
+      },
+      {
+        "day": "Quarta",
+        "time": "14:00 – 15:40",
+        "room": "Lab Eletrônica",
+        "teacher": "Davi"
+      }
+    ],
+    "workload": 45
+  },
+  "23": {
+    "id": 23,
+    "name": "Experimental de Eletrônica Analógica I",
+    "full_code_name": "23 — Experimental de Eletrônica Analógica I",
+    "prerequisites": [
+      8
+    ],
+    "corequisites": [
+      22
+    ],
+    "hours_req": 0,
+    "raw": "23 — Experimental de Eletrônica Analógica I Pré: 8  |  Co: 22",
+    "period": 3,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "14:00 – 15:40",
+        "room": "Lab EA1",
+        "teacher": "Davi"
+      }
+    ],
+    "workload": 60
+  },
+  "24": {
+    "id": 24,
+    "name": "Física Básica: Oscilações, Ondas e Ótica",
+    "full_code_name": "24 — Física Básica: Oscilações, Ondas e Ótica",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "24 — Física Básica: Oscilações, Ondas e Ótica",
+    "period": 4,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "14:00 – 15:40",
+        "room": "MJ 405",
+        "teacher": "Aline"
+      },
+      {
+        "day": "Quinta",
+        "time": "14:00 – 15:40",
+        "room": "MJ 405",
+        "teacher": "Aline"
+      }
+    ],
+    "workload": 90
+  },
+  "25": {
+    "id": 25,
+    "name": "Lab. de Física Básica: Ondulatória e Ótica",
+    "full_code_name": "25 — Lab. de Física Básica: Ondulatória e Ótica",
+    "prerequisites": [],
+    "corequisites": [
+      24
+    ],
+    "hours_req": 0,
+    "raw": "25 — Lab. de Física Básica: Ondulatória e Ótica Co: 24",
+    "period": 4,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "16:00 – 17:40",
+        "room": "Lab Fis 3",
+        "teacher": "Aline"
+      }
+    ],
+    "workload": 60
+  },
+  "26": {
+    "id": 26,
+    "name": "Sinais e Sistemas",
+    "full_code_name": "26 — Sinais e Sistemas",
+    "prerequisites": [
+      4,
+      11,
+      19,
+      20
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "26 — Sinais e Sistemas Pré: 4, 11, 19, 20",
+    "period": 4,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "16:00 – 17:40",
+        "room": "204G",
+        "teacher": "Daniel Ramos"
+      },
+      {
+        "day": "Quarta",
+        "time": "16:00 – 17:40",
+        "room": "204G",
+        "teacher": "Daniel Ramos"
+      }
+    ],
+    "workload": 45
+  },
+  "27": {
+    "id": 27,
+    "name": "Cálculo Numérico",
+    "full_code_name": "27 — Cálculo Numérico",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "27 — Cálculo Numérico",
+    "period": 4,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "16:00 – 17:40",
+        "room": "Lab Comp",
+        "teacher": "Marcelo"
+      }
+    ],
+    "workload": 90
+  },
+  "28": {
+    "id": 28,
+    "name": "Eletromagnetismo",
+    "full_code_name": "28 — Eletromagnetismo",
+    "prerequisites": [
+      4,
+      5,
+      11
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "28 — Eletromagnetismo Pré: 4, 5, 11",
+    "period": 4,
+    "schedule": [
+      {
+        "day": "Quinta",
+        "time": "16:00 – 17:40",
+        "room": "204G",
+        "teacher": "Henrique"
+      }
+    ],
+    "workload": 45
+  },
+  "29": {
+    "id": 29,
+    "name": "Eletrônica Analógica II",
+    "full_code_name": "29 — Eletrônica Analógica II",
+    "prerequisites": [
+      7,
+      22
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "29 — Eletrônica Analógica II Pré: 7, 22",
+    "period": 4,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "08:00 – 09:40",
+        "room": "Lab Eletrônica",
+        "teacher": "Davi"
+      },
+      {
+        "day": "Quarta",
+        "time": "08:00 – 09:40",
+        "room": "Lab Eletrônica",
+        "teacher": "Davi"
+      }
+    ],
+    "workload": 45
+  },
+  "30": {
+    "id": 30,
+    "name": "Experimental de Eletrônica Analógica II",
+    "full_code_name": "30 — Experimental de Eletrônica Analógica II",
+    "prerequisites": [
+      8,
+      23
+    ],
+    "corequisites": [
+      29
+    ],
+    "hours_req": 0,
+    "raw": "30 — Experimental de Eletrônica Analógica II Pré: 8, 23  |  Co: 29",
+    "period": 4,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "08:00 – 09:40",
+        "room": "Lab EA2",
+        "teacher": "Davi"
+      }
+    ],
+    "workload": 60
+  },
+  "31": {
+    "id": 31,
+    "name": "Eletrônica Digital",
+    "full_code_name": "31 — Eletrônica Digital",
+    "prerequisites": [
+      7,
+      22
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "31 — Eletrônica Digital Pré: 7, 22",
+    "period": 4,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "08:00 – 09:40",
+        "room": "Lab Digital",
+        "teacher": "Laurence"
+      },
+      {
+        "day": "Quinta",
+        "time": "08:00 – 09:40",
+        "room": "Lab Digital",
+        "teacher": "Laurence"
+      }
+    ],
+    "workload": 45
+  },
+  "32": {
+    "id": 32,
+    "name": "Experimental de Eletrônica Digital",
+    "full_code_name": "32 — Experimental de Eletrônica Digital",
+    "prerequisites": [
+      8
+    ],
+    "corequisites": [
+      31
+    ],
+    "hours_req": 0,
+    "raw": "32 — Experimental de Eletrônica Digital Pré: 8  |  Co: 31",
+    "period": 4,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "10:00 – 11:40",
+        "room": "Lab EDig",
+        "teacher": "Laurence"
+      }
+    ],
+    "workload": 60
+  },
+  "33": {
+    "id": 33,
+    "name": "Processamento Digital de Sinais",
+    "full_code_name": "33 — Processamento Digital de Sinais",
+    "prerequisites": [
+      26
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "33 — Processamento Digital de Sinais Pré: 26",
+    "period": 5,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "10:00 – 11:40",
+        "room": "Lab PDS",
+        "teacher": "Daniel Ramos"
+      }
+    ],
+    "workload": 45
+  },
+  "34": {
+    "id": 34,
+    "name": "Princípios de Comunicação",
+    "full_code_name": "34 — Princípios de Comunicação",
+    "prerequisites": [
+      26,
+      28
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "34 — Princípios de Comunicação Pré: 26, 28",
+    "period": 5,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "10:00 – 11:40",
+        "room": "205G",
+        "teacher": "Daniel Ramos"
+      },
+      {
+        "day": "Quinta",
+        "time": "10:00 – 11:40",
+        "room": "205G",
+        "teacher": "Daniel Ramos"
+      }
+    ],
+    "workload": 45
+  },
+  "35": {
+    "id": 35,
+    "name": "Circuitos Elétricos Polifásicos",
+    "full_code_name": "35 — Circuitos Elétricos Polifásicos",
+    "prerequisites": [
+      7,
+      28
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "35 — Circuitos Elétricos Polifásicos Pré: 7, 28",
+    "period": 5,
+    "schedule": [
+      {
+        "day": "Quarta",
+        "time": "10:00 – 11:40",
+        "room": "Lab Polifásico",
+        "teacher": "Elise"
+      }
+    ],
+    "workload": 45
+  },
+  "36": {
+    "id": 36,
+    "name": "Ondas Eletromagnéticas",
+    "full_code_name": "36 — Ondas Eletromagnéticas",
+    "prerequisites": [
+      28
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "36 — Ondas Eletromagnéticas Pré: 28",
+    "period": 5,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "14:00 – 15:40",
+        "room": "205G",
+        "teacher": "Henrique"
+      },
+      {
+        "day": "Quarta",
+        "time": "14:00 – 15:40",
+        "room": "205G",
+        "teacher": "Henrique"
+      }
+    ],
+    "workload": 45
+  },
+  "37": {
+    "id": 37,
+    "name": "Microcontroladores",
+    "full_code_name": "37 — Microcontroladores",
+    "prerequisites": [
+      5,
+      31
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "37 — Microcontroladores Pré: 5, 31",
+    "period": 5,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "14:00 – 15:40",
+        "room": "Lab Micro",
+        "teacher": "Laurence"
+      },
+      {
+        "day": "Quinta",
+        "time": "14:00 – 15:40",
+        "room": "Lab Micro",
+        "teacher": "Laurence"
+      }
+    ],
+    "workload": 45
+  },
+  "38": {
+    "id": 38,
+    "name": "Optativa - Eixo de Computação",
+    "full_code_name": "38 — Optativa - Eixo de Computação",
+    "prerequisites": [
+      6,
+      13
+    ],
+    "corequisites": [],
+    "hours_req": 1200,
+    "raw": "38 — Optativa - Eixo de Computação Pré: 6, 13  |  1200 horas",
+    "period": 5,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "14:00 – 17:40",
+        "room": "Lab Comp",
+        "teacher": "Laurence"
+      }
+    ],
+    "workload": 45
+  },
+  "39": {
+    "id": 39,
+    "name": "Comunicações Digitais I",
+    "full_code_name": "39 — Comunicações Digitais I",
+    "prerequisites": [
+      12,
+      26,
+      34
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "39 — Comunicações Digitais I Pré: 12, 26, 34",
+    "period": 6,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "16:00 – 17:40",
+        "room": "205G",
+        "teacher": "Daniel Ramos"
+      },
+      {
+        "day": "Quarta",
+        "time": "16:00 – 17:40",
+        "room": "205G",
+        "teacher": "Daniel Ramos"
+      }
+    ],
+    "workload": 45
+  },
+  "40": {
+    "id": 40,
+    "name": "Sistemas de Controle",
+    "full_code_name": "40 — Sistemas de Controle",
+    "prerequisites": [
+      26
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "40 — Sistemas de Controle Pré: 26",
+    "period": 6,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "16:00 – 17:40",
+        "room": "Lab Controle",
+        "teacher": "Marcelo"
+      }
+    ],
+    "workload": 45
+  },
+  "41": {
+    "id": 41,
+    "name": "Conversão de Energia e Introdução às Máquinas Elétricas",
+    "full_code_name": "41 — Conversão de Energia e Introdução às Máquinas Elétricas",
+    "prerequisites": [
+      28,
+      35
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "41 — Conversão de Energia e Introdução às Máquinas Elétricas Pré: 28, 35",
+    "period": 6,
+    "schedule": [
+      {
+        "day": "Quinta",
+        "time": "16:00 – 17:40",
+        "room": "Lab Máquinas",
+        "teacher": "Elise"
+      }
+    ],
+    "workload": 45
+  },
+  "42": {
+    "id": 42,
+    "name": "Experimental de Conversão de Energia e Introdução às Máquinas Elétricas",
+    "full_code_name": "42 — Experimental de Conversão de Energia e Introdução às Máquinas Elétricas",
+    "prerequisites": [
+      35
+    ],
+    "corequisites": [
+      41
+    ],
+    "hours_req": 0,
+    "raw": "42 — Experimental de Conversão de Energia e Introdução às Máquinas Elétricas Pré: 35  |  Co: 41",
+    "period": 6,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "08:00 – 09:40",
+        "room": "Lab Máquinas",
+        "teacher": "Elise"
+      }
+    ],
+    "workload": 60
+  },
+  "43": {
+    "id": 43,
+    "name": "Linhas de Transmissão e Radiação",
+    "full_code_name": "43 — Linhas de Transmissão e Radiação",
+    "prerequisites": [
+      28,
+      36
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "43 — Linhas de Transmissão e Radiação Pré: 28, 36",
+    "period": 6,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "08:00 – 09:40",
+        "room": "Lab RF",
+        "teacher": "Henrique"
+      },
+      {
+        "day": "Quarta",
+        "time": "08:00 – 09:40",
+        "room": "Lab RF",
+        "teacher": "Henrique"
+      }
+    ],
+    "workload": 45
+  },
+  "44": {
+    "id": 44,
+    "name": "Eletrônica para Radiofrequência",
+    "full_code_name": "44 — Eletrônica para Radiofrequência",
+    "prerequisites": [
+      22,
+      34,
+      43
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "44 — Eletrônica para Radiofrequência Pré: 22, 34, 43",
+    "period": 7,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "08:00 – 09:40",
+        "room": "Lab RF",
+        "teacher": "Davi"
+      }
+    ],
+    "workload": 45
+  },
+  "45": {
+    "id": 45,
+    "name": "Comunicações Digitais II",
+    "full_code_name": "45 — Comunicações Digitais II",
+    "prerequisites": [
+      12,
+      39
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "45 — Comunicações Digitais II Pré: 12, 39",
+    "period": 7,
+    "schedule": [
+      {
+        "day": "Quinta",
+        "time": "08:00 – 09:40",
+        "room": "206G",
+        "teacher": "Daniel Ramos"
+      }
+    ],
+    "workload": 45
+  },
+  "46": {
+    "id": 46,
+    "name": "Telefonia Digital",
+    "full_code_name": "46 — Telefonia Digital",
+    "prerequisites": [
+      34
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "46 — Telefonia Digital Pré: 34",
+    "period": 7,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "10:00 – 11:40",
+        "room": "206G",
+        "teacher": "Daniel Ramos"
+      }
+    ],
+    "workload": 45
+  },
+  "47": {
+    "id": 47,
+    "name": "Redes de Comunicação",
+    "full_code_name": "47 — Redes de Comunicação",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "47 — Redes de Comunicação",
+    "period": 7,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "10:00 – 11:40",
+        "room": "Lab Redes",
+        "teacher": "Laurence"
+      }
+    ],
+    "workload": 45
+  },
+  "48": {
+    "id": 48,
+    "name": "Instalações Elétricas",
+    "full_code_name": "48 — Instalações Elétricas",
+    "prerequisites": [
+      7
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "48 — Instalações Elétricas Pré: 7",
+    "period": 7,
+    "schedule": [
+      {
+        "day": "Quarta",
+        "time": "10:00 – 11:40",
+        "room": "Lab Instalações",
+        "teacher": "Elise"
+      }
+    ],
+    "workload": 45
+  },
+  "49": {
+    "id": 49,
+    "name": "Antenas",
+    "full_code_name": "49 — Antenas",
+    "prerequisites": [
+      28,
+      36,
+      43
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "49 — Antenas Pré: 28, 36, 43",
+    "period": 7,
+    "schedule": [
+      {
+        "day": "Quinta",
+        "time": "10:00 – 11:40",
+        "room": "Lab Antenas",
+        "teacher": "Henrique"
+      }
+    ],
+    "workload": 45
+  },
+  "50": {
+    "id": 50,
+    "name": "Sistemas de Radioenlace",
+    "full_code_name": "50 — Sistemas de Radioenlace",
+    "prerequisites": [
+      44,
+      45,
+      49
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "50 — Sistemas de Radioenlace Pré: 44, 45, 49",
+    "period": 8,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "14:00 – 15:40",
+        "room": "Lab Telecom",
+        "teacher": "Daniel Ramos"
+      }
+    ],
+    "workload": 45
+  },
+  "51": {
+    "id": 51,
+    "name": "Comunicações Móveis",
+    "full_code_name": "51 — Comunicações Móveis",
+    "prerequisites": [
+      44,
+      45,
+      49
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "51 — Comunicações Móveis Pré: 44, 45, 49",
+    "period": 8,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "14:00 – 15:40",
+        "room": "Lab Telecom",
+        "teacher": "Daniel Ramos"
+      }
+    ],
+    "workload": 45
+  },
+  "52": {
+    "id": 52,
+    "name": "Sistemas de Televisão",
+    "full_code_name": "52 — Sistemas de Televisão",
+    "prerequisites": [
+      39,
+      45
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "52 — Sistemas de Televisão Pré: 39, 45",
+    "period": 8,
+    "schedule": [
+      {
+        "day": "Quarta",
+        "time": "14:00 – 15:40",
+        "room": "Lab TV",
+        "teacher": "Davi"
+      }
+    ],
+    "workload": 45
+  },
+  "53": {
+    "id": 53,
+    "name": "Gerenciamento e Segurança de Redes",
+    "full_code_name": "53 — Gerenciamento e Segurança de Redes",
+    "prerequisites": [
+      47
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "53 — Gerenciamento e Segurança de Redes Pré: 47",
+    "period": 8,
+    "schedule": [
+      {
+        "day": "Quinta",
+        "time": "14:00 – 15:40",
+        "room": "Lab Redes",
+        "teacher": "Laurence"
+      }
+    ],
+    "workload": 45
+  },
+  "54": {
+    "id": 54,
+    "name": "Dispositivo de Micro-ondas",
+    "full_code_name": "54 — Dispositivo de Micro-ondas",
+    "prerequisites": [
+      5,
+      36,
+      44
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "54 — Dispositivo de Micro-ondas Pré: 5, 36, 44",
+    "period": 8,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "14:00 – 15:40",
+        "room": "Lab Micro-ondas",
+        "teacher": "Henrique"
+      }
+    ],
+    "workload": 45
+  },
+  "55": {
+    "id": 55,
+    "name": "Comunicações Ópticas",
+    "full_code_name": "55 — Comunicações Ópticas",
+    "prerequisites": [
+      14,
+      36
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "55 — Comunicações Ópticas Pré: 14, 36",
+    "period": 8,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "16:00 – 17:40",
+        "room": "Lab Óptica",
+        "teacher": "Davi"
+      }
+    ],
+    "workload": 45
+  },
+  "56": {
+    "id": 56,
+    "name": "Projeto Final de Curso I 2300h Integralizadas",
+    "full_code_name": "56 — Projeto Final de Curso I 2300h Integralizadas",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 2300,
+    "raw": "56 — Projeto Final de Curso I 2300h Integralizadas",
+    "period": 9,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "16:00 – 17:40",
+        "room": "Auditório",
+        "teacher": "Prof. Daniel Ramos"
+      }
+    ],
+    "workload": 45
+  },
+  "57": {
+    "id": 57,
+    "name": "Ciências Sociais e Jurídicas",
+    "full_code_name": "57 — Ciências Sociais e Jurídicas",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "57 — Ciências Sociais e Jurídicas",
+    "period": 9,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "16:00 – 17:40",
+        "room": "206G",
+        "teacher": "Prof. Direito"
+      }
+    ],
+    "workload": 45
+  },
+  "58": {
+    "id": 58,
+    "name": "Administração e Gerenciamento de Projetos",
+    "full_code_name": "58 — Administração e Gerenciamento de Projetos",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "58 — Administração e Gerenciamento de Projetos",
+    "period": 9,
+    "schedule": [
+      {
+        "day": "Quarta",
+        "time": "16:00 – 17:40",
+        "room": "206G",
+        "teacher": "Prof. Gestão"
+      }
+    ],
+    "workload": 45
+  },
+  "59": {
+    "id": 59,
+    "name": "Engenharia Ambiental",
+    "full_code_name": "59 — Engenharia Ambiental",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "59 — Engenharia Ambiental",
+    "period": 9,
+    "schedule": [
+      {
+        "day": "Quinta",
+        "time": "16:00 – 17:40",
+        "room": "206G",
+        "teacher": "Prof. Ambiental"
+      }
+    ],
+    "workload": 45
+  },
+  "60": {
+    "id": 60,
+    "name": "Economia",
+    "full_code_name": "60 — Economia",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "60 — Economia",
+    "period": 9,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "08:00 – 09:40",
+        "room": "206G",
+        "teacher": "Prof. Economia"
+      }
+    ],
+    "workload": 45
+  },
+  "61": {
+    "id": 61,
+    "name": "Optativa - Eixo Comum 1200h Integralizadas",
+    "full_code_name": "61 — Optativa - Eixo Comum 1200h Integralizadas",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 1200,
+    "raw": "61 — Optativa - Eixo Comum 1200h Integralizadas",
+    "period": 9,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "10:00 – 11:40",
+        "room": "206G",
+        "teacher": "Prof. Optativa"
+      }
+    ],
+    "workload": 45
+  },
+  "62": {
+    "id": 62,
+    "name": "Projeto Final de Curso II",
+    "full_code_name": "62 — Projeto Final de Curso II",
+    "prerequisites": [
+      56
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "62 — Projeto Final de Curso II Pré: 56",
+    "period": 10,
+    "schedule": [
+      {
+        "day": "Segunda",
+        "time": "18:00 – 19:40",
+        "room": "Auditório",
+        "teacher": "Prof. Daniel Ramos"
+      }
+    ],
+    "workload": 45
+  },
+  "63": {
+    "id": 63,
+    "name": "Estágio Supervisionado 2300h Integralizadas",
+    "full_code_name": "63 — Estágio Supervisionado 2300h Integralizadas",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 2300,
+    "raw": "63 — Estágio Supervisionado 2300h Integralizadas",
+    "period": 10,
+    "schedule": [
+      {
+        "day": "Flexível",
+        "time": "Horário de Estágio",
+        "room": "Empresa / Indústria",
+        "teacher": "Orientador Estágio"
+      }
+    ],
+    "workload": 45
+  },
+  "64": {
+    "id": 64,
+    "name": "Atividades Curriculares de Extensão I",
+    "full_code_name": "64 — Atividades Curriculares de Extensão I",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "64 — Atividades Curriculares de Extensão I",
+    "period": 10,
+    "schedule": [
+      {
+        "day": "Quarta",
+        "time": "18:00 – 19:40",
+        "room": "Lab Extensão",
+        "teacher": "Prof. Extensão"
+      }
+    ],
+    "workload": 45
+  },
+  "65": {
+    "id": 65,
+    "name": "Atividades Curriculares de Extensão II",
+    "full_code_name": "65 — Atividades Curriculares de Extensão II",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "65 — Atividades Curriculares de Extensão II",
+    "period": 10,
+    "schedule": [
+      {
+        "day": "Quinta",
+        "time": "18:00 – 19:40",
+        "room": "Lab Extensão",
+        "teacher": "Prof. Extensão"
+      }
+    ],
+    "workload": 45
+  },
+  "66": {
+    "id": 66,
+    "name": "Atividades Curriculares de Extensão III",
+    "full_code_name": "66 — Atividades Curriculares de Extensão III",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "66 — Atividades Curriculares de Extensão III",
+    "period": 10,
+    "schedule": [
+      {
+        "day": "Sexta",
+        "time": "18:00 – 19:40",
+        "room": "Lab Extensão",
+        "teacher": "Prof. Extensão"
+      }
+    ],
+    "workload": 45
+  },
+  "67": {
+    "id": 67,
+    "name": "Atividades Curriculares de Extensão IV",
+    "full_code_name": "67 — Atividades Curriculares de Extensão IV",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "67 — Atividades Curriculares de Extensão IV",
+    "period": 10,
+    "schedule": [
+      {
+        "day": "Sábado",
+        "time": "08:00 – 11:40",
+        "room": "Comunidade Patos",
+        "teacher": "Prof. Extensão"
+      }
+    ],
+    "workload": 45
+  },
+  "68": {
+    "id": 68,
+    "name": "Atividades Curriculares de Extensão V",
+    "full_code_name": "68 — Atividades Curriculares de Extensão V",
+    "prerequisites": [],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "68 — Atividades Curriculares de Extensão V",
+    "period": 10,
+    "schedule": [
+      {
+        "day": "Sábado",
+        "time": "13:10 – 16:50",
+        "room": "Comunidade Patos",
+        "teacher": "Prof. Extensão"
+      }
+    ],
+    "workload": 45
+  },
+  "69": {
+    "id": 69,
+    "name": "Atividades Curriculares de Extensão: Projeto Interdisciplinar",
+    "full_code_name": "69 — Atividades Curriculares de Extensão: Projeto Interdisciplinar",
+    "prerequisites": [
+      6,
+      37
+    ],
+    "corequisites": [],
+    "hours_req": 0,
+    "raw": "69 — Atividades Curriculares de Extensão: Projeto Interdisciplinar Pré: 6, 37",
+    "period": 10,
+    "schedule": [
+      {
+        "day": "Terça",
+        "time": "18:00 – 19:40",
+        "room": "Lab Interdisciplinar",
+        "teacher": "Prof. Interdisciplinar"
+      }
+    ],
+    "workload": 45
+  }
+}

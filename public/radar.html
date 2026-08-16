@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Radar de Rotas Automático — WhatsApp Cloud</title>
+    <meta name="description" content="Radar automático de entregas no WhatsApp para motoboys em tempo real por GPS.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet GIS Map CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="radar.css">
+</head>
+<body class="radar-body">
+
+    <!-- Top Navigation & Radar Master Control Bar -->
+    <header class="radar-header">
+        <div class="header-brand">
+            <div class="brand-logo">
+                <i class="fa-solid fa-satellite-dish pulse-radar-icon"></i>
+            </div>
+            <div class="brand-titles">
+                <h1>RADAR DE ROTAS</h1>
+                <span class="sub-title">WhatsApp Cloud • GPS Realtime</span>
+            </div>
+        </div>
+
+        <!-- Master Radar Toggle Switch -->
+        <div class="radar-switch-wrap">
+            <button id="btn-toggle-radar" class="btn-radar-toggle off">
+                <i class="fa-solid fa-power-off"></i>
+                <span id="radar-status-text">LIGAR RADAR</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="radar-container">
+
+        <!-- Status Badges Bar -->
+        <section class="status-bar">
+            <!-- GPS Status -->
+            <div id="gps-badge" class="status-badge error">
+                <i class="fa-solid fa-location-crosshairs"></i>
+                <div class="badge-info">
+                    <span class="badge-label">GPS CELULAR</span>
+                    <span id="gps-text" class="badge-val">Aguardando Conexão</span>
+                </div>
+            </div>
+
+            <!-- WhatsApp Status -->
+            <div id="wa-badge" class="status-badge warning" id="open-qr-btn">
+                <i class="fa-brands fa-whatsapp"></i>
+                <div class="badge-info">
+                    <span class="badge-label">WHATSAPP CLOUD</span>
+                    <span id="wa-text" class="badge-val">Desconectado (Escanear QR)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Action Toolbar -->
+        <section class="toolbar-section">
+            <button id="btn-add-store" class="action-btn primary">
+                <i class="fa-solid fa-plus-circle"></i>
+                <span>Cadastrar Loja</span>
+            </button>
+            <button id="btn-show-qr" class="action-btn secondary">
+                <i class="fa-solid fa-qrcode"></i>
+                <span>QR Code WhatsApp</span>
+            </button>
+            <button id="btn-test-simulation" class="action-btn test-btn">
+                <i class="fa-solid fa-flask"></i>
+                <span>Simular Envio</span>
+            </button>
+        </section>
+
+        <!-- Realtime Leaflet Map Overlay -->
+        <section class="map-section">
+            <div class="map-header">
+                <h3><i class="fa-solid fa-map-location-dot"></i> Mapa de Cobertura de Rotas</h3>
+                <span id="driver-dist-info" class="map-pill">Sua Posição: Buscando...</span>
+            </div>
+            <div id="radar-map" class="leaflet-radar-map"></div>
+        </section>
+
+        <!-- Registered Stores / Companies List -->
+        <section class="stores-section">
+            <div class="section-title">
+                <h2><i class="fa-solid fa-store"></i> Lojas & Empresas Monitoradas</h2>
+                <span id="stores-count" class="count-pill">0 Lojas</span>
+            </div>
+
+            <div id="stores-list" class="stores-grid">
+                <!-- Dynamically populated via radar.js -->
+                <div class="empty-state">
+                    <i class="fa-solid fa-store-slash"></i>
+                    <p>Nenhuma loja cadastrada. Clique em <strong>+ Cadastrar Loja</strong> para adicionar!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Captured Routes Activity Feed -->
+        <section class="history-section">
+            <div class="section-title">
+                <h2><i class="fa-solid fa-bolt text-yellow"></i> Histórico de Rotas Pegas</h2>
+                <button id="btn-clear-history" class="btn-clean">Limpar</button>
+            </div>
+            <div id="captured-routes-list" class="history-list">
+                <div class="empty-history">
+                    <p>Nenhuma rota capturada até o momento. Ligue o radar!</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL: Cadastrar Nova Loja -->
+    <div id="modal-store" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-store-circle-plus"></i> Cadastrar Empresa no Radar</h3>
+                <button class="modal-close" id="btn-close-store-modal">&times;</button>
+            </div>
+            <form id="form-add-store" class="modal-form">
+                <div class="form-group">
+                    <label for="store-name">Nome do Estabelecimento / Loja</label>
+                    <input type="text" id="store-name" placeholder="Ex: Pizzaria Orla Bar" required>
+                </div>
+                <div class="form-group">
+                    <label for="store-phone">Número de WhatsApp (Com DDD)</label>
+                    <input type="tel" id="store-phone" placeholder="Ex: 5534999998888 ou 34999998888" required>
+                    <small>Número do remetente que envia pedidos no grupo.</small>
+                </div>
+                <div class="form-group">
+                    <label for="store-address">Endereço da Loja (Patos de Minas - MG)</label>
+                    <div class="input-with-btn">
+                        <input type="text" id="store-address" placeholder="Ex: Rua Major Gote, 1200, Centro" required>
+                        <button type="button" id="btn-geocode" class="btn-input-action" title="Buscar Coordenadas">
+                            <i class="fa-solid fa-magnifying-glass-location"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="store-lat">Latitude</label>
+                        <input type="number" step="any" id="store-lat" placeholder="-18.5833" required>
+                    </div>
+                    <div class="form-group col">
+                        <label for="store-lng">Longitude</label>
+                        <input type="number" step="any" id="store-lng" placeholder="-46.5167" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="store-radius">Raio Máximo Aceito de Distância (km)</label>
+                    <div class="range-wrap">
+                        <input type="range" id="store-radius" min="0.5" max="10.0" step="0.5" value="3.0">
+                        <span id="store-radius-val" class="range-badge">3.0 km</span>
+                    </div>
+                    <small>Se você estiver a uma distância maior do que essa no momento em que ela digitar, o robô ignorará.</small>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="btn-cancel-store">Cancelar</button>
+                    <button type="submit" class="btn-submit"><i class="fa-solid fa-check"></i> Salvar Loja</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: QR Code WhatsApp -->
+    <div id="modal-qr" class="modal-overlay hidden">
+        <div class="modal-card text-center">
+            <div class="modal-header">
+                <h3><i class="fa-brands fa-whatsapp"></i> Autenticação WhatsApp Cloud</h3>
+                <button class="modal-close" id="btn-close-qr-modal">&times;</button>
+            </div>
+            <div class="modal-body qr-modal-body">
+                <div id="qr-container" class="qr-box">
+                    <i class="fa-solid fa-spinner fa-spin qr-spinner"></i>
+                    <p>Aguardando servidor gerar QR Code...</p>
+                </div>
+                <div id="qr-status-msg" class="qr-msg">
+                    Abra o WhatsApp no celular ➔ Aparelhos Conectados ➔ Conectar Aparelho ➔ Aponte a câmera para a tela!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OVERLAY FULLSCREEN: ALARME DE ROTA PEGA! -->
+    <div id="captured-alert-overlay" class="alert-overlay hidden">
+        <div class="alert-box">
+            <div class="alert-icon-ring">
+                <i class="fa-solid fa-bullseye pulse-alert"></i>
+            </div>
+            <h1 class="alert-title">🎯 ROTA PEGA COM SUCESSO!</h1>
+            <h2 id="alert-store-name" class="alert-store">Restaurante X</h2>
+            <div class="alert-dist-tag">
+                <i class="fa-solid fa-route"></i>
+                <span id="alert-dist-val">a 1,5 km de você</span>
+            </div>
+            <div class="alert-msg-preview">
+                <span class="preview-label">Mensagem do Pedido:</span>
+                <p id="alert-msg-text">"1 Corrida para o Bairro Gramado (R$ 12,00)"</p>
+            </div>
+            <button id="btn-stop-alarm" class="btn-stop-alarm">
+                <i class="fa-solid fa-volume-xmark"></i> ENTENDIDO / PARAR ALARME
+            </button>
+        </div>
+    </div>
+
+    <!-- Socket.IO or WS Radar Client Engine -->
+    <script src="radar.js"></script>
+</body>
+</html>
