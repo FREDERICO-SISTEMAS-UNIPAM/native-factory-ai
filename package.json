@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "auth:setup": "node scripts/browser-auth.js setup",
+    "auth:status": "node scripts/browser-auth.js status"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "^6.7.9",
@@ -14,6 +16,7 @@
     "express": "^4.19.2",
     "pdfkit": "^0.19.1",
     "pino": "^9.1.0",
+    "playwright": "^1.49.1",
     "qrcode": "^1.5.3",
     "ws": "^8.17.0"
   }

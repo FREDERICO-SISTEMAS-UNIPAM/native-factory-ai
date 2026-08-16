@@ -1,5 +1,10 @@
 .vercel
 node_modules/
 auth_info_baileys/
+.user_browser_data/
 .env
+.env.credentials
+credentials.json
+storageState.json
 *.log
+

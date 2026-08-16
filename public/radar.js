@@ -324,33 +324,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Limpa marcadores anteriores
         Object.values(storeMapMarkers).forEach(({ marker, circle }) => {
-            map.removeLayer(marker);
-            map.removeLayer(circle);
+            if (marker && map.hasLayer(marker)) map.removeLayer(marker);
+            if (circle && map.hasLayer(circle)) map.removeLayer(circle);
         });
         storeMapMarkers = {};
 
         storesList.forEach(store => {
+            if (store.latitude == null || store.longitude == null) return;
+
             const storeIcon = L.divIcon({
                 className: 'store-map-pin',
-                html: `<div style="background:#3b82f6; color:#fff; width:32px; height:32px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; border:2px solid #fff; box-shadow:0 0 10px rgba(59,130,246,0.6);">🏪</div>`,
+                html: `<div style="background:#3b82f6; color:#fff; width:32px; height:32px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; border:2px solid #fff; box-shadow:0 0 10px rgba(59,130,246,0.6); cursor:pointer;" title="${store.name}">🏪</div>`,
                 iconSize: [32, 32],
                 iconAnchor: [16, 16]
             });
 
             const marker = L.marker([store.latitude, store.longitude], { icon: storeIcon })
-                .bindPopup(`<b>${store.name}</b><br>Raio Máx: ${store.maxRadiusKm} km`)
+                .bindPopup(`<b>${store.name}</b><br>📍 ${store.address || 'Patos de Minas - MG'}<br>🎯 Raio Máx: ${store.maxRadiusKm} km`)
                 .addTo(map);
 
-            const circle = L.circle([store.latitude, store.longitude], {
-                radius: store.maxRadiusKm * 1000,
-                color: '#3b82f6',
-                fillColor: '#3b82f6',
-                fillOpacity: 0.08,
-                weight: 1,
-                dashArray: '4, 4'
-            }).addTo(map);
-
-            storeMapMarkers[store.id] = { marker, circle };
+            storeMapMarkers[store.id] = { marker, circle: null, store };
         });
     }
 
@@ -359,15 +352,34 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = document.getElementById(`store-card-${data.storeId}`);
         if (card) {
             card.classList.add('typing-armed');
-            setTimeout(() => card.classList.remove('typing-armed'), 5000);
+            setTimeout(() => card.classList.remove('typing-armed'), 6000);
         }
 
-        if (storeMapMarkers[data.storeId]) {
-            const circle = storeMapMarkers[data.storeId].circle;
-            circle.setStyle({ color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.3 });
+        const storeEntry = storeMapMarkers[data.storeId];
+        if (storeEntry && storeEntry.store) {
+            // Remove destaque anterior se existir
+            if (storeEntry.circle && map.hasLayer(storeEntry.circle)) {
+                map.removeLayer(storeEntry.circle);
+            }
+
+            // Destaque dinâmico apenas para a loja engatilhada/digitando
+            const circle = L.circle([storeEntry.store.latitude, storeEntry.store.longitude], {
+                radius: (data.maxRadiusKm || storeEntry.store.maxRadiusKm) * 1000,
+                color: '#f59e0b',
+                fillColor: '#f59e0b',
+                fillOpacity: 0.2,
+                weight: 2,
+                dashArray: '6, 6'
+            }).addTo(map);
+
+            storeEntry.circle = circle;
+
             setTimeout(() => {
-                circle.setStyle({ color: '#3b82f6', fillColor: '#3b82f6', fillOpacity: 0.08 });
-            }, 5000);
+                if (circle && map.hasLayer(circle)) {
+                    map.removeLayer(circle);
+                    storeEntry.circle = null;
+                }
+            }, 6000);
         }
     }
 
