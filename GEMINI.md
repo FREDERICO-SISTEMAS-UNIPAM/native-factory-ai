@@ -455,6 +455,17 @@ SYSTEM_SPEC {
 
 ---
 
-## 37. REGRA DE OURO DE MANUTENÇÃO CANÔNICA
-- **Invariância do Documento GEMINI.md**: Este documento é o guia definitivo de regras e comportamento do projeto. Todas as novas funcionalidades ou refatorações DEVEM respeitar rigorosamente os 10 Princípios Universais, as 15 Hard Rules e as regras 1 a 37.
+---
+
+## 38. HARDENING DE PRODUÇÃO E SEGURANÇA EM NUVEM (RENDER 24/7)
+- **Isolamento de Arquivos Estáticos**: Proibido servir a raiz do projeto (`__dirname`) via `express.static()`. Servir exclusivamente o diretório `public/`.
+- **Idempotência de Mensagens**: Mensagens processadas recebem registro TTL por `msg.key.id` para proibir respostas "eu" duplicadas.
+- **GPS Fresco Obrigatório**: Disparos exigem localização ativa e atualizada nos últimos 60s (`hasFreshGps`). Proibido usar coordenadas estáticas ou fallback arbitrário.
+- **Instância Única Baileys**: Reconexões devem encerrar a instância anterior do socket (`waSock?.end?.()`) antes de criar outra.
+- **Limpeza Automática de Memória**: O backend executa faxina periódica (`setInterval`) no Map `armedStores` para evitar vazamentos de memória.
+
+---
+
+## 39. REGRA DE OURO DE MANUTENÇÃO CANÔNICA
+- **Invariância do Documento GEMINI.md**: Este documento é o guia definitivo de regras e comportamento do projeto. Todas as novas funcionalidades ou refatorações DEVEM respeitar rigorosamente os Princípios Universais, Hard Rules e as regras 1 a 38.
 

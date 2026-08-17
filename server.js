@@ -14,10 +14,12 @@ const {
 
 const PORT = process.env.PORT || 3000;
 const STORES_FILE = path.join(__dirname, 'data', 'stores.json');
+const AUTH_DIR = process.env.WA_AUTH_DIR || path.join(__dirname, 'auth_info_baileys');
+const ALLOW_FROM_ME_TEST_STORES = process.env.ALLOW_FROM_ME_TEST_STORES !== 'false';
 
 const app = express();
 app.use(express.json());
-app.use(express.static(__dirname));
+// HARDENING: Servir estaticamente APENAS o diretório public
 app.use(express.static(path.join(__dirname, 'public')));
 
 const server = http.createServer(app);
@@ -32,8 +34,31 @@ if (!fs.existsSync(path.join(__dirname, 'data'))) {
 let stores = [];
 let driverGps = { lat: null, lng: null, accuracy: null, active: false, updatedAt: 0 };
 let armedStores = new Map(); // senderPhone -> { store, distanceKm, armedAt, groupJid }
+let processedMessageIds = new Map(); // msg.key.id -> timestamp
 let waSock = null;
 let waStatus = { connected: false, qr: null, user: null };
+let isConnectingWa = false;
+let reconnectWaTimer = null;
+
+// HARDENING: Pruning periódico de armedStores por TTL (a cada 15s)
+setInterval(() => {
+    const now = Date.now();
+    for (const [key, info] of armedStores.entries()) {
+        if (now - info.armedAt > 45000) {
+            armedStores.delete(key);
+        }
+    }
+}, 15000).unref?.();
+
+// HARDENING: Limpeza de cache de mensagens processadas (TTL 5m, a cada 2m)
+setInterval(() => {
+    const now = Date.now();
+    for (const [id, timestamp] of processedMessageIds.entries()) {
+        if (now - timestamp > 300000) {
+            processedMessageIds.delete(id);
+        }
+    }
+}, 120000).unref?.();
 
 // Load stores database
 function loadStores() {
@@ -60,6 +85,17 @@ function saveStores() {
 
 loadStores();
 
+// HARDENING: Validador estrito de Coordenadas e Raios (impede NaN e Infinity)
+function parseCoordinate(val, min, max) {
+    const parsed = Number.parseFloat(val);
+    return Number.isFinite(parsed) && parsed >= min && parsed <= max ? parsed : null;
+}
+
+function parseRadius(val) {
+    const parsed = Number.parseFloat(val);
+    return Number.isFinite(parsed) && parsed > 0 && parsed <= 50 ? parsed : 3.0;
+}
+
 // Utility: Clean phone number (handles Baileys multi-device suffix like :12@s.whatsapp.net)
 function cleanNumber(numStr) {
     if (!numStr) return '';
@@ -80,6 +116,17 @@ function matchPhoneNumber(num1, num2) {
     return false;
 }
 
+// HARDENING: Verificador de GPS Ativo e Recente
+function hasFreshGps(maxAgeMs = 60000) {
+    return (
+        driverGps &&
+        driverGps.active &&
+        Number.isFinite(driverGps.lat) &&
+        Number.isFinite(driverGps.lng) &&
+        (Date.now() - (driverGps.updatedAt || 0)) <= maxAgeMs
+    );
+}
+
 // Haversine Distance Formula in Kilometers
 function calculateDistanceKm(lat1, lon1, lat2, lon2) {
     if (lat1 == null || lon1 == null || lat2 == null || lon2 == null) return Infinity;
@@ -93,13 +140,22 @@ function calculateDistanceKm(lat1, lon1, lat2, lon2) {
     return R * c;
 }
 
-// Broadcast JSON message to all connected WebSocket clients
+// HARDENING: Envio seguro WebSocket com validação de estado e backpressure
+function safeSend(client, payload) {
+    if (!client || client.readyState !== WebSocket.OPEN) return;
+    if (client.bufferedAmount > 1024 * 1024) {
+        client.terminate();
+        return;
+    }
+    client.send(payload, (err) => {
+        if (err) try { client.terminate(); } catch (_) {}
+    });
+}
+
 function broadcastToClients(data) {
     const payload = JSON.stringify(data);
     wss.clients.forEach(client => {
-        if (client.readyState === WebSocket.OPEN) {
-            client.send(payload);
-        }
+        safeSend(client, payload);
     });
 }
 
@@ -107,8 +163,27 @@ function broadcastToClients(data) {
 // WHATSAPP BAILEYS BOT ENGINE
 // ----------------------------------------------------
 async function connectToWhatsApp() {
-    const authDir = path.join(__dirname, 'auth_info_baileys');
-    const { state, saveCreds } = await useMultiFileAuthState(authDir);
+    if (isConnectingWa) return;
+    isConnectingWa = true;
+
+    if (reconnectWaTimer) {
+        clearTimeout(reconnectWaTimer);
+        reconnectWaTimer = null;
+    }
+
+    // HARDENING: Limpa socket e ouvintes anteriores para impedir duplicação
+    if (waSock) {
+        try {
+            waSock.ev.removeAllListeners('connection.update');
+            waSock.ev.removeAllListeners('creds.update');
+            waSock.ev.removeAllListeners('presence.update');
+            waSock.ev.removeAllListeners('messages.upsert');
+            waSock.end?.();
+        } catch (_) {}
+        waSock = null;
+    }
+
+    const { state, saveCreds } = await useMultiFileAuthState(AUTH_DIR);
     const { version } = await fetchLatestBaileysVersion();
 
     console.log(`[WHATSAPP] Iniciando Baileys v${version.join('.')}...`);
@@ -119,6 +194,8 @@ async function connectToWhatsApp() {
         auth: state,
         browser: ['Radar de Rotas Patos', 'Chrome', '1.0.0']
     });
+
+    isConnectingWa = false;
 
     waSock.ev.on('creds.update', saveCreds);
 
@@ -137,13 +214,14 @@ async function connectToWhatsApp() {
         }
 
         if (connection === 'close') {
-            const shouldReconnect = (lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut);
-            console.log('[WHATSAPP] Conexão fechada. Reconectar?:', shouldReconnect);
+            const statusCode = lastDisconnect?.error?.output?.statusCode;
+            const shouldReconnect = (statusCode !== DisconnectReason.loggedOut);
+            console.log(`[WHATSAPP] Conexão fechada (${statusCode}). Reconectar?: ${shouldReconnect}`);
             waStatus = { connected: false, qr: null, user: null };
             broadcastToClients({ type: 'whatsapp_status', status: waStatus });
 
             if (shouldReconnect) {
-                setTimeout(connectToWhatsApp, 5000);
+                reconnectWaTimer = setTimeout(connectToWhatsApp, 5000);
             }
         } else if (connection === 'open') {
             console.log('[WHATSAPP] Conexão estabelecida com sucesso!');
@@ -164,16 +242,14 @@ async function connectToWhatsApp() {
         for (const [participantJid, pres] of Object.entries(presences)) {
             if (pres.lastKnownPresence === 'composing' || pres.lastKnownPresence === 'recording') {
                 const senderPhone = cleanNumber(participantJid);
-
-                // Check against active registered stores
                 const matchingStore = stores.find(s => s.active && matchPhoneNumber(s.whatsappNumber, senderPhone));
 
                 if (matchingStore) {
-                    if (!driverGps || !driverGps.active || driverGps.lat == null) {
-                        console.log(`[RADAR] Empresa ${matchingStore.name} está digitando, mas GPS da moto está desligado.`);
+                    if (!hasFreshGps()) {
+                        console.log(`[RADAR] Empresa ${matchingStore.name} está digitando, mas GPS da moto está ausente ou desatualizado.`);
                         broadcastToClients({
                             type: 'log_event',
-                            message: `⚠️ ${matchingStore.name} digitando, mas seu GPS está desligado.`
+                            message: `⚠️ ${matchingStore.name} digitando, mas seu GPS está desatualizado.`
                         });
                         continue;
                     }
@@ -182,7 +258,6 @@ async function connectToWhatsApp() {
                     const formattedDist = parseFloat(distKm.toFixed(2));
 
                     if (distKm <= matchingStore.maxRadiusKm) {
-                        // ENGATILHA A RESPOSTA!
                         armedStores.set(senderPhone, {
                             store: matchingStore,
                             distanceKm: formattedDist,
@@ -191,7 +266,7 @@ async function connectToWhatsApp() {
                             participantJid
                         });
 
-                        console.log(`[RADAR 🎯 ENGATILHADO] ${matchingStore.name} está digitando a ${formattedDist} km (Limite: ${matchingStore.maxRadiusKm} km). Aguardando envio!`);
+                        console.log(`[RADAR 🎯 ENGATILHADO] ${matchingStore.name} digitando a ${formattedDist} km (Limite: ${matchingStore.maxRadiusKm} km).`);
 
                         broadcastToClients({
                             type: 'store_typing_armed',
@@ -202,10 +277,10 @@ async function connectToWhatsApp() {
                             groupJid
                         });
                     } else {
-                        console.log(`[RADAR 🛡️ IGNORADO] ${matchingStore.name} digitando a ${formattedDist} km (Acima do raio de ${matchingStore.maxRadiusKm} km).`);
+                        console.log(`[RADAR 🛡️ IGNORADO] ${matchingStore.name} digitando a ${formattedDist} km (Fora do limite de ${matchingStore.maxRadiusKm} km).`);
                         broadcastToClients({
                             type: 'log_event',
-                            message: `🛡️ ${matchingStore.name} digitando a ${formattedDist} km (Fora do limite de ${matchingStore.maxRadiusKm} km). Ignorado.`
+                            message: `🛡️ ${matchingStore.name} digitando a ${formattedDist} km (Fora do limite). Ignorado.`
                         });
                     }
                 }
@@ -220,16 +295,17 @@ async function connectToWhatsApp() {
         for (const msg of messages) {
             if (!msg.message) continue;
 
+            const msgId = msg.key?.id;
+            // HARDENING: Idempotência por ID de mensagem (evita envios múltiplos)
+            if (msgId && processedMessageIds.has(msgId)) continue;
+
             const groupJid = msg.key.remoteJid;
             const participantJid = msg.key.participant || msg.participant || groupJid;
             const senderPhone = cleanNumber(participantJid);
 
-            // Se for mensagem enviada do próprio número de WhatsApp conectado (fromMe),
-            // só ignora se o número NÃO estiver cadastrado como uma loja de teste.
             const isRegisteredStore = stores.some(s => s.active && matchPhoneNumber(s.whatsappNumber, senderPhone));
-            if (msg.key.fromMe && !isRegisteredStore) continue;
+            if (msg.key.fromMe && !(ALLOW_FROM_ME_TEST_STORES && isRegisteredStore)) continue;
 
-            // PASSO 3: Proteção contra empresas distantes
             let armedSenderKey = null;
             let armedInfo = null;
 
@@ -241,14 +317,16 @@ async function connectToWhatsApp() {
                 }
             }
 
-            // FALLBACK RESILIENTE: Se a presença 'composing' não foi recebida a tempo,
-            // mas a mensagem veio de uma empresa cadastrada ativa e dentro do raio de distância, processa!
+            // FALLBACK RESILIENTE COM VALIDAÇÃO DE GPS FRESCO
             if (!armedInfo) {
                 const matchingStore = stores.find(s => s.active && matchPhoneNumber(s.whatsappNumber, senderPhone));
                 if (matchingStore) {
-                    const currentLat = (driverGps && driverGps.lat != null) ? driverGps.lat : -18.5790;
-                    const currentLng = (driverGps && driverGps.lng != null) ? driverGps.lng : -46.5210;
-                    const distKm = calculateDistanceKm(currentLat, currentLng, matchingStore.latitude, matchingStore.longitude);
+                    if (!hasFreshGps()) {
+                        console.log(`[RADAR ⚠️ REJEITADO] Mensagem de ${matchingStore.name} ignorada pois GPS da moto não está ativo/atualizado.`);
+                        continue;
+                    }
+
+                    const distKm = calculateDistanceKm(driverGps.lat, driverGps.lng, matchingStore.latitude, matchingStore.longitude);
                     const formattedDist = parseFloat(distKm.toFixed(2));
 
                     if (distKm <= matchingStore.maxRadiusKm) {
@@ -266,8 +344,7 @@ async function connectToWhatsApp() {
                 }
             }
 
-            if (!armedInfo) {
-                // Se a mensagem veio de alguém não cadastrado ou fora do raio aceito, ignora!
+            if (!armedInfo || !armedInfo.store.active) {
                 continue;
             }
 
@@ -277,6 +354,9 @@ async function connectToWhatsApp() {
                 console.log(`[RADAR] Engatilhamento de ${armedInfo.store.name} expirou.`);
                 continue;
             }
+
+            // HARDENING: Marca mensagem como processada imediatamente antes de enviar
+            if (msgId) processedMessageIds.set(msgId, Date.now());
 
             // PASSO 2: RESPONDER INSTANTANEAMENTE "eu"
             try {
@@ -288,7 +368,6 @@ async function connectToWhatsApp() {
 
                 console.log(`[RADAR 🚀 ROTA PEGA] "eu" enviado para ${armedInfo.store.name} no grupo ${groupJid}!`);
 
-                // Remove do estado engatilhado
                 if (armedSenderKey) armedStores.delete(armedSenderKey);
 
                 const msgText = msg.message.conversation ||
@@ -296,7 +375,6 @@ async function connectToWhatsApp() {
                                 msg.message.imageMessage?.caption ||
                                 'Nova Rota Solicitada';
 
-                // NOTIFICA CELULAR PARA TOCAR ALARME E VIBRAR
                 broadcastToClients({
                     type: 'route_captured',
                     storeName: armedInfo.store.name,
@@ -322,12 +400,11 @@ connectToWhatsApp().catch(err => {
 // WEBSOCKET CLIENT HANDLER
 // ----------------------------------------------------
 wss.on('connection', (ws) => {
-    console.log('[WEBSOCKET] Cliente celular conectado.');
+    console.log('[WEBSOCKET] Cliente conectado.');
 
-    // Send initial status
-    ws.send(JSON.stringify({ type: 'whatsapp_status', status: waStatus }));
-    ws.send(JSON.stringify({ type: 'stores_list', stores }));
-    ws.send(JSON.stringify({ type: 'driver_gps', gps: driverGps }));
+    safeSend(ws, JSON.stringify({ type: 'whatsapp_status', status: waStatus }));
+    safeSend(ws, JSON.stringify({ type: 'stores_list', stores }));
+    safeSend(ws, JSON.stringify({ type: 'driver_gps', gps: driverGps }));
 
     ws.on('message', (message) => {
         try {
@@ -338,11 +415,13 @@ wss.on('connection', (ws) => {
                 const existingAccuracy = parseFloat(driverGps.accuracy) || 9999;
                 const isExpired = (Date.now() - (driverGps.updatedAt || 0)) > 60000;
 
-                // Priority Rule: Accept update if active AND (accuracy <= 150m OR better than existing OR existing position older than 60s)
-                if (data.active !== false && data.lat != null && (incomingAccuracy <= 150 || incomingAccuracy <= existingAccuracy || isExpired)) {
+                const lat = parseCoordinate(data.lat, -90, 90);
+                const lng = parseCoordinate(data.lng, -180, 180);
+
+                if (data.active !== false && lat != null && lng != null && (incomingAccuracy <= 150 || incomingAccuracy <= existingAccuracy || isExpired)) {
                     driverGps = {
-                        lat: parseFloat(data.lat),
-                        lng: parseFloat(data.lng),
+                        lat,
+                        lng,
                         accuracy: incomingAccuracy,
                         active: true,
                         updatedAt: Date.now()
@@ -356,14 +435,18 @@ wss.on('connection', (ws) => {
                     console.log(`[GPS REJEITADO] Posição imprecisa do PC (±${Math.round(incomingAccuracy)}m) rejeitada em favor do GPS do celular (±${Math.round(existingAccuracy)}m).`);
                 }
             } else if (data.type === 'store_add') {
+                const lat = parseCoordinate(data.latitude, -90, 90);
+                const lng = parseCoordinate(data.longitude, -180, 180);
+                if (lat == null || lng == null) return;
+
                 const newStore = {
                     id: 'store-' + Date.now(),
-                    name: data.name || 'Nova Loja',
+                    name: (data.name || 'Nova Loja').trim(),
                     whatsappNumber: cleanNumber(data.whatsappNumber),
-                    address: data.address || '',
-                    latitude: parseFloat(data.latitude),
-                    longitude: parseFloat(data.longitude),
-                    maxRadiusKm: parseFloat(data.maxRadiusKm || 3.0),
+                    address: (data.address || '').trim(),
+                    latitude: lat,
+                    longitude: lng,
+                    maxRadiusKm: parseRadius(data.maxRadiusKm),
                     active: true
                 };
                 stores.push(newStore);
@@ -372,14 +455,17 @@ wss.on('connection', (ws) => {
             } else if (data.type === 'store_update') {
                 const idx = stores.findIndex(s => s.id === data.id);
                 if (idx !== -1) {
+                    const lat = data.latitude != null ? parseCoordinate(data.latitude, -90, 90) : stores[idx].latitude;
+                    const lng = data.longitude != null ? parseCoordinate(data.longitude, -180, 180) : stores[idx].longitude;
+
                     stores[idx] = {
                         ...stores[idx],
-                        name: data.name ?? stores[idx].name,
+                        name: data.name ? data.name.trim() : stores[idx].name,
                         whatsappNumber: data.whatsappNumber ? cleanNumber(data.whatsappNumber) : stores[idx].whatsappNumber,
-                        address: data.address ?? stores[idx].address,
-                        latitude: data.latitude != null ? parseFloat(data.latitude) : stores[idx].latitude,
-                        longitude: data.longitude != null ? parseFloat(data.longitude) : stores[idx].longitude,
-                        maxRadiusKm: data.maxRadiusKm != null ? parseFloat(data.maxRadiusKm) : stores[idx].maxRadiusKm,
+                        address: data.address != null ? data.address.trim() : stores[idx].address,
+                        latitude: lat != null ? lat : stores[idx].latitude,
+                        longitude: lng != null ? lng : stores[idx].longitude,
+                        maxRadiusKm: data.maxRadiusKm != null ? parseRadius(data.maxRadiusKm) : stores[idx].maxRadiusKm,
                         active: data.active ?? stores[idx].active
                     };
                     saveStores();
@@ -390,12 +476,15 @@ wss.on('connection', (ws) => {
                 saveStores();
                 broadcastToClients({ type: 'stores_list', stores });
             } else if (data.type === 'simulate_typing_and_route') {
-                // FERRAMENTA DE TESTE: Simula empresa digitando e enviando rota
                 handleSimulatedTrigger(data.storeId, data.distanceKm);
             }
         } catch (err) {
             console.error('[WEBSOCKET] Erro ao processar mensagem do cliente:', err);
         }
+    });
+
+    ws.on('error', (err) => {
+        console.error('[WEBSOCKET ERRO]', err);
     });
 
     ws.on('close', () => {
@@ -413,20 +502,48 @@ app.get('/api/stores', (req, res) => {
 });
 
 app.post('/api/stores', (req, res) => {
+    const lat = parseCoordinate(req.body.latitude, -90, 90);
+    const lng = parseCoordinate(req.body.longitude, -180, 180);
+    if (lat == null || lng == null) {
+        return res.status(400).json({ error: 'Coordenadas de Latitude e Longitude inválidas' });
+    }
+
     const newStore = {
         id: 'store-' + Date.now(),
-        name: req.body.name || 'Nova Loja',
+        name: (req.body.name || 'Nova Loja').trim(),
         whatsappNumber: cleanNumber(req.body.whatsappNumber),
-        address: req.body.address || '',
-        latitude: parseFloat(req.body.latitude),
-        longitude: parseFloat(req.body.longitude),
-        maxRadiusKm: parseFloat(req.body.maxRadiusKm || 3.0),
+        address: (req.body.address || '').trim(),
+        latitude: lat,
+        longitude: lng,
+        maxRadiusKm: parseRadius(req.body.maxRadiusKm),
         active: req.body.active !== false
     };
     stores.push(newStore);
     saveStores();
     broadcastToClients({ type: 'stores_list', stores });
     res.json({ success: true, store: newStore });
+});
+
+app.patch('/api/stores/:id', (req, res) => {
+    const idx = stores.findIndex(s => s.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ error: 'Loja não encontrada' });
+
+    const lat = req.body.latitude != null ? parseCoordinate(req.body.latitude, -90, 90) : stores[idx].latitude;
+    const lng = req.body.longitude != null ? parseCoordinate(req.body.longitude, -180, 180) : stores[idx].longitude;
+
+    stores[idx] = {
+        ...stores[idx],
+        name: req.body.name ? req.body.name.trim() : stores[idx].name,
+        whatsappNumber: req.body.whatsappNumber ? cleanNumber(req.body.whatsappNumber) : stores[idx].whatsappNumber,
+        address: req.body.address != null ? req.body.address.trim() : stores[idx].address,
+        latitude: lat != null ? lat : stores[idx].latitude,
+        longitude: lng != null ? lng : stores[idx].longitude,
+        maxRadiusKm: req.body.maxRadiusKm != null ? parseRadius(req.body.maxRadiusKm) : stores[idx].maxRadiusKm,
+        active: req.body.active ?? stores[idx].active
+    };
+    saveStores();
+    broadcastToClients({ type: 'stores_list', stores });
+    res.json({ success: true, store: stores[idx] });
 });
 
 app.delete('/api/stores/:id', (req, res) => {
@@ -436,7 +553,6 @@ app.delete('/api/stores/:id', (req, res) => {
     res.json({ success: true });
 });
 
-// SIMULAÇÃO DE TESTE PARA REVISÃO E DEMONSTRAÇÃO
 function handleSimulatedTrigger(storeId, forceDistanceKm) {
     const targetStore = stores.find(s => s.id === storeId) || stores[0];
     if (!targetStore) return;
@@ -444,7 +560,6 @@ function handleSimulatedTrigger(storeId, forceDistanceKm) {
     const dist = forceDistanceKm || 1.5;
     console.log(`[SIMULAÇÃO] Simulando digitação de ${targetStore.name} a ${dist} km...`);
 
-    // Broadcast arming
     broadcastToClients({
         type: 'store_typing_armed',
         storeId: targetStore.id,
@@ -454,7 +569,6 @@ function handleSimulatedTrigger(storeId, forceDistanceKm) {
         groupJid: 'grupo-simulado@g.us'
     });
 
-    // Simula resposta instantânea após 1.2 segundos (empresa apertou enviar)
     setTimeout(() => {
         console.log(`[SIMULAÇÃO] Mensagem enviada! "eu" disparado para ${targetStore.name}!`);
         broadcastToClients({
@@ -473,7 +587,6 @@ app.post('/api/simulate', (req, res) => {
     res.json({ success: true, message: 'Simulação de radar iniciada!' });
 });
 
-// Redirect root route to public/radar.html if opened
 app.get('/radar', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'radar.html'));
 });
