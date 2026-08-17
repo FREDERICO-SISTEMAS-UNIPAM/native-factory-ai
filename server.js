@@ -15,6 +15,14 @@ app.use(express.json());
 
 const STORES_FILE = path.join(__dirname, 'data', 'stores.json');
 
+app.get('/radar', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'radar.html'));
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'radar.html'));
+});
+
 app.get('/api/stores', (req, res) => {
     if (fs.existsSync(STORES_FILE)) {
         res.json(JSON.parse(fs.readFileSync(STORES_FILE, 'utf8')));
