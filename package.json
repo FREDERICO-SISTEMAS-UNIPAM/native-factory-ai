@@ -1,26 +1,17 @@
 {
-  "name": "delivery-boy-patos-radar",
+  "name": "delivery-radar",
   "version": "1.0.0",
-  "description": "Radar de Rotas Automático para WhatsApp - Delivery Boy",
+  "description": "Radar de Rotas de Entregas do WhatsApp",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
-    "auth:setup": "node scripts/browser-auth.js setup",
-    "auth:status": "node scripts/browser-auth.js status"
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "start": "node server.js"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.7.9",
+    "@whiskeysockets/baileys": "^6.7.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "pdfkit": "^0.19.1",
-    "pino": "^9.1.0",
-    "playwright": "^1.49.1",
-    "qrcode": "^1.5.3",
+    "pino": "^9.0.0",
+    "qrcode-terminal": "^0.12.0",
     "ws": "^8.17.0"
   }
 }

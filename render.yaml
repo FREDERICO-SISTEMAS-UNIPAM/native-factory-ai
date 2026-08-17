@@ -1,15 +1,10 @@
 services:
   - type: web
-    name: radar-rotas-whatsapp
+    name: delivery-radar
     env: node
     buildCommand: npm install
     startCommand: npm start
     disk:
-      name: radar-data
-      mountPath: /opt/render/project/src/data
+      name: data-storage
+      mountPath: /opt/render/project/src/baileys_auth_info
       sizeGB: 1
-    envVars:
-      - key: PORT
-        value: 10000
-      - key: WA_AUTH_DIR
-        value: /opt/render/project/src/data/auth_info_baileys
