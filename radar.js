@@ -423,6 +423,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Unlock AudioContext on any user interaction with the page
+    ['click', 'touchstart', 'keydown'].forEach(evtType => {
+        document.addEventListener(evtType, () => initAudioContext(), { passive: true });
+    });
+
     function startLoudAlarm() {
         initAudioContext();
         stopLoudAlarm(); // Limpa alarmes anteriores se houver

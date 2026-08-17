@@ -60,10 +60,11 @@ function saveStores() {
 
 loadStores();
 
-// Utility: Clean phone number
+// Utility: Clean phone number (handles Baileys multi-device suffix like :12@s.whatsapp.net)
 function cleanNumber(numStr) {
     if (!numStr) return '';
-    return numStr.toString().replace(/\D/g, '');
+    const withoutDevice = numStr.toString().split(':')[0].split('@')[0];
+    return withoutDevice.replace(/\D/g, '');
 }
 
 // Utility: Flexible phone number matching
@@ -235,8 +236,33 @@ async function connectToWhatsApp() {
                 }
             }
 
+            // FALLBACK RESILIENTE: Se a presença 'composing' não foi recebida a tempo,
+            // mas a mensagem veio de uma empresa cadastrada ativa e dentro do raio de distância, processa!
             if (!armedInfo) {
-                // Se a mensagem veio de alguém não engatilhado (distante ou não cadastrado), ignora!
+                const matchingStore = stores.find(s => s.active && matchPhoneNumber(s.whatsappNumber, senderPhone));
+                if (matchingStore) {
+                    const currentLat = (driverGps && driverGps.lat != null) ? driverGps.lat : -18.5790;
+                    const currentLng = (driverGps && driverGps.lng != null) ? driverGps.lng : -46.5210;
+                    const distKm = calculateDistanceKm(currentLat, currentLng, matchingStore.latitude, matchingStore.longitude);
+                    const formattedDist = parseFloat(distKm.toFixed(2));
+
+                    if (distKm <= matchingStore.maxRadiusKm) {
+                        armedInfo = {
+                            store: matchingStore,
+                            distanceKm: formattedDist,
+                            armedAt: Date.now(),
+                            groupJid,
+                            participantJid
+                        };
+                        console.log(`[RADAR 🎯 DISPARADO DIRETO] ${matchingStore.name} enviou mensagem a ${formattedDist} km (Limite: ${matchingStore.maxRadiusKm} km).`);
+                    } else {
+                        console.log(`[RADAR 🛡️ MENSAGEM IGNORADA] ${matchingStore.name} enviou mensagem a ${formattedDist} km (Acima do raio de ${matchingStore.maxRadiusKm} km).`);
+                    }
+                }
+            }
+
+            if (!armedInfo) {
+                // Se a mensagem veio de alguém não cadastrado ou fora do raio aceito, ignora!
                 continue;
             }
 
