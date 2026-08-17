@@ -218,11 +218,16 @@ async function connectToWhatsApp() {
         if (type !== 'notify') return;
 
         for (const msg of messages) {
-            if (!msg.message || msg.key.fromMe) continue;
+            if (!msg.message) continue;
 
             const groupJid = msg.key.remoteJid;
             const participantJid = msg.key.participant || msg.participant || groupJid;
             const senderPhone = cleanNumber(participantJid);
+
+            // Se for mensagem enviada do próprio número de WhatsApp conectado (fromMe),
+            // só ignora se o número NÃO estiver cadastrado como uma loja de teste.
+            const isRegisteredStore = stores.some(s => s.active && matchPhoneNumber(s.whatsappNumber, senderPhone));
+            if (msg.key.fromMe && !isRegisteredStore) continue;
 
             // PASSO 3: Proteção contra empresas distantes
             let armedSenderKey = null;
