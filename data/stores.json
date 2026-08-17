@@ -1,15 +1,5 @@
 [
   {
-    "id": "store-king-adega",
-    "name": "King Adega",
-    "whatsappNumber": "5534999990001",
-    "address": "Rua Major Gote, 1200, Centro, Patos de Minas - MG",
-    "latitude": -18.5833,
-    "longitude": -46.5167,
-    "maxRadiusKm": 3,
-    "active": true
-  },
-  {
     "id": "store-orla-bar",
     "name": "Orla Bar & Resto",
     "whatsappNumber": "5534999990002",

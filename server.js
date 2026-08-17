@@ -329,14 +329,27 @@ wss.on('connection', (ws) => {
             const data = JSON.parse(message);
 
             if (data.type === 'gps_update') {
-                driverGps = {
-                    lat: data.lat,
-                    lng: data.lng,
-                    accuracy: data.accuracy || 10,
-                    active: data.active !== false,
-                    updatedAt: Date.now()
-                };
-                broadcastToClients({ type: 'driver_gps', gps: driverGps });
+                const incomingAccuracy = parseFloat(data.accuracy) || 9999;
+                const existingAccuracy = parseFloat(driverGps.accuracy) || 9999;
+                const isExpired = (Date.now() - (driverGps.updatedAt || 0)) > 60000;
+
+                // Priority Rule: Accept update if active AND (accuracy <= 150m OR better than existing OR existing position older than 60s)
+                if (data.active !== false && data.lat != null && (incomingAccuracy <= 150 || incomingAccuracy <= existingAccuracy || isExpired)) {
+                    driverGps = {
+                        lat: parseFloat(data.lat),
+                        lng: parseFloat(data.lng),
+                        accuracy: incomingAccuracy,
+                        active: true,
+                        updatedAt: Date.now()
+                    };
+                    console.log(`[GPS ACEITO] Posição atualizada: (${driverGps.lat.toFixed(4)}, ${driverGps.lng.toFixed(4)}) - Precisão: ±${Math.round(incomingAccuracy)}m`);
+                    broadcastToClients({ type: 'driver_gps', gps: driverGps });
+                } else if (data.active === false) {
+                    driverGps.active = false;
+                    broadcastToClients({ type: 'driver_gps', gps: driverGps });
+                } else {
+                    console.log(`[GPS REJEITADO] Posição imprecisa do PC (±${Math.round(incomingAccuracy)}m) rejeitada em favor do GPS do celular (±${Math.round(existingAccuracy)}m).`);
+                }
             } else if (data.type === 'store_add') {
                 const newStore = {
                     id: 'store-' + Date.now(),

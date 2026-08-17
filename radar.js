@@ -182,8 +182,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentGps.lng = pos.coords.longitude;
                 currentGps.accuracy = pos.coords.accuracy;
 
-                gpsText.textContent = `Ativo (Precisão: ±${Math.round(pos.coords.accuracy)}m)`;
-                gpsBadge.className = 'status-badge success';
+                const isPcIpGeo = pos.coords.accuracy > 200;
+                if (isPcIpGeo) {
+                    gpsText.textContent = `Ativo (IP PC: ±${Math.round(pos.coords.accuracy)}m - Celular tem prioridade)`;
+                    gpsBadge.className = 'status-badge warning';
+                } else {
+                    gpsText.textContent = `Ativo (Precisão: ±${Math.round(pos.coords.accuracy)}m)`;
+                    gpsBadge.className = 'status-badge success';
+                }
 
                 driverDistInfo.textContent = `Sua Posição: ${currentGps.lat.toFixed(4)}, ${currentGps.lng.toFixed(4)}`;
 
@@ -510,16 +516,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- LOCAL STORAGE PERSISTENCE (Salva no Celular) ---
     const DEFAULT_STORES_DATABASE = [
-  {
-    "id": "store-king-adega",
-    "name": "King Adega",
-    "whatsappNumber": "5534999990001",
-    "address": "Rua Major Gote, 1200, Centro, Patos de Minas - MG",
-    "latitude": -18.5833,
-    "longitude": -46.5167,
-    "maxRadiusKm": 3,
-    "active": true
-  },
   {
     "id": "store-orla-bar",
     "name": "Orla Bar & Resto",
