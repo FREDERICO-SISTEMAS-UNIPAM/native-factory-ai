@@ -9,6 +9,9 @@
     "auth:setup": "node scripts/browser-auth.js setup",
     "auth:status": "node scripts/browser-auth.js status"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@whiskeysockets/baileys": "^6.7.9",
     "cors": "^2.8.5",
