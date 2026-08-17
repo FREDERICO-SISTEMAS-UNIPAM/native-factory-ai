@@ -1,7 +1,6 @@
 {
-  "cleanUrls": false,
+  "version": 2,
   "rewrites": [
-    { "source": "/radar", "destination": "/public/radar.html" },
-    { "source": "/planejador", "destination": "/planejador.html" }
+    { "source": "/api/(.*)", "destination": "/api/index.js" }
   ]
 }

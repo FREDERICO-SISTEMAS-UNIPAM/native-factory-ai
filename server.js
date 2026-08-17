@@ -10,7 +10,7 @@ import pino from 'pino';
 import { Server } from 'socket.io';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
-const dir = process.env.DATA_DIR || path.join(root, 'data');
+const dir = process.env.DATA_DIR || (process.env.VERCEL ? '/tmp/data' : path.join(root, 'data'));
 const auth = path.join(dir, 'whatsapp-auth');
 const file = path.join(dir, 'radar.json');
 
@@ -29,7 +29,15 @@ let status = { state: 'disconnected', message: 'Desconectado', qr: null };
 const armed = new Map();
 const cooldown = new Map();
 
-const save = () => fs.writeFile(file, JSON.stringify(db, null, 2));
+const save = async () => {
+    try {
+        await fs.mkdir(dir, { recursive: true });
+        await fs.writeFile(file, JSON.stringify(db, null, 2));
+    } catch (e) {
+        console.error('Save error:', e);
+    }
+};
+
 const emit = (n, x) => io.emit(n, x);
 const setStatus = x => {
     status = { ...status, ...x };
@@ -64,6 +72,17 @@ const accepted = (c, m) => {
         .filter(Boolean);
     return !p.length || p.some(x => text(m).toLowerCase().includes(x));
 };
+
+async function initDB() {
+    try {
+        await fs.mkdir(dir, { recursive: true });
+        const content = await fs.readFile(file, 'utf8');
+        db = { ...db, ...JSON.parse(content) };
+    } catch {
+        await save();
+    }
+}
+initDB();
 
 async function start() {
     if (connecting || sock) return;
@@ -176,13 +195,11 @@ app.post('/api/gps', async (q, r) => {
     await save();
     r.sendStatus(204);
 });
+
 app.get('*', (q, r) => r.sendFile(path.join(root, 'public', 'index.html')));
 
-await fs.mkdir(dir, { recursive: true });
-try {
-    db = { ...db, ...JSON.parse(await fs.readFile(file, 'utf8')) };
-} catch {
-    await save();
+if (!process.env.VERCEL) {
+    httpServer.listen(process.env.PORT || 3000, () => console.log('Radar ativo'));
 }
 
-httpServer.listen(process.env.PORT || 3000, () => console.log('Radar ativo'));
+export default app;
