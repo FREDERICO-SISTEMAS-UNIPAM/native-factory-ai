@@ -4,7 +4,10 @@
   "description": "Radar de Rotas de Entregas do WhatsApp",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "codex": "node scripts/codex-cli.js run",
+    "codex:setup": "node scripts/codex-cli.js setup",
+    "codex:status": "node scripts/codex-cli.js status"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "^6.7.0",
