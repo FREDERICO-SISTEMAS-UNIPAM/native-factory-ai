@@ -1,10 +1,13 @@
 services:
   - type: web
-    name: delivery-radar
+    name: radar-de-rotas
     env: node
     buildCommand: npm install
     startCommand: npm start
+    envVars:
+      - key: DATA_DIR
+        value: /var/data
     disk:
-      name: data-storage
-      mountPath: /opt/render/project/src/baileys_auth_info
+      name: radar-data
+      mountPath: /var/data
       sizeGB: 1
