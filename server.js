@@ -10,7 +10,7 @@ import pino from 'pino';
 import { Server } from 'socket.io';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
-const dir = process.env.DATA_DIR || (process.env.VERCEL ? '/tmp/data' : path.join(root, 'data'));
+const dir = process.env.DATA_DIR || path.join(root, 'data');
 const auth = path.join(dir, 'whatsapp-auth');
 const file = path.join(dir, 'radar.json');
 
@@ -34,7 +34,7 @@ const save = async () => {
         await fs.mkdir(dir, { recursive: true });
         await fs.writeFile(file, JSON.stringify(db, null, 2));
     } catch (e) {
-        console.error('Save error:', e);
+        console.error('[DATABASE] Save error:', e);
     }
 };
 
@@ -82,7 +82,6 @@ async function initDB() {
         await save();
     }
 }
-initDB();
 
 async function start() {
     if (connecting || sock) return;
@@ -91,8 +90,7 @@ async function start() {
         await fs.mkdir(auth, { recursive: true });
         const { state, saveCreds } = await useMultiFileAuthState(auth);
         sock = makeWASocket({
-            auth,
-            state,
+            auth: state,
             logger: pino({ level: 'silent' }),
             browser: ['Radar de Rotas', 'Chrome', '1.0'],
             markOnlineOnConnect: false
@@ -195,11 +193,9 @@ app.post('/api/gps', async (q, r) => {
     await save();
     r.sendStatus(204);
 });
-
 app.get('*', (q, r) => r.sendFile(path.join(root, 'public', 'index.html')));
 
-if (!process.env.VERCEL) {
-    httpServer.listen(process.env.PORT || 3000, () => console.log('Radar ativo'));
-}
+await initDB();
 
-export default app;
+const PORT = process.env.PORT || 3000;
+httpServer.listen(PORT, () => console.log(`Radar ativo na porta ${PORT}`));

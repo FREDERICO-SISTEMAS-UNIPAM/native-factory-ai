@@ -6,8 +6,8 @@ services:
     startCommand: npm start
     envVars:
       - key: DATA_DIR
-        value: /var/data
+        value: /data
     disk:
       name: radar-data
-      mountPath: /var/data
+      mountPath: /data
       sizeGB: 1

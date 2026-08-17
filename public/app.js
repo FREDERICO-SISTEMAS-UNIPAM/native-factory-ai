@@ -1,39 +1,24 @@
 const $ = s => document.querySelector(s);
-
-// Tab Navigation - Always set up listeners first so UI tabs work unconditionally
-document.querySelectorAll('[data-tab]').forEach(b => {
-    b.onclick = () => {
-        document.querySelectorAll('[data-tab],.tab').forEach(x => x.classList.remove('active'));
-        b.classList.add('active');
-        const target = $('#' + b.dataset.tab);
-        if (target) target.classList.add('active');
-    };
-});
-
-let socket = null;
-try {
-    if (typeof io === 'function') {
-        socket = io({ autoConnect: true, reconnectionAttempts: 5 });
-    }
-} catch (e) {
-    console.warn('Socket.io client notice:', e);
-}
-
+const socket = io();
 let watchId, wakeLock, audio;
+
+document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => {
+    document.querySelectorAll('[data-tab],.tab').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    const target = $('#' + b.dataset.tab);
+    if (target) target.classList.add('active');
+});
 
 async function api(url, opt) {
     const r = await fetch(url, opt);
-    if (!r.ok) {
-        const err = await r.json().catch(() => ({}));
-        throw new Error(err.error || 'Erro ' + r.status);
-    }
+    if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || 'Erro ' + r.status);
     return r.status === 204 ? null : r.json();
 }
 
 async function status() {
     try {
         const s = await api('/api/status');
-        if ($('#status')) $('#status').textContent = s.message || 'Pronto';
+        if ($('#status')) $('#status').textContent = s.message || 'Desconectado';
         if ($('#qr')) {
             $('#qr').hidden = !s.qr;
             if (s.qr) $('#qr').src = s.qr;
@@ -42,8 +27,7 @@ async function status() {
             $('#connectMessage').textContent = s.state === 'connected' ? '✅ Conectado e monitorando grupos.' : '';
         }
     } catch (err) {
-        if ($('#status')) $('#status').textContent = 'Desconectado';
-        console.error('Status fetch error:', err);
+        if ($('#status')) $('#status').textContent = 'Erro de conexão com o servidor';
     }
 }
 
@@ -168,14 +152,11 @@ if (silenceBtn) {
     };
 }
 
-if (socket) {
-    socket.on('whatsapp-status', status);
-    socket.on('route-captured', alertRoute);
-    socket.on('company-typing', x => {
-        if ($('#typing')) $('#typing').textContent = x.empresaNome + ' está digitando (' + x.distancia + ' km)';
-    });
-}
+socket.on('whatsapp-status', status);
+socket.on('route-captured', alertRoute);
+socket.on('company-typing', x => {
+    if ($('#typing')) $('#typing').textContent = x.empresaNome + ' está digitando (' + x.distancia + ' km)';
+});
 
-// Initial calls
 status();
 companies();

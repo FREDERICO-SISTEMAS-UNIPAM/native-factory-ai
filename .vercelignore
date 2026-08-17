@@ -1,9 +1,0 @@
-node_modules
-data
-.git
-.agents
-.user_browser_data
-*.zip
-*.jpg
-*.png
-*.pdf
